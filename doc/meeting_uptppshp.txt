@@ -1,0 +1,24 @@
+permohonan pengujian :
+ - tambah NIK / NPWP dibawah instansi/perusahaan
+ - kemasan :
+	- plastik
+	- alumunium foil
+	- kardus
+	- kertas
+	- sterofoam
+	- karung
+	- kotak
+	- botol
+	- botol kaca
+	- botol plastik
+ - kondisi (bisa banyak) :
+	- baik
+	- buruk
+	- basah
+	- tidak baik
+	- kering
+	- layu
+	- busuk
+	- berbau
+	-
+ -  

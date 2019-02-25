@@ -1,0 +1,48 @@
+.OPTION EXPLICIT
+.Set Cabinet=off
+.Set Compress=off
+.Set MaxDiskSize=CDROM
+.Set ReservePerCabinetSize=6144
+.Set DiskDirectoryTemplate=".."
+.Set CompressionType=MSZIP
+.Set CompressionLevel=7
+.Set CompressionMemory=21
+.Set CabinetNameTemplate="pengujian.CAB"
+"Setup.Lst"
+"setup.exe"
+.Set Cabinet=on
+.Set Compress=on
+"pengujian.exe"
+"msvbvm60.dll"
+"oleaut32.dll"
+"olepro32.dll"
+"asycfilt.dll"
+"stdole2.tlb"
+"COMCAT.DLL"
+"MSDATGRD.OCX"
+"msstdfmt.dll"
+"msadodc.ocx"
+"msado25.tlb"
+"MSBIND.DLL"
+"MSDATLST.OCX"
+"mscomct2.ocx"
+"mscomctl.ocx"
+"msdbrptr.dll"
+"TABCTL32.OCX"
+"crviewer.dll"
+"craxdrt.dll"
+"craxddrt.dll"
+"Implode.dll"
+"Crpaig80.dll"
+"msvcrt.dll"
+"mfc42.dll"
+"SSCSDK80.DLL"
+"PG32CONV.DLL"
+"P2smon.dll"
+"msderun.dll"
+"comdlg32.ocx"
+"SETUP1.EXE"
+"VB6STKIT.DLL"
+"ST6UNST.EXE"
+"backup.exe"
+"database.mdb"

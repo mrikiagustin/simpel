@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>parameter_pengujian_residu</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
+    <directory>&#x2f;</directory>
+    <parameters>
+    </parameters>
+    <log>
+<trans-log-table><connection/>
+<schema/>
+<table/>
+<size_limit_lines/>
+<interval/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field><field><id>EXECUTING_SERVER</id><enabled>N</enabled><name>EXECUTING_SERVER</name></field><field><id>EXECUTING_USER</id><enabled>N</enabled><name>EXECUTING_USER</name></field><field><id>CLIENT</id><enabled>N</enabled><name>CLIENT</name></field></trans-log-table>
+<perf-log-table><connection/>
+<schema/>
+<table/>
+<interval/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>SEQ_NR</id><enabled>Y</enabled><name>SEQ_NR</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>INPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>INPUT_BUFFER_ROWS</name></field><field><id>OUTPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>OUTPUT_BUFFER_ROWS</name></field></perf-log-table>
+<channel-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>LOGGING_OBJECT_TYPE</id><enabled>Y</enabled><name>LOGGING_OBJECT_TYPE</name></field><field><id>OBJECT_NAME</id><enabled>Y</enabled><name>OBJECT_NAME</name></field><field><id>OBJECT_COPY</id><enabled>Y</enabled><name>OBJECT_COPY</name></field><field><id>REPOSITORY_DIRECTORY</id><enabled>Y</enabled><name>REPOSITORY_DIRECTORY</name></field><field><id>FILENAME</id><enabled>Y</enabled><name>FILENAME</name></field><field><id>OBJECT_ID</id><enabled>Y</enabled><name>OBJECT_ID</name></field><field><id>OBJECT_REVISION</id><enabled>Y</enabled><name>OBJECT_REVISION</name></field><field><id>PARENT_CHANNEL_ID</id><enabled>Y</enabled><name>PARENT_CHANNEL_ID</name></field><field><id>ROOT_CHANNEL_ID</id><enabled>Y</enabled><name>ROOT_CHANNEL_ID</name></field></channel-log-table>
+<step-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></step-log-table>
+<metrics-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>METRICS_DATE</id><enabled>Y</enabled><name>METRICS_DATE</name></field><field><id>METRICS_CODE</id><enabled>Y</enabled><name>METRICS_CODE</name></field><field><id>METRICS_DESCRIPTION</id><enabled>Y</enabled><name>METRICS_DESCRIPTION</name></field><field><id>METRICS_SUBJECT</id><enabled>Y</enabled><name>METRICS_SUBJECT</name></field><field><id>METRICS_TYPE</id><enabled>Y</enabled><name>METRICS_TYPE</name></field><field><id>METRICS_VALUE</id><enabled>Y</enabled><name>METRICS_VALUE</name></field></metrics-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+  <created_user>-</created_user>
+  <created_date>2019&#x2f;01&#x2f;24 16&#x3a;55&#x3a;29.108</created_date>
+  <modified_user>-</modified_user>
+  <modified_date>2019&#x2f;01&#x2f;24 16&#x3a;55&#x3a;29.108</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
+    <is_key_private>N</is_key_private>
+  </info>
+  <notepads>
+  </notepads>
+  <connection>
+    <name>local mysql pertanian</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>pertanian</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ff228dc6fa8c</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <order>
+  <hop> <from>Golongan  Organofosfat</from><to>Golongan  Organofosfat id_laporan &#x28;9&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Golongan  Organofosfat id_laporan &#x28;9&#x29;</from><to>Table output</to><enabled>Y</enabled> </hop>
+  <hop> <from>golongan Piretroid</from><to>Golongan  Piretroid id_laporan &#x28;10&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Golongan  Piretroid id_laporan &#x28;10&#x29;</from><to>Table output 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Golongan Karbamat</from><to>Golongan Karbamat id_laporan &#x28;11&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Golongan Karbamat id_laporan &#x28;11&#x29;</from><to>Table output 2 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Golongan Organoklor</from><to>Golongan Organoklor id_laporan &#x28;8&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Golongan Organoklor id_laporan &#x28;8&#x29;</from><to>Table output 2 2 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Golongan Lain</from><to>Golongan Lain id_laporan &#x28;15&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Golongan Lain id_laporan &#x28;15&#x29;</from><to>Table output 2 2 2 2</to><enabled>Y</enabled> </hop>
+  </order>
+  <step>
+    <name>Golongan  Organofosfat</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>parameter_pengujian</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <data>
+      <line> <item>Acephate</item> </line>
+      <line> <item>Azamethiphos</item> </line>
+      <line> <item>Azinphos-Ethyl</item> </line>
+      <line> <item>Azinphos-Methyl</item> </line>
+      <line> <item>Bensulide</item> </line>
+      <line> <item>Bromophos-Ethyl</item> </line>
+      <line> <item>Cadusafos</item> </line>
+      <line> <item>Carbophenothion</item> </line>
+      <line> <item>Chlorfenvinphos</item> </line>
+      <line> <item>Chlorpyrifos</item> </line>
+      <line> <item>Chlorpyrifos-Methyl</item> </line>
+      <line> <item>Diazinon</item> </line>
+      <line> <item>Dichlorvos</item> </line>
+      <line> <item>Dieldrin</item> </line>
+      <line> <item>Dimethoate</item> </line>
+      <line> <item>Disulfoton</item> </line>
+      <line> <item>Ethion</item> </line>
+      <line> <item>Ethoprophos</item> </line>
+      <line> <item>Fenamiphos</item> </line>
+      <line> <item>Fenitrothion</item> </line>
+      <line> <item>Fenthion</item> </line>
+      <line> <item>Fenthion-Oxonsulfoxide</item> </line>
+      <line> <item>Malathion</item> </line>
+      <line> <item>Methamidophos</item> </line>
+      <line> <item>Methidathion</item> </line>
+      <line> <item>Mevinphos</item> </line>
+      <line> <item>Parathion</item> </line>
+      <line> <item>Parathion-Methyl</item> </line>
+    </data>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>112</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Golongan  Organofosfat id_laporan &#x28;9&#x29;</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>id_laporan</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>9</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>336</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Golongan  Piretroid id_laporan &#x28;10&#x29;</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>id_laporan</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>10</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>336</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Golongan Karbamat</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>parameter_pengujian</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <data>
+      <line> <item>Aldicarb</item> </line>
+      <line> <item>Aldicarb-Sulfone</item> </line>
+      <line> <item>Aminocarb</item> </line>
+      <line> <item>Bendiocarb</item> </line>
+      <line> <item>Benfuracarb</item> </line>
+      <line> <item>Carbaryl</item> </line>
+      <line> <item>Carbofuran</item> </line>
+      <line> <item>Carbosulfan</item> </line>
+      <line> <item>Diethofencarb</item> </line>
+      <line> <item>Ethiofencarb</item> </line>
+      <line> <item>Fenoxycarb</item> </line>
+      <line> <item>Methomyl</item> </line>
+      <line> <item>Oxamyl</item> </line>
+      <line> <item>Propoxur</item> </line>
+    </data>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>112</xloc>
+      <yloc>336</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Golongan Karbamat id_laporan &#x28;11&#x29;</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>id_laporan</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>11</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>336</xloc>
+      <yloc>336</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Golongan Lain</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>parameter_pengujian</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <data>
+      <line> <item>Abamectin</item> </line>
+      <line> <item>Acetamiprid</item> </line>
+      <line> <item>Ametryn</item> </line>
+      <line> <item>Aminopyralid</item> </line>
+      <line> <item>Amiotriazole</item> </line>
+      <line> <item>Amitraz</item> </line>
+      <line> <item>Atrazine</item> </line>
+      <line> <item>Azaconazole</item> </line>
+      <line> <item>Azocyclotin</item> </line>
+      <line> <item>Azoxystrobin</item> </line>
+      <line> <item>Benalaxyl</item> </line>
+      <line> <item>Benfluralin</item> </line>
+      <line> <item>Benfuresate</item> </line>
+      <line> <item>Bensulfuron-Methyl</item> </line>
+      <line> <item>Bentazone</item> </line>
+      <line> <item>Bitertanol</item> </line>
+      <line> <item>Boscalid</item> </line>
+      <line> <item>Brodifacoum</item> </line>
+      <line> <item>Bromacil</item> </line>
+      <line> <item>Bromopropylate</item> </line>
+      <line> <item>Bromoxynil</item> </line>
+      <line> <item>Bromuconazole</item> </line>
+      <line> <item>Bupirimate</item> </line>
+      <line> <item>Buprofezin</item> </line>
+      <line> <item>Butachlor</item> </line>
+      <line> <item>Captan</item> </line>
+      <line> <item>Carbendazim</item> </line>
+      <line> <item>Carboxin</item> </line>
+      <line> <item>Carfentrazone-Ethyl</item> </line>
+      <line> <item>Chlopropham</item> </line>
+      <line> <item>Chlorantraniliprole</item> </line>
+      <line> <item>Chlorfenapyr</item> </line>
+      <line> <item>Chlorimuron-Ethyl</item> </line>
+      <line> <item>Chlormequat</item> </line>
+      <line> <item>Clofentezine</item> </line>
+      <line> <item>Clothianidin</item> </line>
+      <line> <item>Coumaphos</item> </line>
+      <line> <item>Cycloxydim</item> </line>
+      <line> <item>Cyhexatin</item> </line>
+      <line> <item>Cymoxanil</item> </line>
+      <line> <item>Cyproconazole</item> </line>
+      <line> <item>Cyprodinil</item> </line>
+      <line> <item>Cyromazine</item> </line>
+      <line> <item>Dichlofluanid</item> </line>
+      <line> <item>Dicloran</item> </line>
+      <line> <item>Difenoconazole</item> </line>
+      <line> <item>Diflubenzuron</item> </line>
+      <line> <item>Diflufenican</item> </line>
+      <line> <item>Dimethomorph</item> </line>
+      <line> <item>Diniconazole</item> </line>
+      <line> <item>Dinocap</item> </line>
+      <line> <item>Dinotefuran</item> </line>
+      <line> <item>Diphenylamine</item> </line>
+      <line> <item>Diuron</item> </line>
+      <line> <item>Emamectin benzoate</item> </line>
+      <line> <item>Epoxiconazole</item> </line>
+      <line> <item>Ethoxyquin</item> </line>
+      <line> <item>Etoxazole</item> </line>
+      <line> <item>Etridiazole</item> </line>
+      <line> <item>Famoxadone</item> </line>
+      <line> <item>Fenarimol</item> </line>
+      <line> <item>Fenazaquin</item> </line>
+      <line> <item>Fenbuconazole</item> </line>
+      <line> <item>Fenhexamid</item> </line>
+      <line> <item>Fenoxaprop-P-Ethyl</item> </line>
+      <line> <item>Fenpiclonil</item> </line>
+      <line> <item>Fenpropidin</item> </line>
+      <line> <item>Fenpropimorph</item> </line>
+      <line> <item>Fenpyroximate</item> </line>
+      <line> <item>Fenquinconazole</item> </line>
+      <line> <item>Fluazinam</item> </line>
+      <line> <item>Flubendiamide</item> </line>
+      <line> <item>Fludioxonil</item> </line>
+      <line> <item>Fluopicolide</item> </line>
+      <line> <item>Fluopyram</item> </line>
+      <line> <item>Fluquinconazole</item> </line>
+      <line> <item>Flusilazole</item> </line>
+      <line> <item>Flutolanil</item> </line>
+      <line> <item>Flutriafol</item> </line>
+      <line> <item>Furmecyclox</item> </line>
+      <line> <item>Haloxyfop</item> </line>
+      <line> <item>Heptenophos</item> </line>
+      <line> <item>Hexaconazole</item> </line>
+      <line> <item>Hexythiazox</item> </line>
+      <line> <item>Imazalil</item> </line>
+      <line> <item>Imidacloprid</item> </line>
+      <line> <item>Indoxacarb</item> </line>
+      <line> <item>Isoprocarb</item> </line>
+      <line> <item>Kresoxim-Methyl</item> </line>
+      <line> <item>Linuron</item> </line>
+      <line> <item>Malathion</item> </line>
+      <line> <item>Mandipropamid</item> </line>
+      <line> <item>Meptyldinocap </item> </line>
+      <line> <item>Mesosulfuron-Methyl</item> </line>
+      <line> <item>Mesotrione</item> </line>
+      <line> <item>Metaldehyde</item> </line>
+      <line> <item>Methoxyfenozide</item> </line>
+      <line> <item>Paclobutrazol</item> </line>
+      <line> <item>Paraquat</item> </line>
+      <line> <item>Penconazole</item> </line>
+      <line> <item>Phenthoate</item> </line>
+      <line> <item>Phosalone</item> </line>
+      <line> <item>Phosmet</item> </line>
+      <line> <item>Picoxystrobin</item> </line>
+      <line> <item>Piperonyl Butoxide</item> </line>
+      <line> <item>Pirimicarb</item> </line>
+      <line> <item>Pirimiphos-Ethyl</item> </line>
+      <line> <item>Pirimiphos-Methyl</item> </line>
+      <line> <item>Prochloraz</item> </line>
+      <line> <item>Procymidone</item> </line>
+      <line> <item>Profenofos</item> </line>
+      <line> <item>Prometryn</item> </line>
+      <line> <item>Propamocarb</item> </line>
+      <line> <item>Propargite</item> </line>
+      <line> <item>Propham</item> </line>
+      <line> <item>Propiconazole</item> </line>
+      <line> <item>Propyzamide</item> </line>
+      <line> <item>Pymetrozine</item> </line>
+      <line> <item>Pyraclostrobin</item> </line>
+      <line> <item>Pyrimethanil</item> </line>
+      <line> <item>Pyriproxyfen</item> </line>
+      <line> <item>Quinalphos</item> </line>
+      <line> <item>Quinoxyfen</item> </line>
+      <line> <item>Retenone</item> </line>
+      <line> <item>Spirotetramat</item> </line>
+      <line> <item>Sulcotrione</item> </line>
+      <line> <item>Tebuconazole</item> </line>
+      <line> <item>Tebufenozide</item> </line>
+      <line> <item>Teflubenzuron </item> </line>
+      <line> <item>Tetraconazole</item> </line>
+      <line> <item>Thiabendazole</item> </line>
+      <line> <item>Thiophanate-Methyl</item> </line>
+      <line> <item>Tolclofos-Methyl</item> </line>
+      <line> <item>Tolylfluanid</item> </line>
+      <line> <item>Triadimefon</item> </line>
+      <line> <item>Triadimenol</item> </line>
+      <line> <item>Triazophos</item> </line>
+      <line> <item>Trifloxystrobin</item> </line>
+      <line> <item>Triforine</item> </line>
+      <line> <item>Warfarin</item> </line>
+    </data>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>112</xloc>
+      <yloc>560</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Golongan Lain id_laporan &#x28;15&#x29;</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>id_laporan</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>15</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>336</xloc>
+      <yloc>560</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Golongan Organoklor</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>parameter_pengujian</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <data>
+      <line> <item>Aldrin</item> </line>
+      <line> <item>BHC-alpha </item> </line>
+      <line> <item>BHC-beta   </item> </line>
+      <line> <item>BHC-delta</item> </line>
+      <line> <item>DDD-o,p</item> </line>
+      <line> <item>DDD-p,p</item> </line>
+      <line> <item>DDE-o,p</item> </line>
+      <line> <item>DDE-p,p</item> </line>
+      <line> <item>DDT-o,p</item> </line>
+      <line> <item>DDT-p,p</item> </line>
+      <line> <item>Dicofol</item> </line>
+      <line> <item>Endosulfan</item> </line>
+      <line> <item>Endosulfan-alpha</item> </line>
+      <line> <item>Endosulfan-beta</item> </line>
+      <line> <item>Endosulfansulfate</item> </line>
+      <line> <item>Endrin</item> </line>
+      <line> <item>Heptachlor</item> </line>
+      <line> <item>Lindane</item> </line>
+    </data>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>112</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Golongan Organoklor id_laporan &#x28;8&#x29;</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>id_laporan</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>8</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>336</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Table output</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>local mysql pertanian</connection>
+    <schema/>
+    <table>parameter_pengujian</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>parameter_pengujian</column_name>
+          <stream_name>parameter_pengujian</stream_name>
+        </field>
+        <field>
+          <column_name>id_laporan</column_name>
+          <stream_name>id_laporan</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>528</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Table output 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>local mysql pertanian</connection>
+    <schema/>
+    <table>parameter_pengujian</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>parameter_pengujian</column_name>
+          <stream_name>parameter_pengujian</stream_name>
+        </field>
+        <field>
+          <column_name>id_laporan</column_name>
+          <stream_name>id_laporan</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>528</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Table output 2 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>local mysql pertanian</connection>
+    <schema/>
+    <table>parameter_pengujian</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>parameter_pengujian</column_name>
+          <stream_name>parameter_pengujian</stream_name>
+        </field>
+        <field>
+          <column_name>id_laporan</column_name>
+          <stream_name>id_laporan</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>528</xloc>
+      <yloc>336</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Table output 2 2 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>local mysql pertanian</connection>
+    <schema/>
+    <table>parameter_pengujian</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>parameter_pengujian</column_name>
+          <stream_name>parameter_pengujian</stream_name>
+        </field>
+        <field>
+          <column_name>id_laporan</column_name>
+          <stream_name>id_laporan</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>528</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Table output 2 2 2 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>local mysql pertanian</connection>
+    <schema/>
+    <table>parameter_pengujian</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>parameter_pengujian</column_name>
+          <stream_name>parameter_pengujian</stream_name>
+        </field>
+        <field>
+          <column_name>id_laporan</column_name>
+          <stream_name>id_laporan</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>528</xloc>
+      <yloc>560</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>golongan Piretroid</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>parameter_pengujian</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <data>
+      <line> <item>Acrinathrin</item> </line>
+      <line> <item>Bifenthrin</item> </line>
+      <line> <item>Bioallethrin</item> </line>
+      <line> <item>Bioresmethrin</item> </line>
+      <line> <item>Cyfluthrin</item> </line>
+      <line> <item>Cyfluthrin-beta</item> </line>
+      <line> <item>Cyhalothrin-gamma</item> </line>
+      <line> <item>Cyhalothrin-lambda</item> </line>
+      <line> <item>Cypermethrin </item> </line>
+      <line> <item>Cypermethrin-alpha</item> </line>
+      <line> <item>Cypermethrin-beta</item> </line>
+      <line> <item>Cypermethrin-zeta</item> </line>
+      <line> <item>Deltamethrin</item> </line>
+      <line> <item>Etofenprox</item> </line>
+      <line> <item>Fenpropathrin</item> </line>
+      <line> <item>Fluvalinate, tau-</item> </line>
+      <line> <item>Permethrin </item> </line>
+      <line> <item>Fenvalerate</item> </line>
+    </data>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>112</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step_error_handling>
+  </step_error_handling>
+   <slave-step-copy-partition-distribution>
+</slave-step-copy-partition-distribution>
+   <slave_transformation>N</slave_transformation>
+
+</transformation>

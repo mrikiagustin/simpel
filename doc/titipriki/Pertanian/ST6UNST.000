@@ -1,0 +1,165 @@
+ %% PLEASE DO NOT MODIFY OR DELETE THIS FILE! %% 
+ %% This file contains information about the installation of an application. %% 
+ %% It will be used to automatically remove all application components from your computer if you choose to do so. %% 
+
+
+NOTE: Beginning of the bootstrapper section
+
+CONFIG: Title: "Peringatan: Reinstall akan menimpa database bila sudah ada"
+
+ACTION: RegKey: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion", "SharedDLLs"
+
+ACTION: SystemFile: "C:\WINDOWS\system32\VB6STKIT.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\system32\COMCAT.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\system32\olepro32.dll"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\system32\stdole2.tlb"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\system32\asycfilt.dll"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\system32\oleaut32.dll"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\system32\msvbvm60.dll"
+(File currently on disk was already up to date)
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM32\COMCAT.DLL"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM32\olepro32.dll"
+
+ACTION: TLBRegister: "C:\WINDOWS\SYSTEM32\stdole2.tlb"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM32\oleaut32.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM32\msvbvm60.dll"
+
+NOTE: End of the bootstrapper section
+
+NOTE: Now spawning the main Setup program 'Setup1.exe'....
+
+ACTION: PrivateFile: "C:\Program Files\Pengujian\database.mdb"
+(File currently on disk was already up to date)
+
+ACTION: PrivateFile: "C:\Program Files\Pengujian\backup.exe"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\comdlg32.ocx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\msderun.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\P2smon.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Pengujian\PG32CONV.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\SSCSDK80.DLL"
+(File was not found or was an older version -- new file copied)
+
+*** ERROR: C:\WINDOWS\system32\mfc42.dll
+*** ERROR: The destination file in in-use.  Please ensure that all other applications are closed.
+*** ERROR: (User Responded with 'Ignore')
+*** DURING THIS ACTION: SharedFile: "C:\WINDOWS\system32\mfc42.dll"
+
+*** ERROR: C:\WINDOWS\system32\mfc42.dll
+*** ERROR: The destination file in in-use.  Please ensure that all other applications are closed.
+*** ERROR: If you ignore a copy error, the file will not be copied.  The application may not function properly as a result.  Do you want to ignore the error?
+*** ERROR: (User Responded with 'Yes')
+*** DURING THIS ACTION: SharedFile: "C:\WINDOWS\system32\mfc42.dll"
+
+ACTION: SharedFile: "C:\WINDOWS\system32\msvcrt.dll"
+(File currently on disk was already up to date)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\Crpaig80.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Pengujian\Implode.dll"
+(File currently on disk was already up to date)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\craxddrt.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\craxdrt.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\crviewer.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\TABCTL32.OCX"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\msstdfmt.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\msdbrptr.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\mscomctl.ocx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\mscomct2.ocx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\MSDATLST.OCX"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\MSBIND.DLL"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\msado25.tlb"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\msadodc.ocx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\system32\MSDATGRD.OCX"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Pengujian\pengujian.exe"
+(File was not found or was an older version -- new file copied)
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\comdlg32.ocx"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\msderun.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\craxddrt.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\craxdrt.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\crviewer.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\TABCTL32.OCX"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\msstdfmt.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\msdbrptr.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\mscomctl.ocx"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\mscomct2.ocx"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\MSDATLST.OCX"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\MSBIND.DLL"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\msadodc.ocx"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\system32\MSDATGRD.OCX"
+
+ACTION: ShellLink: "Pertanian DKI", "Aplikasi Penerimaan Sample"
+
+ACTION: ShellLink: "Pertanian DKI", "Backup Data Penerimaan Sample"
+
+ACTION: RegKey: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion", "App Paths\pengujian.exe"
+
+ACTION: RegValue: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\pengujian.exe", ""
+

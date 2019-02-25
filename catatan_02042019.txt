@@ -1,0 +1,115 @@
+P4ssw0rd
+P4ssword
+
+//RESIDU
+//MYCOTOXIN
+//mikrobiologi//
+
+//Komposisi nutrisi
+//Logam berat dan mineral
+benih
+//formulasi
+//mutu fisik beras/
+
+teamviewer :
+192.168.1.244
+407 097 020
+9k95pz
+
+
+- lhp benih diberi catatan di bawahnya.
+- lhp residu pestisida disatukan tidak per golongan.
+//- kontrak kerja, nomor urut bulan harusnya 2 digit
+//- kontrak kerja, total tidak menghitung
+//- permohonan pengujian menginput 2x kadang kadang
+//- lhp kacang merah tidak ada
+//- pengantar contoh, halaman kedua mepet sama header
+- pengantar contoh pdf nya di buat pageof
+
+//- kode_contoh dibuat manual
+//- kode_lab dibuat manual
+- nomor_seri dibuat manual
+
+//- tanggal print bisa dipilih
+- on delete callback , hapus detail dan detail parameter
+
+--paging di kontrak dan pengantar contoh
+
+//- hasil print makan kertas, dibuat tombol print baru untuk per paket
+//- DI BAGIAN CONTOH ISI KODE CONTOHNYA SEKALI AJA PALING ATAS
+
+
+29 line
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- LPC Komnut , dari 015/KN/II/19 -> 014/KN/II/19
+
+
+(KN : 22)
+
+senin 	015/KN/II/19
+selasa 	016/KN/II/19
+rabu	017/KN/II/19
+
+kamis	018/KN/II/19
+	019/KN/II/19
+
+jumat	020/KN/II/19
+	022/KN/II/19
+	
+
+
+
+
+
+<?php if($ttd == true):?>
+
+  <tr>
+    <td colspan="6"></td>
+    <td colspan="1">Total</td>
+    <td colspan="2">Rp. <?php echo number_format($total,0,",",".")?></td>
+
+  </tr>
+
+  <tr>
+    <td colspan="6"></td>
+    <td colspan="1">Uang Muka</td>
+    <td colspan="2">Rp. <?php echo number_format($data->res->uang_muka,0,",",".")?></td>
+
+  </tr>
+
+  <tr>
+    <td colspan="6"></td>
+    <td colspan="1">Sisa Pembayaran</td>
+    <td colspan="2">Rp. <?php echo number_format($total - $data->res->uang_muka,0,",",".")?></td>
+
+  </tr>
+
+  <?php endif;?>
