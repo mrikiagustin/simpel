@@ -155,9 +155,9 @@
 	</tr>
 </table>
 
-<p style="font-size:10xp">
-	Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Manajemen Puncak Laboratorium Pusat Pengujian Mutu Dan Promosi Hasil Pertanian
-<br><i>This report shall not be reproduced without the written approval from Laboratory Top Management Laboratorium Pusat Pengujian Mutu Dan Promosi Hasil Pertanian</i>
+<p style="font-size:10px">
+	Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Laboratorium Pusat Promosi dan Sertifikasi Hasil Pertanian
+<br><i>This report shall not be reproduced without the written approval from Laboratory of Pusat Promosi dan Sertifikasi Hasil Pertanian</i>
 </p>
 
 <?php endif;?>
