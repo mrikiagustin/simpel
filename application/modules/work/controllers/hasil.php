@@ -325,12 +325,16 @@ class Hasil extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_read();
 			$crud->unset_clone();
+			
+
+
+			if( $crud->getState() == 'edit' ) { //add these only in add form	
 
 			$crud->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.10.1.custom.min.css');
 			$crud->set_css('assets/grocery_crud/themes/flexigrid/css/flexigrid.css');
 
 
-
+						
 			$crud->set_js('assets/grocery_crud/js/jquery-1.11.1.min.js');
 			$crud->set_js('assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js');
 			$crud->set_js('assets/grocery_crud/js/jquery_plugins/ui/i18n/datepicker/jquery.ui.datepicker-id.js');
@@ -346,7 +350,8 @@ class Hasil extends CI_Controller {
 				$crud->set_js('assets/grocery_crud/texteditor/ckeditor/ckeditor.js');
 				$crud->set_js('assets/grocery_crud/texteditor/ckeditor/adapters/jquery.js');
 				$crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.ckeditor.config.js');
-
+			
+			}
 
 			$crud->callback_before_update(array($this,'_update_callback'));
 
