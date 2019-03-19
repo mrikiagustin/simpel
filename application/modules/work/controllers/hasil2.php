@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Hasil extends CI_Controller {
+class Hasil2 extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
@@ -251,7 +251,7 @@ class Hasil extends CI_Controller {
 
 
 
-			$crud->set_table('vw_hasil');
+			$crud->set_table('vw_hasil_laporan2');
 			$crud->set_primary_key('prim');
 
 			$crud->set_subject('Hasil Pengujian');
@@ -360,7 +360,7 @@ class Hasil extends CI_Controller {
 			$output = $crud->render();
 
 
-			$output->title = "Laporan Hasil Pengujian";
+			$output->title = "Laporan Hasil Pengujian 2";
 			//$output = $this->grocery_crud->render();
 			$c = $this->load->view('permohonan_index',(array)$output,true);
 

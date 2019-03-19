@@ -72,6 +72,12 @@ $d = $data[0];
 					<td style="width:2%">:</td>
 					<td style="width:63%"><?php echo tgl_indo($d->tanggal_masuk)?></td>
 				</tr>
+				
+				<tr>
+					<td style="width:35%">Nomor Contoh<br><i>Sample COde</i><br></td>
+					<td style="width:2%">:</td>
+					<td style="width:63%"><?php echo $d->nomor_contoh?></td>
+				</tr>
 
 				<tr>
 					<td style="width:35%">Kondisi Contoh<br><i>Condition of sample</i><br></td>
@@ -110,13 +116,10 @@ $d = $data[0];
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
-<p style="font-size:10xp">
-	Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Manajemen Puncak Laboratorium Pusat Pengujian Mutu Dan Promosi Hasil Pertanian
-<br><i>This report shall not be reproduced without the written approval from Laboratory Top Management Laboratorium Pusat Pengujian Mutu Dan Promosi Hasil Pertanian</i>
+<?php if($header == "1"):?>
+<p style="font-size:10px;text-align:justify">
+	Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Laboratorium Pusat Promosi dan Sertifikasi Hasil Pertanian
+<br><i>This report shall not be reproduced without the written approval from Laboratory of Pusat Promosi dan Sertifikasi Hasil Pertanian</i>
 </p>
+<?php endif;?>

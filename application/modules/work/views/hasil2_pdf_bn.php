@@ -32,17 +32,17 @@
 <table border="1" cellpadding="2" style="text-align:center">
 	<tr>
 		<td style="width:5%">No.</td>
-		<td style="width:25%">Parameter
+		<td style="width:30%">Parameter
 			<br><i>Parameter</i>
 		</td>
-		<td style="width:15%">
+		<td style="width:20%">
 			Hasil
 			<br><i>Result</i>
 		</td>
 		<td style="width:15%">Satuan
 			<br><i>Unit</i>
 		</td>
-		<td style="width:40%">
+		<td style="width:30%">
 			Metode/Teknik Pengujian
 			<br><i>Analitycal  Methods </i>
 		</td>
@@ -52,7 +52,7 @@
   <?php if($no >= $start && $no < $end):?>
 	<tr>
 		<td><?php echo $no?></td>
-		<td><?php echo $v->caption == "" ? $v->parameter_pengujian : $v->caption?></td>
+		<td style="text-align:left"><?php echo $v->caption == "" ? $v->parameter_pengujian : $v->caption?></td>
 		<td><?php echo $v->hasil?></td>
 		<td><?php echo $v->satuan_hasil?></td>
 		<td><?php echo $v->metode?></td>
@@ -155,9 +155,11 @@
 	</tr>
 </table>
 
-<p style="font-size:10px">
+<?php if($header == "1"):?>
+<p style="font-size:10px;text-align:justify">
 	Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Laboratorium Pusat Promosi dan Sertifikasi Hasil Pertanian
 <br><i>This report shall not be reproduced without the written approval from Laboratory of Pusat Promosi dan Sertifikasi Hasil Pertanian</i>
 </p>
+<?php endif;?>
 
 <?php endif;?>

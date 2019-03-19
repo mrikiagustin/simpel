@@ -535,6 +535,9 @@ class Permohonan_model  extends CI_Model  {
 			case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
 				$res = $this->db->get("vw_hasil2_residu");
 				break;
+			case "12":  // KN
+				$res = $this->db->get("vw_hasil2_kn");
+				break;
 			case "13":  // RESIDU PESTISIDA (GOLONGAN LAIN)
 				$res = $this->db->get("vw_hasil2_lbm");
 				break;

@@ -51,7 +51,7 @@
   <?php if($no >= $start && $no < $end):?>
 	<tr>
 		<td><?php echo $no?></td>
-		<td><?php echo $v->caption == "" ? $v->parameter_pengujian : $v->caption?></td>
+		<td style="text-align:left"><?php echo $v->caption == "" ? $v->parameter_pengujian : $v->caption?></td>
 		<td><?php echo $v->berat?></td>
 		<td><?php echo $v->kadar?></td>
 		<td><?php echo $v->satuan_hasil?></td>
@@ -86,8 +86,8 @@
 
 <table border="1" cellpadding="2">
   <tr>
-    <th style="width:40%">Kadar Bahan aktif yang dinyatakan g/kg atau g/L pada temperatur 20 &plusmn; 20 C</th>
-    <th style="width:60%">Batas Toleransi</th>
+    <th style="width:45%;text-align:center">Kadar Bahan aktif yang dinyatakan g/kg atau g/L pada temperatur 20 &plusmn; 20 C</th>
+    <th style="width:55%;text-align:center">Batas Toleransi</th>
   </tr>
   <tr>
     <td rowspan="2"> < =  25</td>
@@ -98,23 +98,23 @@
   </tr>
 
   <tr>
-    <td style="width:40%"> > 25 - 100</td>
-    <td style="width:60%">&plusmn; 10 % dari kadar Bahan Aktif</td>
+    <td style="width:45%"> > 25 - 100</td>
+    <td style="width:55%">&plusmn; 10 % dari kadar Bahan Aktif</td>
   </tr>
 
   <tr>
-    <td style="width:40%"> > 100 - 250</td>
-    <td style="width:60%">&plusmn; 6 % dari kadar Bahan Aktif</td>
+    <td style="width:45%"> > 100 - 250</td>
+    <td style="width:55%">&plusmn; 6 % dari kadar Bahan Aktif</td>
   </tr>
 
   <tr>
-    <td style="width:40%"> > 250 - 500</td>
-    <td style="width:60%">&plusmn; 5 % dari kadar Bahan Aktif</td>
+    <td style="width:45%"> > 250 - 500</td>
+    <td style="width:55%">&plusmn; 5 % dari kadar Bahan Aktif</td>
   </tr>
 
   <tr>
-    <td style="width:40%"> > 500</td>
-    <td style="width:60%">&plusmn; 25 g/kg atah g/L</td>
+    <td style="width:45%"> > 500</td>
+    <td style="width:55%">&plusmn; 25 g/kg atau g/L</td>
   </tr>
 </table>
 
@@ -195,9 +195,11 @@
 	</tr>
 </table>
 
-<p style="font-size:10px">
+<?php if($header == "1"):?>
+<p style="font-size:10px;text-align:justify">
 	Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Laboratorium Pusat Promosi dan Sertifikasi Hasil Pertanian
 <br><i>This report shall not be reproduced without the written approval from Laboratory of Pusat Promosi dan Sertifikasi Hasil Pertanian</i>
 </p>
+<?php endif;?>
 
 <?php endif;?>

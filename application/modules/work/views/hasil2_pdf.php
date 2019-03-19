@@ -1,4 +1,8 @@
-<?php //echo "<pre>";print_r($data2);die();?>
+<?php //echo "<pre>";print_r($data2);die();
+  $setting = $this->db->get("setting_lhp")->row();
+
+  //$data_detail = $this->db->where("prim",$data)->get("hasil_lbm")->row();
+?>
 <style>
   .isi {font-size: 8px;}
   .meta {font-size: 8px;}
@@ -102,17 +106,17 @@
 <table border="1" cellpadding="2" style="text-align:center">
 	<tr>
 		<td style="width:5%">No.</td>
-		<td style="width:15%">Parameter
+		<td style="width:20%">Parameter
 			<br><i>Parameter</i>
 		</td>
-		<td style="width:10%">
+		<td style="width:15%">
 			Hasil
 			<br><i>Result</i>
 		</td>
 		<td style="width:10%">Satuan
 			<br><i>Unit</i>
 		</td>
-		<td style="width:40%">
+		<td style="width:30%">
 			Metode/Teknik Pengujian
 			<br><i>Analitycal  Methods </i>
 		</td>
@@ -125,7 +129,7 @@
 <?php $no=1;foreach($data as $x  => $v):?>
 	<tr>
 		<td><?php echo $no++?></td>
-		<td><?php echo $v->parameter_pengujian?></td>
+		<td style="text-align:left"><?php echo $v->parameter_pengujian?></td>
 		<td><?php echo $v->hasil?></td>
 		<td><?php echo $v->satuan_hasil?></td>
 		<td><?php echo $v->metode?></td>
@@ -192,12 +196,9 @@
 		<td style="width:60%;text-align:center;">
 			Jakarta, <?php echo tgl_indo(date("Y-m-d"))?>
 			<span style="font-size:12px;">
-				<br>Kepala Pusat
-	<br>Promosi Dan Sertifikasi Hasil Pertanian
-	<br>Manajemen Puncak
-	<br><i>Top Management</i>
+				<?php echo $setting->lembaga?>
 		<br><br><br>
-		.................................................
+		<?php echo $setting->pejabat?>
 			</span>
 
 
@@ -205,7 +206,9 @@
 	</tr>
 </table>
 
-<p style="font-size:10px">
+<?php if($header == "1"):?>
+<p style="font-size:10px;text-align:justify">
 	Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Laboratorium Pusat Promosi dan Sertifikasi Hasil Pertanian
 <br><i>This report shall not be reproduced without the written approval from Laboratory of Pusat Promosi dan Sertifikasi Hasil Pertanian</i>
 </p>
+<?php endif;?>
