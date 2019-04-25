@@ -124,7 +124,7 @@ class Hasil2 extends CI_Controller {
 	{
 
 		$temp = explode("_",$id);
-		$data = $this->permohonan_model->get_hasil2(str_replace('-','/',$temp[0]),$temp[1]);
+		$data = $this->permohonan_model->get_hasil2_2(str_replace('-','/',$temp[0]),$temp[1]);
 		$data2= $this->db->where("prim",$id)->get("hasil")->row();
 
 		$kkode = $this->db->where("id_laporan",$temp[1])->get("laporan")->row()->kode_laporan;
@@ -810,8 +810,8 @@ class Hasil2 extends CI_Controller {
 
     $data = $this->db
                     ->where("nomor_contoh", $nomor)
-                    ->where("id_laporan", $laporan)
-                    ->get("vw_hasil2_residu");
+                    //->where("id_laporan", $laporan)
+                    ->get("vw_hasil2_residu2");
 
 	  $data_metode = $this->db
 										->where("nomor_contoh", $nomor)
