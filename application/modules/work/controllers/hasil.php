@@ -113,7 +113,7 @@ class Hasil extends CI_Controller {
 
 
 			// echo date('H:i:s'), ' Saving the result document...', EOL;
-			header("Content-Disposition: attachment; filename='Laporan Hasil Pengujian.docx'");
+			header("Content-Disposition: attachment; filename=Laporan Hasil Pengujian.docx");
 			$templateProcessor->saveAs('php://output');
 			// $templateProcessor->saveAs(APPPATH.'third_party/PhpWord/Sample_23_TemplateBlock_hasil.docx');
 		}

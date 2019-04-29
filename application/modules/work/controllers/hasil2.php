@@ -360,7 +360,7 @@ class Hasil2 extends CI_Controller {
 			$output = $crud->render();
 
 
-			$output->title = "Laporan Hasil Pengujian 2";
+			$output->title = "Laporan Hasil Pengujian (Khusus Residu yang tidak di kelompokan)";
 			//$output = $this->grocery_crud->render();
 			$c = $this->load->view('permohonan_index',(array)$output,true);
 
