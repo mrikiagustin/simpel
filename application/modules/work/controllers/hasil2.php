@@ -127,6 +127,8 @@ class Hasil2 extends CI_Controller {
 		$data = $this->permohonan_model->get_hasil2_2(str_replace('-','/',$temp[0]),$temp[1]);
 		$data2= $this->db->where("prim",$id)->get("hasil")->row();
 
+		
+
 		$kkode = $this->db->where("id_laporan",$temp[1])->get("laporan")->row()->kode_laporan;
 
 		$content = $this->load->view("hasil_pdf",array("data" => $data,"data2" => $data2,"kode_dokumen" => $kkode,"header" => $header),true);
@@ -145,7 +147,10 @@ class Hasil2 extends CI_Controller {
 			case "10":  // RESIDU PESTISIDA (GOLONGAN PERETROID)
 			case "11":  // RESIDU PESTISIDA (GOLONGAN KARBAMAT)
 			case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
-				$view_name = "hasil2_pdf_residu";
+				$view_name = "hasil2_pdf_residu_2";
+				$expl     = explode("_",$id);
+				$nmr    = str_replace('-','/',$expl[0]);
+				$data_detail = $this->db->where("nomor",$nmr)->get("hasil_residu2");
 				break;
 			case "12":  // KN
 				$view_name = "hasil2_pdf_kn";
@@ -360,7 +365,7 @@ class Hasil2 extends CI_Controller {
 			$output = $crud->render();
 
 
-			$output->title = "Laporan Hasil Pengujian (Khusus Residu yang tidak di kelompokan)";
+			$output->title = "Laporan Hasil Pengujian 2";
 			//$output = $this->grocery_crud->render();
 			$c = $this->load->view('permohonan_index',(array)$output,true);
 
@@ -804,7 +809,9 @@ class Hasil2 extends CI_Controller {
 	public function hasil_pengujian_residu($value = '', $primary_key = null)
 	{
 		$expl     = explode("_",$primary_key);
-    $nomor    = str_replace('-','/',$expl[0]);
+		$nomor    = str_replace('-','/',$expl[0]);
+		
+		//echo '<pre>';print_r($nomor);die(); // TODO debug die();
 
     $laporan  = $expl[1];
 
@@ -858,9 +865,41 @@ class Hasil2 extends CI_Controller {
       $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
       $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmr]' value='".$value->bmr."'></td>";
       $html .= "</tr>";
-    }
+		}
 
-    $html .= "</table>";
+		
+
+		$data_detail = $this->db->where("nomor",$nomor)->get("hasil_residu2")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($data_detail->g1) && $data_detail->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($data_detail->g2) && $data_detail->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($data_detail->g3) && $data_detail->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($data_detail->l1) && $data_detail->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($data_detail->l2) && $data_detail->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
+
+		$html .= "</table>";
+		
+		
 
 		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
 
@@ -1111,7 +1150,7 @@ class Hasil2 extends CI_Controller {
 						case "10":  // RESIDU PESTISIDA (GOLONGAN PERETROID)
 						case "11":  // RESIDU PESTISIDA (GOLONGAN KARBAMAT)
 						case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
-							$this->_update_hasil_residu($post_array['h']);
+							$this->_update_hasil_residu($post_array);
 							break;
 						case "12":  // KOMPOSISI NUTRISI
 							$this->_update_hasil_kn($post_array);
@@ -1269,7 +1308,8 @@ class Hasil2 extends CI_Controller {
 
 	public function _update_hasil_residu($arr)
 	{
-		foreach ($arr as $key => $value) {
+		//echo '<pre>';print_r($arr);die(); // TODO debug die();
+		foreach ($arr['h'] as $key => $value) {
 
 			// hapus data sebelumnya
 			$this->db->delete('hasil_detail_residu', array('id_permohonan_detail_parameter' => $key));
@@ -1278,6 +1318,26 @@ class Hasil2 extends CI_Controller {
 			$data = $value;
 			$data['id_permohonan_detail_parameter'] = $key;
 			$this->db->insert('hasil_detail_residu',$data);
+		}
+
+		$expl     = explode("_",$arr['prim']);
+		$nomor    = str_replace('-','/',$expl[0]);
+
+		$det= array();
+		$det['g1'] = isset($arr['g1']) ? '1' : '0';
+		$det['g2'] = isset($arr['g2']) ? '1' : '0';
+		$det['g3'] = isset($arr['g3']) ? '1' : '0';
+		$det['l1'] = isset($arr['l1']) ? '1' : '0';
+		$det['l2'] = isset($arr['l2']) ? '1' : '0';
+
+		if($this->db->where("nomor",$nomor)->get("hasil_residu2")->num_rows() > 0){
+			//update
+			$this->db->where("nomor",$nomor);
+			$this->db->update("hasil_residu2",$det);
+		}else{
+			//insert
+			$det['nomor'] = $nomor;
+			$this->db->insert("hasil_residu2",$det);
 		}
 	}
 

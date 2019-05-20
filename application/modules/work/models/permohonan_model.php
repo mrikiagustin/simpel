@@ -557,7 +557,7 @@ class Permohonan_model  extends CI_Model  {
 		}
 		return $res->result();
 	}
-
+	
 	public function get_hasil2_2($nomor,$id_laporan)
 	{
 		$this->db->where("nomor_contoh",$nomor);
@@ -572,7 +572,7 @@ class Permohonan_model  extends CI_Model  {
 			case "10":  // RESIDU PESTISIDA (GOLONGAN PERETROID)
 			case "11":  // RESIDU PESTISIDA (GOLONGAN KARBAMAT)
 			case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
-				$res = $this->db->get("vw_hasil2_residu");
+				$res = $this->db->get("vw_hasil2_residu2");
 				break;
 			case "12":  // KN
 				$res = $this->db->get("vw_hasil2_kn");
