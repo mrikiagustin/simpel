@@ -97,6 +97,58 @@
   </tr>
 </table>
 
+<br><br>
+
+<?php if($data_detail_metode->num_rows() > 0): $my_row = $data_detail_metode->row();?>
+<?php if($my_row->g1 != 0 || $my_row->g2 != 0 || $my_row->g3 != 0 || $my_row->l1 != 0 || $my_row->l2 != 0):?>
+<table>
+	<tr>
+		<td colspan='3'>Metode Analitikal </td>
+  </tr>
+
+	<?php if($my_row->g1 == 1) : ?>
+  <tr>
+    <td style="width:10%" >G1</td>
+    <td style="width:5%"> : </td>
+    <td style="width:85%">GC-ECD/FPD</td>
+  </tr>
+	<?php endif;?>
+
+	<?php if($my_row->g2 == 1) : ?>
+	<tr>
+    <td style="width:10%" >G2</td>
+    <td style="width:5%"> : </td>
+    <td style="width:85%">GC-ECD/FID/NPD</td>
+  </tr>
+	<?php endif;?>
+
+	<?php if($my_row->g3 == 1) : ?>
+	<tr>
+    <td style="width:10%" >G3</td>
+    <td style="width:5%"> : </td>
+    <td style="width:85%">GC-MS</td>
+  </tr>
+	<?php endif;?>
+
+	<?php if($my_row->l1 == 1) : ?>
+	<tr>
+    <td style="width:10%" >L1</td>
+    <td style="width:5%"> : </td>
+    <td style="width:85%">LC-FLD</td>
+  </tr>
+	<?php endif;?>
+
+	<?php if($my_row->l2 == 1) : ?>
+	<tr>
+    <td style="width:10%" >L2</td>
+    <td style="width:5%"> : </td>
+    <td style="width:85%">LC-MS/MS(MRM)</td>
+  </tr>
+	<?php endif;?>
+</table>
+
+<?php endif;endif;?>
+
 <br>
 <br>
 <br>

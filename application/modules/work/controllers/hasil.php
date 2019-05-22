@@ -133,6 +133,7 @@ class Hasil extends CI_Controller {
 
 
 		$data_detail = null;
+		$data_detail_metode = $this->db->where("nomor",$id)->get("hasil_metode");
 		switch ($temp[1]) {
 			case "3":  // RESIDU PESTISIDA (GOLONGAN LAIN)
 				$view_name = "hasil2_pdf_bn";
@@ -167,7 +168,7 @@ class Hasil extends CI_Controller {
 		}
 
 		$true_content = array();
-		$max_data_per_page = 10;
+		$max_data_per_page = 12;
 
 		$count_content = ceil(count($data) / $max_data_per_page);
 
@@ -179,7 +180,7 @@ class Hasil extends CI_Controller {
 
 			$ttd = $position == $count_content ? true : false;
 
-			$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>$start , "end"=>$end,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header),true);
+			$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>$start , "end"=>$end,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
 		}
 
 
@@ -228,7 +229,7 @@ class Hasil extends CI_Controller {
 
 		foreach ($true_content as $key) {
 			$pdf->SetPrintHeader(false);
-			$pdf->SetPrintFooter(false);
+			//$pdf->SetPrintFooter(false);
 			$pdf->AddPage();
 			$pdf->writeHTML($key, true, false, true, false, '');
 		}
@@ -482,6 +483,34 @@ class Hasil extends CI_Controller {
 			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
 			$html .= "</tr>";
 		}
+		
+		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
 
 		$html .= "</table>";
 
@@ -559,6 +588,34 @@ class Hasil extends CI_Controller {
       $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
       $html .= "</tr>";
     }
+	
+		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
 
     $html .= "</table>";
 
@@ -633,6 +690,34 @@ class Hasil extends CI_Controller {
 										</select></td>";
       $html .= "</tr>";
     }
+	
+		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
 
 		$html .= "<tr>
 								<th colspan='2'> Catatan :</th>
@@ -707,6 +792,34 @@ class Hasil extends CI_Controller {
       $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
       $html .= "</tr>";
     }
+	
+		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
 
 		$html .= "<tr>
 								<th colspan='2'> Catatan :</th>
@@ -786,6 +899,34 @@ class Hasil extends CI_Controller {
       $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
       $html .= "</tr>";
     }
+	
+		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
 
 		$html .= "<tr>
 								<th colspan='2'> Catatan :</th>
@@ -861,6 +1002,34 @@ class Hasil extends CI_Controller {
       $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmr]' value='".$value->bmr."'></td>";
       $html .= "</tr>";
     }
+	
+		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
 
     $html .= "</table>";
 
@@ -930,6 +1099,34 @@ class Hasil extends CI_Controller {
       $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmc]' value='".$value->bmc."'></td>";
       $html .= "</tr>";
     }
+	
+		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
 
     $html .= "</table>";
 
@@ -1006,6 +1203,34 @@ class Hasil extends CI_Controller {
 										</select></td>";
       $html .= "</tr>";
     }
+	
+		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		
+		$html .= "<tr>
+								<th colspan='2'> Metode Analitikal :</th>
+								<td colspan='5'>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+								</div>
+								<div class='form-check'>
+									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+								</div>
+								</td>
+							</tr>";
 
     $html .= "</table>";
 
@@ -1113,7 +1338,7 @@ class Hasil extends CI_Controller {
 						case "10":  // RESIDU PESTISIDA (GOLONGAN PERETROID)
 						case "11":  // RESIDU PESTISIDA (GOLONGAN KARBAMAT)
 						case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
-							$this->_update_hasil_residu($post_array['h']);
+							$this->_update_hasil_residu($post_array);
 							break;
 						case "12":  // KOMPOSISI NUTRISI
 							$this->_update_hasil_kn($post_array);
@@ -1124,7 +1349,7 @@ class Hasil extends CI_Controller {
 							break;
 
 						case "19": // MYCOTOXIN
-							$this->_update_hasil_mycotoxin($post_array['h']);
+							$this->_update_hasil_mycotoxin($post_array);
 							break;
 
 						case "20": // MFB
@@ -1189,6 +1414,25 @@ class Hasil extends CI_Controller {
 			$data['id_permohonan_detail_parameter'] = $key;
 			$this->db->insert('hasil_detail_fp',$data);
 		}
+		
+		$nomor    = $arr['prim'];
+
+		$det= array();
+		$det['g1'] = isset($arr['g1']) ? '1' : '0';
+		$det['g2'] = isset($arr['g2']) ? '1' : '0';
+		$det['g3'] = isset($arr['g3']) ? '1' : '0';
+		$det['l1'] = isset($arr['l1']) ? '1' : '0';
+		$det['l2'] = isset($arr['l2']) ? '1' : '0';
+
+		if($this->db->where("nomor",$nomor)->get("hasil_metode")->num_rows() > 0){
+			//update
+			$this->db->where("nomor",$nomor);
+			$this->db->update("hasil_metode",$det);
+		}else{
+			//insert
+			$det['nomor'] = $nomor;
+			$this->db->insert("hasil_metode",$det);
+		}
 	}
 
 	public function _update_hasil_mfb($arr)
@@ -1203,6 +1447,25 @@ class Hasil extends CI_Controller {
 			$data = $value;
 			$data['id_permohonan_detail_parameter'] = $key;
 			$this->db->insert('hasil_detail_mfb',$data);
+		}
+		
+		$nomor    = $arr['prim'];
+
+		$det= array();
+		$det['g1'] = isset($arr['g1']) ? '1' : '0';
+		$det['g2'] = isset($arr['g2']) ? '1' : '0';
+		$det['g3'] = isset($arr['g3']) ? '1' : '0';
+		$det['l1'] = isset($arr['l1']) ? '1' : '0';
+		$det['l2'] = isset($arr['l2']) ? '1' : '0';
+
+		if($this->db->where("nomor",$nomor)->get("hasil_metode")->num_rows() > 0){
+			//update
+			$this->db->where("nomor",$nomor);
+			$this->db->update("hasil_metode",$det);
+		}else{
+			//insert
+			$det['nomor'] = $nomor;
+			$this->db->insert("hasil_metode",$det);
 		}
 	}
 
@@ -1225,6 +1488,25 @@ class Hasil extends CI_Controller {
 			"prim" => $arr['prim'],
 			"catatan" => $arr['catatan_detail'],
 		));
+		
+		$nomor    = $arr['prim'];
+
+		$det= array();
+		$det['g1'] = isset($arr['g1']) ? '1' : '0';
+		$det['g2'] = isset($arr['g2']) ? '1' : '0';
+		$det['g3'] = isset($arr['g3']) ? '1' : '0';
+		$det['l1'] = isset($arr['l1']) ? '1' : '0';
+		$det['l2'] = isset($arr['l2']) ? '1' : '0';
+
+		if($this->db->where("nomor",$nomor)->get("hasil_metode")->num_rows() > 0){
+			//update
+			$this->db->where("nomor",$nomor);
+			$this->db->update("hasil_metode",$det);
+		}else{
+			//insert
+			$det['nomor'] = $nomor;
+			$this->db->insert("hasil_metode",$det);
+		}
 	}
 
 	public function _update_hasil_kn($arr)
@@ -1246,6 +1528,25 @@ class Hasil extends CI_Controller {
 			"prim" => $arr['prim'],
 			"catatan" => $arr['catatan_detail'],
 		));
+		
+		$nomor    = $arr['prim'];
+
+		$det= array();
+		$det['g1'] = isset($arr['g1']) ? '1' : '0';
+		$det['g2'] = isset($arr['g2']) ? '1' : '0';
+		$det['g3'] = isset($arr['g3']) ? '1' : '0';
+		$det['l1'] = isset($arr['l1']) ? '1' : '0';
+		$det['l2'] = isset($arr['l2']) ? '1' : '0';
+
+		if($this->db->where("nomor",$nomor)->get("hasil_metode")->num_rows() > 0){
+			//update
+			$this->db->where("nomor",$nomor);
+			$this->db->update("hasil_metode",$det);
+		}else{
+			//insert
+			$det['nomor'] = $nomor;
+			$this->db->insert("hasil_metode",$det);
+		}
 	}
 
 	public function _update_hasil_bn($arr)
@@ -1267,11 +1568,30 @@ class Hasil extends CI_Controller {
 			"prim" => $arr['prim'],
 			"catatan" => $arr['catatan_detail'],
 		));
+		
+		$nomor    = $arr['prim'];
+
+		$det= array();
+		$det['g1'] = isset($arr['g1']) ? '1' : '0';
+		$det['g2'] = isset($arr['g2']) ? '1' : '0';
+		$det['g3'] = isset($arr['g3']) ? '1' : '0';
+		$det['l1'] = isset($arr['l1']) ? '1' : '0';
+		$det['l2'] = isset($arr['l2']) ? '1' : '0';
+
+		if($this->db->where("nomor",$nomor)->get("hasil_metode")->num_rows() > 0){
+			//update
+			$this->db->where("nomor",$nomor);
+			$this->db->update("hasil_metode",$det);
+		}else{
+			//insert
+			$det['nomor'] = $nomor;
+			$this->db->insert("hasil_metode",$det);
+		}
 	}
 
 	public function _update_hasil_residu($arr)
 	{
-		foreach ($arr as $key => $value) {
+		foreach ($arr['h'] as $key => $value) {
 
 			// hapus data sebelumnya
 			$this->db->delete('hasil_detail_residu', array('id_permohonan_detail_parameter' => $key));
@@ -1281,11 +1601,30 @@ class Hasil extends CI_Controller {
 			$data['id_permohonan_detail_parameter'] = $key;
 			$this->db->insert('hasil_detail_residu',$data);
 		}
+		
+		$nomor    = $arr['prim'];
+
+		$det= array();
+		$det['g1'] = isset($arr['g1']) ? '1' : '0';
+		$det['g2'] = isset($arr['g2']) ? '1' : '0';
+		$det['g3'] = isset($arr['g3']) ? '1' : '0';
+		$det['l1'] = isset($arr['l1']) ? '1' : '0';
+		$det['l2'] = isset($arr['l2']) ? '1' : '0';
+
+		if($this->db->where("nomor",$nomor)->get("hasil_metode")->num_rows() > 0){
+			//update
+			$this->db->where("nomor",$nomor);
+			$this->db->update("hasil_metode",$det);
+		}else{
+			//insert
+			$det['nomor'] = $nomor;
+			$this->db->insert("hasil_metode",$det);
+		}
 	}
 
 	public function _update_hasil_mycotoxin($arr)
 	{
-		foreach ($arr as $key => $value) {
+		foreach ($arr['h'] as $key => $value) {
 
 			// hapus data sebelumnya
 			$this->db->delete('hasil_detail_mycotoxin', array('id_permohonan_detail_parameter' => $key));
@@ -1294,6 +1633,25 @@ class Hasil extends CI_Controller {
 			$data = $value;
 			$data['id_permohonan_detail_parameter'] = $key;
 			$this->db->insert('hasil_detail_mycotoxin',$data);
+		}
+		
+		$nomor    = $arr['prim'];
+
+		$det= array();
+		$det['g1'] = isset($arr['g1']) ? '1' : '0';
+		$det['g2'] = isset($arr['g2']) ? '1' : '0';
+		$det['g3'] = isset($arr['g3']) ? '1' : '0';
+		$det['l1'] = isset($arr['l1']) ? '1' : '0';
+		$det['l2'] = isset($arr['l2']) ? '1' : '0';
+
+		if($this->db->where("nomor",$nomor)->get("hasil_metode")->num_rows() > 0){
+			//update
+			$this->db->where("nomor",$nomor);
+			$this->db->update("hasil_metode",$det);
+		}else{
+			//insert
+			$det['nomor'] = $nomor;
+			$this->db->insert("hasil_metode",$det);
 		}
 	}
 

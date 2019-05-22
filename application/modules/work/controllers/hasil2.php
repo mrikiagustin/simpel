@@ -131,7 +131,7 @@ class Hasil2 extends CI_Controller {
 
 		$kkode = $this->db->where("id_laporan",$temp[1])->get("laporan")->row()->kode_laporan;
 
-		$content = $this->load->view("hasil_pdf",array("data" => $data,"data2" => $data2,"kode_dokumen" => $kkode,"header" => $header),true);
+		$content = $this->load->view("hasil_pdf2",array("data" => $data,"data2" => $data2,"kode_dokumen" => $kkode,"header" => $header),true);
 
 
 		$data_detail = null;
@@ -172,7 +172,7 @@ class Hasil2 extends CI_Controller {
 		}
 
 		$true_content = array();
-		$max_data_per_page = 10;
+		$max_data_per_page = 12;
 
 		$count_content = ceil(count($data) / $max_data_per_page);
 
@@ -232,6 +232,8 @@ class Hasil2 extends CI_Controller {
 		$pdf->writeHTML($content, true, false, true, false, '');
 
 		foreach ($true_content as $key) {
+			$pdf->SetPrintHeader(false);
+			//$pdf->SetPrintFooter(false);
 			$pdf->AddPage();
 			$pdf->writeHTML($key, true, false, true, false, '');
 		}
@@ -817,6 +819,7 @@ class Hasil2 extends CI_Controller {
 
     $data = $this->db
                     ->where("nomor_contoh", $nomor)
+					->order_by("id_permohonan_detail_parameter")
                     //->where("id_laporan", $laporan)
                     ->get("vw_hasil2_residu2");
 

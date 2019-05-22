@@ -561,6 +561,7 @@ class Permohonan_model  extends CI_Model  {
 	public function get_hasil2_2($nomor,$id_laporan)
 	{
 		$this->db->where("nomor_contoh",$nomor);
+		$this->db->order_by("id_permohonan_detail_parameter");
 		//$this->db->where("id_laporan",$id_laporan);
 
 		switch ($id_laporan) {
