@@ -137,6 +137,7 @@ class Hasil extends CI_Controller {
 		switch ($temp[1]) {
 			case "3":  // RESIDU PESTISIDA (GOLONGAN LAIN)
 				$view_name = "hasil2_pdf_bn";
+				$data_detail = $this->db->where("prim",$id)->get("hasil_bn")->row();
 				break;
 			case "4":  // RESIDU PESTISIDA (GOLONGAN LAIN)
 				$view_name = "hasil2_pdf_fp";
