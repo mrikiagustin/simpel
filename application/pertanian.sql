@@ -11,7 +11,7 @@
  Target Server Version : 100110
  File Encoding         : 65001
 
- Date: 01/02/2019 14:28:53
+ Date: 15/01/2019 10:57:23
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `counter_contoh`  (
 -- Records of counter_contoh
 -- ----------------------------
 INSERT INTO `counter_contoh` VALUES (1, 2018, 1);
-INSERT INTO `counter_contoh` VALUES (2, 2019, 8);
+INSERT INTO `counter_contoh` VALUES (2, 2019, 2);
 INSERT INTO `counter_contoh` VALUES (3, 2020, 0);
 INSERT INTO `counter_contoh` VALUES (4, 2021, 0);
 
@@ -46,7 +46,7 @@ CREATE TABLE `counter_lab`  (
   `tahun` int(11) NULL DEFAULT NULL,
   `counter` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_counter_lab`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of counter_lab
@@ -63,14 +63,8 @@ INSERT INTO `counter_lab` VALUES (80, 'LBM', 2018, 0);
 INSERT INTO `counter_lab` VALUES (83, 'Bn.P', 2018, 0);
 INSERT INTO `counter_lab` VALUES (84, 'MIK', 2018, 0);
 INSERT INTO `counter_lab` VALUES (85, 'FP', 2018, 0);
-INSERT INTO `counter_lab` VALUES (96, NULL, 2019, 1);
-INSERT INTO `counter_lab` VALUES (98, 'RP', 2019, 2);
-INSERT INTO `counter_lab` VALUES (99, 'KN', 2019, 3);
-INSERT INTO `counter_lab` VALUES (100, 'MY', 2019, 1);
-INSERT INTO `counter_lab` VALUES (101, 'MIK', 2019, 1);
-INSERT INTO `counter_lab` VALUES (102, 'LBM', 2019, 1);
-INSERT INTO `counter_lab` VALUES (103, 'MFB', 2019, 1);
-INSERT INTO `counter_lab` VALUES (104, 'FP', 2019, 1);
+INSERT INTO `counter_lab` VALUES (86, 'KN', 2019, 0);
+INSERT INTO `counter_lab` VALUES (91, 'LBM', 2019, 0);
 
 -- ----------------------------
 -- Table structure for counter_nomorseri
@@ -81,15 +75,15 @@ CREATE TABLE `counter_nomorseri`  (
   `tahun` int(11) NULL DEFAULT NULL,
   `counter` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_counter_nomorseri`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of counter_nomorseri
 -- ----------------------------
 INSERT INTO `counter_nomorseri` VALUES (10, 2018, 10);
+INSERT INTO `counter_nomorseri` VALUES (11, 2019, 0);
 INSERT INTO `counter_nomorseri` VALUES (12, 2020, 0);
 INSERT INTO `counter_nomorseri` VALUES (13, 2021, 0);
-INSERT INTO `counter_nomorseri` VALUES (25, 2019, 12);
 
 -- ----------------------------
 -- Table structure for hasil
@@ -104,6 +98,12 @@ CREATE TABLE `hasil`  (
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Records of hasil
+-- ----------------------------
+INSERT INTO `hasil` VALUES ('001-30-2018_3', '180007', b'1', b'1');
+INSERT INTO `hasil` VALUES ('001-31-2018_4', '180010', b'0', b'0');
+
+-- ----------------------------
 -- Table structure for hasil_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `hasil_detail`;
@@ -116,115 +116,15 @@ CREATE TABLE `hasil_detail`  (
   `keterangan` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `standard` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_hasil`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Table structure for hasil_detail_fp
+-- Records of hasil_detail
 -- ----------------------------
-DROP TABLE IF EXISTS `hasil_detail_fp`;
-CREATE TABLE `hasil_detail_fp`  (
-  `id_hasil` int(11) NOT NULL AUTO_INCREMENT,
-  `id_permohonan_detail_parameter` int(11) NULL DEFAULT NULL,
-  `bahan` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `berat` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `kadar` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `satuan` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `metode` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_hasil`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Table structure for hasil_detail_kn
--- ----------------------------
-DROP TABLE IF EXISTS `hasil_detail_kn`;
-CREATE TABLE `hasil_detail_kn`  (
-  `id_hasil` int(11) NOT NULL AUTO_INCREMENT,
-  `id_permohonan_detail_parameter` int(11) NULL DEFAULT NULL,
-  `hasil` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `satuan` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `metode` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `keterangan` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `standard` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id_hasil`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Table structure for hasil_detail_lbm
--- ----------------------------
-DROP TABLE IF EXISTS `hasil_detail_lbm`;
-CREATE TABLE `hasil_detail_lbm`  (
-  `id_hasil` int(11) NOT NULL AUTO_INCREMENT,
-  `id_permohonan_detail_parameter` int(11) NULL DEFAULT NULL,
-  `hasil` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `metode` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `satuan` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `lod` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `loq` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_hasil`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Table structure for hasil_detail_mfb
--- ----------------------------
-DROP TABLE IF EXISTS `hasil_detail_mfb`;
-CREATE TABLE `hasil_detail_mfb`  (
-  `id_hasil` int(11) NOT NULL AUTO_INCREMENT,
-  `id_permohonan_detail_parameter` int(11) NULL DEFAULT NULL,
-  `hasil` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `satuan` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `metode` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `medium` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `premium` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_hasil`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Table structure for hasil_detail_mycotoxin
--- ----------------------------
-DROP TABLE IF EXISTS `hasil_detail_mycotoxin`;
-CREATE TABLE `hasil_detail_mycotoxin`  (
-  `id_hasil` int(11) NOT NULL AUTO_INCREMENT,
-  `id_permohonan_detail_parameter` int(11) NULL DEFAULT NULL,
-  `hasil` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `mql` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `metode` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `bmc` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_hasil`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Table structure for hasil_detail_residu
--- ----------------------------
-DROP TABLE IF EXISTS `hasil_detail_residu`;
-CREATE TABLE `hasil_detail_residu`  (
-  `id_hasil` int(11) NOT NULL AUTO_INCREMENT,
-  `id_permohonan_detail_parameter` int(11) NULL DEFAULT NULL,
-  `hasil` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `mql` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `metode` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `bmr` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_hasil`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Table structure for hasil_kn
--- ----------------------------
-DROP TABLE IF EXISTS `hasil_kn`;
-CREATE TABLE `hasil_kn`  (
-  `prim` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `catatan` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  PRIMARY KEY (`prim`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Table structure for hasil_lbm
--- ----------------------------
-DROP TABLE IF EXISTS `hasil_lbm`;
-CREATE TABLE `hasil_lbm`  (
-  `prim` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `catatan` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  PRIMARY KEY (`prim`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+INSERT INTO `hasil_detail` VALUES (7, 1, '100', 'gram', 'GC', 'as', 1);
+INSERT INTO `hasil_detail` VALUES (8, 2, '200', 'kilo', 'BBPPMBTPH*)', '', 1);
+INSERT INTO `hasil_detail` VALUES (9, 3, '300', 'liter', 'Rapid Test', '', 1);
+INSERT INTO `hasil_detail` VALUES (12, 11, '67,56', '%', 'AOAC [Titrasi]', '', 1);
 
 -- ----------------------------
 -- Table structure for kemasan
@@ -298,10 +198,10 @@ CREATE TABLE `kondisi`  (
 -- ----------------------------
 -- Records of kondisi
 -- ----------------------------
-INSERT INTO `kondisi` VALUES (3, 'Baik', '2018-10-14 21:50:50', NULL, NULL, NULL);
+INSERT INTO `kondisi` VALUES (3, 'baik', '2018-10-14 21:50:50', NULL, NULL, NULL);
 INSERT INTO `kondisi` VALUES (4, 'buruk', '2018-10-14 21:50:57', NULL, NULL, NULL);
 INSERT INTO `kondisi` VALUES (5, 'basah', '2018-10-14 21:51:00', NULL, NULL, NULL);
-INSERT INTO `kondisi` VALUES (6, 'Tidak Baik', '2018-10-14 21:51:04', NULL, NULL, NULL);
+INSERT INTO `kondisi` VALUES (6, 'tidak baik', '2018-10-14 21:51:04', NULL, NULL, NULL);
 INSERT INTO `kondisi` VALUES (7, 'kering', '2018-10-14 21:51:08', NULL, NULL, NULL);
 INSERT INTO `kondisi` VALUES (8, 'layu', '2018-10-14 21:51:11', NULL, NULL, NULL);
 INSERT INTO `kondisi` VALUES (9, 'busuk', '2018-10-14 21:51:15', NULL, NULL, NULL);
@@ -338,7 +238,7 @@ CREATE TABLE `laporan`  (
   `kode_contoh` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `kode_laporan` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_laporan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of laporan
@@ -353,12 +253,11 @@ INSERT INTO `laporan` VALUES (9, 'RESIDU PESTISIDA (GOLONGAN ORGANOFOSFAT)', '20
 INSERT INTO `laporan` VALUES (10, 'RESIDU PESTISIDA (GOLONGAN PERETROID)', '2018-10-19 12:00:03', NULL, NULL, NULL, 'RP', 'DF/MA/026');
 INSERT INTO `laporan` VALUES (11, 'RESIDU PESTISIDA (GOLONGAN KARBAMAT)', '2018-10-19 12:00:44', NULL, NULL, NULL, 'RP', 'DF/MA/026');
 INSERT INTO `laporan` VALUES (12, 'KOMPOSISI NUTRISI', '2018-10-19 12:01:23', NULL, NULL, NULL, 'KN', 'DF/MA/029');
-INSERT INTO `laporan` VALUES (13, 'LOGAM BERAT DAN MINERAL', '2018-10-19 12:01:34', NULL, NULL, NULL, 'LBM', 'DF/MA/029');
+INSERT INTO `laporan` VALUES (13, 'LOGAM BERAT', '2018-10-19 12:01:34', NULL, NULL, NULL, 'LBM', 'DF/MA/029');
 INSERT INTO `laporan` VALUES (14, 'MINERAL', '2018-10-19 12:01:43', NULL, NULL, NULL, 'LBM', 'DF/MA/029');
 INSERT INTO `laporan` VALUES (15, 'RESIDU PESTISIDA (GOLONGAN LAIN)', '2018-10-19 14:42:01', NULL, NULL, NULL, 'RP', 'DF/MA/026');
+INSERT INTO `laporan` VALUES (17, 'RESIDU PESTISIDA (GOLONGAN PIRETROID)', '2018-12-20 07:59:19', NULL, NULL, NULL, 'RP', 'DF/MA/026');
 INSERT INTO `laporan` VALUES (18, 'KIMIA KANDUNGAN MINERAL DAN LOGAM BERAT', '2018-12-20 08:09:13', NULL, NULL, NULL, 'LBM', 'DF/MA/029');
-INSERT INTO `laporan` VALUES (19, 'MYCOTOXIN', '2019-01-31 01:09:57', NULL, NULL, NULL, 'MY', NULL);
-INSERT INTO `laporan` VALUES (20, 'MUTU FISIK BERAS', '2019-02-01 06:02:19', NULL, NULL, NULL, 'MFB', NULL);
 
 -- ----------------------------
 -- Table structure for menu
@@ -373,7 +272,7 @@ CREATE TABLE `menu`  (
   `base_url` bit(1) NULL DEFAULT b'1',
   `class` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_menu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of menu
@@ -402,7 +301,6 @@ INSERT INTO `menu` VALUES (23, 'Setting Permohonan', 22, 2, 'setting/permohonan'
 INSERT INTO `menu` VALUES (24, 'Setting Kontrak Kerja', 22, 3, 'setting/kontrak_kerja', b'1', 'kontrak_kerja');
 INSERT INTO `menu` VALUES (25, 'Setting Pengantar Contoh', 22, 4, 'setting/pengantar_contoh', b'1', 'pengantar_contoh');
 INSERT INTO `menu` VALUES (26, 'Setting Kop', 22, 1, 'setting/kop', b'1', 'kop');
-INSERT INTO `menu` VALUES (27, 'Setting LHP', 22, 5, 'setting/lhp', b'1', 'lhp');
 
 -- ----------------------------
 -- Table structure for metode
@@ -449,346 +347,101 @@ CREATE TABLE `parameter_pengujian`  (
   `id_laporan` int(11) NULL DEFAULT NULL,
   `kode_contoh` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_parameter_pengujian`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 336 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 93 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of parameter_pengujian
 -- ----------------------------
-INSERT INTO `parameter_pengujian` VALUES (1, 'Acephate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (2, 'Aldrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (3, 'Acrinathrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (4, 'Aldicarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (5, 'Abamectin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (6, 'Azamethiphos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (7, 'Azinphos-Ethyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (8, 'Aldicarb-Sulfone', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (9, 'Aminocarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (10, 'Acetamiprid', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (11, 'Azinphos-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (12, 'Bendiocarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (13, 'Bifenthrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (14, 'Bensulide', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (15, 'Ametryn', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (16, 'BHC-alpha ', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (17, 'Bromophos-Ethyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (18, 'Aminopyralid', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (19, 'Bioallethrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (20, 'Benfuracarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (21, 'Cadusafos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (22, 'BHC-beta   ', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (23, 'Amiotriazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (24, 'Bioresmethrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (25, 'Carbaryl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (26, 'Carbophenothion', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (27, 'BHC-delta', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (28, 'Amitraz', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (29, 'Cyfluthrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (30, 'Chlorfenvinphos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (31, 'Carbofuran', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (32, 'DDD-o,p', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (33, 'Atrazine', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (34, 'Cyfluthrin-beta', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (35, 'Chlorpyrifos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (36, 'Carbosulfan', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (37, 'DDD-p,p', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (38, 'Azaconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (39, 'Cyhalothrin-gamma', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (40, 'Chlorpyrifos-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (41, 'DDE-o,p', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (42, 'Diethofencarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (43, 'Azocyclotin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (44, 'Cyhalothrin-lambda', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (45, 'Diazinon', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (46, 'DDE-p,p', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (47, 'Ethiofencarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (48, 'Azoxystrobin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (49, 'Cypermethrin ', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (50, 'Dichlorvos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (51, 'Benalaxyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (52, 'DDT-o,p', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (53, 'Fenoxycarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (54, 'Cypermethrin-alpha', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (55, 'Dieldrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (56, 'DDT-p,p', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (57, 'Benfluralin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (58, 'Methomyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (59, 'Cypermethrin-beta', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (60, 'Dimethoate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (61, 'Benfuresate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (62, 'Oxamyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (63, 'Dicofol', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (64, 'Cypermethrin-zeta', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (65, 'Disulfoton', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (66, 'Bensulfuron-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (67, 'Propoxur', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 11, NULL);
-INSERT INTO `parameter_pengujian` VALUES (68, 'Endosulfan', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (69, 'Deltamethrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (70, 'Bentazone', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (71, 'Ethion', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (72, 'Endosulfan-alpha', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (73, 'Bitertanol', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (74, 'Etofenprox', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (75, 'Ethoprophos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (76, 'Fenamiphos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (77, 'Endosulfan-beta', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (78, 'Endosulfansulfate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (79, 'Fenitrothion', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (80, 'Boscalid', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (81, 'Fenpropathrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (82, 'Endrin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (83, 'Fenthion', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (84, 'Brodifacoum', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (85, 'Fluvalinate, tau-', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (86, 'Heptachlor', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (87, 'Fenthion-Oxonsulfoxide', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (88, 'Bromacil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (89, 'Permethrin ', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (90, 'Lindane', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 8, NULL);
-INSERT INTO `parameter_pengujian` VALUES (91, 'Bromopropylate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (92, 'Malathion', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (93, 'Methamidophos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (94, 'Fenvalerate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 10, NULL);
-INSERT INTO `parameter_pengujian` VALUES (95, 'Bromoxynil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (96, 'Methidathion', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (97, 'Mevinphos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (98, 'Bromuconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (99, 'Bupirimate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (100, 'Parathion', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (101, 'Parathion-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 9, NULL);
-INSERT INTO `parameter_pengujian` VALUES (102, 'Buprofezin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (103, 'Butachlor', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (104, 'Captan', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (105, 'Carbendazim', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (106, 'Carboxin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (107, 'Carfentrazone-Ethyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (108, 'Chlopropham', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (109, 'Chlorantraniliprole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (110, 'Chlorfenapyr', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (111, 'Chlorimuron-Ethyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (112, 'Chlormequat', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (113, 'Clofentezine', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (114, 'Clothianidin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (115, 'Coumaphos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (116, 'Cycloxydim', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (117, 'Cyhexatin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (118, 'Cymoxanil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (119, 'Cyproconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (120, 'Cyprodinil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (121, 'Cyromazine', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (122, 'Dichlofluanid', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (123, 'Dicloran', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (124, 'Difenoconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (125, 'Diflubenzuron', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (126, 'Diflufenican', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (127, 'Dimethomorph', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (128, 'Diniconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (129, 'Dinocap', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (130, 'Dinotefuran', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (131, 'Diphenylamine', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (132, 'Diuron', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (133, 'Emamectin benzoate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (134, 'Epoxiconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (135, 'Ethoxyquin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (136, 'Etoxazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (137, 'Etridiazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (138, 'Famoxadone', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (139, 'Fenarimol', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (140, 'Fenazaquin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (141, 'Fenbuconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (142, 'Fenhexamid', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (143, 'Fenoxaprop-P-Ethyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (144, 'Fenpiclonil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (145, 'Fenpropidin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (146, 'Fenpropimorph', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (147, 'Fenpyroximate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (148, 'Fenquinconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (149, 'Fluazinam', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (150, 'Flubendiamide', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (151, 'Fludioxonil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (152, 'Fluopicolide', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (153, 'Fluopyram', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (154, 'Fluquinconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (155, 'Flusilazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (156, 'Flutolanil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (157, 'Flutriafol', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (158, 'Furmecyclox', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (159, 'Haloxyfop', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (160, 'Heptenophos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (161, 'Hexaconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (162, 'Hexythiazox', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (163, 'Imazalil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (164, 'Imidacloprid', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (165, 'Indoxacarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (166, 'Isoprocarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (167, 'Kresoxim-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (168, 'Linuron', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (169, 'Malathion', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (170, 'Mandipropamid', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (171, 'Meptyldinocap ', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (172, 'Mesosulfuron-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (173, 'Mesotrione', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (174, 'Metaldehyde', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (175, 'Methoxyfenozide', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (176, 'Paclobutrazol', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (177, 'Paraquat', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (178, 'Penconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (179, 'Phenthoate', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (180, 'Phosalone', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (181, 'Phosmet', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (182, 'Picoxystrobin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (183, 'Piperonyl Butoxide', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (184, 'Pirimicarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (185, 'Pirimiphos-Ethyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (186, 'Pirimiphos-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (187, 'Prochloraz', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (188, 'Procymidone', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (189, 'Profenofos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (190, 'Prometryn', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (191, 'Propamocarb', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (192, 'Propargite', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (193, 'Propham', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (194, 'Propiconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (195, 'Propyzamide', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (196, 'Pymetrozine', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (197, 'Pyraclostrobin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (198, 'Pyrimethanil', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (199, 'Pyriproxyfen', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (200, 'Quinalphos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (201, 'Quinoxyfen', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (202, 'Retenone', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (203, 'Spirotetramat', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (204, 'Sulcotrione', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (205, 'Tebuconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (206, 'Tebufenozide', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (207, 'Teflubenzuron ', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (208, 'Tetraconazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (209, 'Thiabendazole', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (210, 'Thiophanate-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (211, 'Tolclofos-Methyl', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (212, 'Tolylfluanid', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (213, 'Triadimefon', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (214, 'Triadimenol', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (215, 'Triazophos', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (216, 'Trifloxystrobin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (217, 'Triforine', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (218, 'Warfarin', NULL, '2019-01-24 17:11:44', NULL, NULL, NULL, 15, NULL);
-INSERT INTO `parameter_pengujian` VALUES (219, 'Aflatoxin B1', NULL, '2019-01-31 03:17:29', NULL, NULL, NULL, 19, NULL);
-INSERT INTO `parameter_pengujian` VALUES (220, 'Aflatoxin B2', NULL, '2019-01-31 03:17:29', NULL, NULL, NULL, 19, NULL);
-INSERT INTO `parameter_pengujian` VALUES (221, 'Aflatoxin G1', NULL, '2019-01-31 03:17:29', NULL, NULL, NULL, 19, NULL);
-INSERT INTO `parameter_pengujian` VALUES (222, 'Aflatoxin G2', NULL, '2019-01-31 03:17:29', NULL, NULL, NULL, 19, NULL);
-INSERT INTO `parameter_pengujian` VALUES (223, 'Ochratoxin A', NULL, '2019-01-31 03:17:29', NULL, NULL, NULL, 19, NULL);
-INSERT INTO `parameter_pengujian` VALUES (224, 'Total Plate Count (TPC)', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (225, 'MPN Coliform', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (226, 'MPN E.coli', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (227, 'Yeast & Mold', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (228, 'Escherichia coli', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (229, 'Salmonella', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (230, 'Staphylococcus aureus', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (231, 'Listeria sp', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (232, 'Pseudomonas aeruginosa', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (233, 'Shigella sp', NULL, '2019-01-31 04:35:49', NULL, NULL, NULL, 5, NULL);
-INSERT INTO `parameter_pengujian` VALUES (234, 'Kadar Air', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (235, 'Kadar Abu', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (236, 'Protein', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (237, 'Karbohidrat', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (238, 'Lemak', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (239, 'Vitamin C', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (240, 'Vitamin D', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (241, 'Vitamin B1', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (242, 'Vitamin B12', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (243, 'Vitamin E', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (244, 'Vitamin A', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (245, 'Formalin', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (246, 'Chlorin', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (247, 'Boraxs', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (248, 'Pewarna', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (249, 'Pemanis', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (250, 'Pengawet', NULL, '2019-01-31 05:38:04', NULL, NULL, NULL, 12, NULL);
-INSERT INTO `parameter_pengujian` VALUES (251, 'Logam Pb', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (252, 'Logam Cd', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (253, 'Logam Hg', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (254, 'Logam Sn', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (255, 'Mineral Fe', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (256, 'Mineral Zn', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (257, 'Mineral Cu', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (258, 'Mineral Mg', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (259, 'Mineral Al', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (260, 'Mineral Ca', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (261, 'Mineral Na', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (262, 'Mineral Mn', NULL, '2019-01-31 05:41:39', NULL, NULL, NULL, 13, NULL);
-INSERT INTO `parameter_pengujian` VALUES (263, 'Derajat sosoh', NULL, '2019-02-01 06:03:26', NULL, NULL, NULL, 20, NULL);
-INSERT INTO `parameter_pengujian` VALUES (264, 'Butir kepala', NULL, '2019-02-01 06:03:26', NULL, NULL, NULL, 20, NULL);
-INSERT INTO `parameter_pengujian` VALUES (265, 'Butir patah', NULL, '2019-02-01 06:03:26', NULL, NULL, NULL, 20, NULL);
-INSERT INTO `parameter_pengujian` VALUES (266, 'Butir gabah', NULL, '2019-02-01 06:03:26', NULL, NULL, NULL, 20, NULL);
-INSERT INTO `parameter_pengujian` VALUES (267, 'Total butir beras lainnya', NULL, '2019-02-01 06:03:26', NULL, NULL, NULL, 20, NULL);
-INSERT INTO `parameter_pengujian` VALUES (268, 'Benda lain', NULL, '2019-02-01 06:03:26', NULL, NULL, NULL, 20, NULL);
-INSERT INTO `parameter_pengujian` VALUES (269, 'Kadar air', NULL, '2019-02-01 06:03:26', NULL, NULL, NULL, 20, NULL);
-INSERT INTO `parameter_pengujian` VALUES (270, 'Abamektin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (271, 'Alfa Sipermetrin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (272, 'Amonium Glufosinat', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (273, 'Atrazine', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (274, 'Azoksistrobin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (275, 'Brodifakum', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (276, 'Carbofuran', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (277, 'Cloprop', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (278, 'Difenokonazol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (279, 'Dimetomorf', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (280, 'Dinotefuran', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (281, 'Diuron', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (282, 'Deltametrin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (283, 'Emmamektin Benzoate', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (284, 'Epoksikonazol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (285, 'Etil Pirazosulfuron', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (286, 'Fenoksaprop-p-etil', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (287, 'Flokumafen', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (288, 'Fipronil', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (289, 'Glifosate', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (290, 'Heksakonazol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (291, 'Imidaklorprid', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (292, 'Isoxaflutole', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (293, 'Karbaryl', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (294, 'Karbendazim', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (295, 'Karbosulfan', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (296, 'Klorpirifos', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (297, 'Lamda Sihalotrin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (298, 'Lufenuron', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (299, 'Mankozeb', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (300, 'Maneb', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (301, 'Mathrine', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (302, 'Methomyl', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (303, 'Methyl Metsulfuron ', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (304, 'Metil Thiofanat', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (305, 'Metiram', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (306, 'Mesotrione', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (307, 'N-Orto Nitrophenol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (308, 'N-Para Nitrophenol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (309, 'N-5Nitroquaicol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (310, 'Paklobutrazol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (311, 'Permethrin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (312, 'Piraklostrobin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (313, 'Piperonyl Butoxide (PBO)', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (314, 'Profoksidim', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (315, 'Propiconazol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (316, 'Propineb', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (317, 'Profenofos', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (318, 'Pretilaklor', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (319, 'Pyrazosulfuron etil', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (320, 'Simoksanil', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (321, 'Sipermetrin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (322, 'Siprokonazol', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (323, 'Triasulfuron', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (324, 'Triazafos', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (325, 'Triklopir BEE', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (326, 'Triklopir', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (327, 'Teflumethrin tehnical', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (328, 'Thiobenkarb', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (329, 'Zineb', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (330, 'Ziram', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (331, '1-naftil asam asetat', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (332, '2-(1-naftil) asetamida', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (333, '2,4 D dimetil amina', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (334, '2,4 D BE', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `parameter_pengujian` VALUES (335, 'Oxathiapiprolin', NULL, '2019-02-01 07:54:28', NULL, NULL, NULL, 4, NULL);
+INSERT INTO `parameter_pengujian` VALUES (1, 'Kadar Air', 50000, '2018-10-05 03:41:58', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (2, 'Kadar Abu', 50000, '2018-10-05 03:41:59', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (3, 'Karbohidrat', 50000, '2018-10-05 03:42:00', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (4, 'Pb (Timbal)', 100000, '2018-10-05 03:42:01', NULL, NULL, NULL, 13, NULL);
+INSERT INTO `parameter_pengujian` VALUES (5, 'Cd (Cadmium)', 100000, '2018-10-05 03:42:02', NULL, NULL, NULL, 13, NULL);
+INSERT INTO `parameter_pengujian` VALUES (6, 'Seng (Zn)', 100000, '2018-10-05 03:42:04', NULL, NULL, NULL, 14, NULL);
+INSERT INTO `parameter_pengujian` VALUES (7, 'Lindane', 100000, '2018-10-05 03:42:06', NULL, NULL, NULL, 8, NULL);
+INSERT INTO `parameter_pengujian` VALUES (8, 'Aldrin', 100000, '2018-10-19 12:09:49', NULL, NULL, NULL, 8, NULL);
+INSERT INTO `parameter_pengujian` VALUES (9, 'o.p-DDE', 100000, '2018-10-19 12:10:04', NULL, NULL, NULL, 8, NULL);
+INSERT INTO `parameter_pengujian` VALUES (10, 'p.p-DDE', 100000, '2018-10-19 12:10:10', NULL, NULL, NULL, 8, NULL);
+INSERT INTO `parameter_pengujian` VALUES (11, 'Deldrin', 75000, '2018-10-19 12:10:17', NULL, NULL, NULL, 8, NULL);
+INSERT INTO `parameter_pengujian` VALUES (12, 'o.p-DDT', 75000, '2018-10-19 12:10:25', NULL, NULL, NULL, 8, NULL);
+INSERT INTO `parameter_pengujian` VALUES (13, 'p.p-DDT', 75000, '2018-10-19 12:10:31', NULL, NULL, NULL, 8, NULL);
+INSERT INTO `parameter_pengujian` VALUES (14, 'Dichlorvos', 75000, '2018-10-19 12:12:03', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (15, 'Dimethoate', 75000, '2018-10-19 12:12:10', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (16, 'Diazinon', 75000, '2018-10-19 12:12:17', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (17, 'Fenitrothion', 75000, '2018-10-19 12:12:30', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (18, 'Chlorphyrifos', 75000, '2018-10-19 12:12:45', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (19, 'Parathion', 75000, '2018-10-19 12:12:52', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (20, 'Methidation', 75000, '2018-10-19 12:13:03', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (21, 'Profenofos', 100000, '2018-10-19 12:13:13', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (22, 'Carbaryl', 100000, '2018-12-20 07:56:24', NULL, NULL, NULL, 11, NULL);
+INSERT INTO `parameter_pengujian` VALUES (23, 'Carbofuran', 100000, '2018-12-20 07:57:54', NULL, NULL, NULL, 11, NULL);
+INSERT INTO `parameter_pengujian` VALUES (24, 'Methomyl', 100000, '2018-12-20 07:58:11', NULL, NULL, NULL, 11, NULL);
+INSERT INTO `parameter_pengujian` VALUES (25, 'Oxamyl', 100000, '2018-12-20 07:58:27', NULL, NULL, NULL, 11, NULL);
+INSERT INTO `parameter_pengujian` VALUES (26, 'Permetrin', 100000, '2018-12-20 08:00:16', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (27, 'Deltametrin', 100000, '2018-12-20 08:00:55', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (28, 'beta-Siflutrin', 100000, '2018-12-20 08:01:20', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (29, 'lamda-Sihalotrin', 100000, '2018-12-20 08:01:29', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (30, 'Fenvalerat', 100000, '2018-12-20 08:01:40', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (31, 'Fenprofatrin', 100000, '2018-12-20 08:01:48', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (32, 'Sipermetrin', 100000, '2018-12-20 08:01:55', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (33, 'beta-Sipermetrin', 100000, '2018-12-20 08:02:01', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (34, 'alfa-Sipermetrin', 100000, '2018-12-20 08:02:09', NULL, NULL, NULL, 17, NULL);
+INSERT INTO `parameter_pengujian` VALUES (35, 'Fenthion', 100000, '2018-12-20 08:04:31', NULL, NULL, NULL, 9, NULL);
+INSERT INTO `parameter_pengujian` VALUES (36, 'Formalin', 100000, '2018-12-20 08:06:52', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (37, 'Kadar Fruktosa', 100000, '2018-12-20 08:07:03', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (38, 'Kadar Glukosa', 100000, '2018-12-20 08:07:25', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (39, 'Kadar Karbohidrat', 100000, '2018-12-20 08:07:34', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (40, 'Kadar Lemak', 100000, '2018-12-20 08:07:43', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (41, 'Kadar Protein', 100000, '2018-12-20 08:07:52', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (42, 'Kadar Serat', 100000, '2018-12-20 08:08:01', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (43, 'Klorin (Pemutih)', 100000, '2018-12-20 08:08:17', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (44, 'Sachrosa', 100000, '2018-12-20 08:08:27', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (45, 'Vitamin C', 100000, '2018-12-20 08:08:36', NULL, NULL, NULL, 12, NULL);
+INSERT INTO `parameter_pengujian` VALUES (46, 'Besi (Fe) / AAS', 100000, '2018-12-20 08:09:35', NULL, NULL, NULL, 18, NULL);
+INSERT INTO `parameter_pengujian` VALUES (47, 'Kalsium (Ca) / AAS', 100000, '2018-12-20 08:09:50', NULL, NULL, NULL, 18, NULL);
+INSERT INTO `parameter_pengujian` VALUES (48, 'Seng (Zn) / AAS', 100000, '2018-12-20 08:10:01', NULL, NULL, NULL, 18, NULL);
+INSERT INTO `parameter_pengujian` VALUES (49, 'Tembaga (Cu) / AAS', 100000, '2018-12-20 08:10:11', NULL, NULL, NULL, 18, NULL);
+INSERT INTO `parameter_pengujian` VALUES (50, 'Magnesium (Mg) / AAS', 100000, '2018-12-20 08:10:20', NULL, NULL, NULL, 18, NULL);
+INSERT INTO `parameter_pengujian` VALUES (51, 'Timbal (Pb) / AAS', 100000, '2018-12-20 08:10:28', NULL, NULL, NULL, 18, NULL);
+INSERT INTO `parameter_pengujian` VALUES (52, 'Cadmium (Cd) / AAS', 100000, '2018-12-20 08:10:37', NULL, NULL, NULL, 18, NULL);
+INSERT INTO `parameter_pengujian` VALUES (53, 'E.coli', 100000, '2018-12-20 08:12:20', NULL, NULL, NULL, 5, NULL);
+INSERT INTO `parameter_pengujian` VALUES (54, 'Salmonella', 100000, '2018-12-20 08:12:28', NULL, NULL, NULL, 5, NULL);
+INSERT INTO `parameter_pengujian` VALUES (55, 'TPC/ALT', 100000, '2018-12-20 08:12:36', NULL, NULL, NULL, 5, NULL);
+INSERT INTO `parameter_pengujian` VALUES (56, 'MPN Coliform', 100000, '2018-12-20 08:12:45', NULL, NULL, NULL, 5, NULL);
+INSERT INTO `parameter_pengujian` VALUES (57, 'Kapang Khamir', 100000, '2018-12-20 08:12:54', NULL, NULL, NULL, 5, NULL);
+INSERT INTO `parameter_pengujian` VALUES (58, 'S. aureus', 100000, '2018-12-20 08:13:04', NULL, NULL, NULL, 5, NULL);
+INSERT INTO `parameter_pengujian` VALUES (59, 'Listeria,sp', 100000, '2018-12-20 08:13:14', NULL, NULL, NULL, 5, NULL);
+INSERT INTO `parameter_pengujian` VALUES (60, 'Atrazine', 100000, '2018-12-20 08:13:49', NULL, NULL, NULL, 4, NULL);
+INSERT INTO `parameter_pengujian` VALUES (61, 'Kadar Air', 100000, '2018-12-20 08:15:03', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (62, 'Kemurnian Fisik :Benih Murni', 100000, '2018-12-20 08:15:25', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (63, 'Kemurnian Fisik : Benih Tanaman Lain', 100000, '2018-12-20 08:15:40', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (64, 'Kemurnian Fisik : Kotoran Benih', 100000, '2018-12-20 08:15:51', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (65, 'Daya Berkecambah : Kecambah Normal', 100000, '2018-12-20 08:16:03', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (66, 'Daya Berkecambah : Kecambah Abnormal', 100000, '2018-12-20 08:16:15', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (67, 'Daya Berkecambah : Kecambah Abnormal', 100000, '2018-12-20 08:16:29', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (68, 'Daya Berkecambah : Biji Keras', 100000, '2018-12-20 08:16:41', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (69, 'Daya Berkecambah : Biji Segar Tidak Tumbuh', 100000, '2018-12-20 08:16:53', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (70, 'Daya Berkecambah : Biji Mati', 100000, '2018-12-20 08:17:05', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (71, 'Bobot 1000 Butir', 100000, '2018-12-20 08:17:13', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (72, 'Kesehatan Benih', 100000, '2018-12-20 08:17:20', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (73, 'Uji Cepat Viabilitas (TZ)', 100000, '2018-12-20 08:17:29', NULL, NULL, NULL, 3, NULL);
+INSERT INTO `parameter_pengujian` VALUES (74, 'Abamectin', 100000, '2018-12-26 22:47:14', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (75, 'Acetamiprid', 100000, '2018-12-26 22:48:07', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (76, 'Ametryn', 100000, '2018-12-26 22:48:30', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (78, 'Aminopyralid\r\n', 100000, '2018-12-26 22:48:55', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (79, 'Amiotriazole\r\n', 100000, '2018-12-26 22:49:17', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (80, 'Atrazine\r\n', 100000, '2018-12-26 22:49:41', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (81, 'Azaconazole\r\n', 100000, '2018-12-26 22:49:49', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (82, 'Azocyclotin\r\n', 100000, '2018-12-26 22:49:59', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (83, 'Azoxystrobin\r\n', 100000, '2018-12-26 22:50:06', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (84, 'Benfluralin\r\n', 100000, '2018-12-26 22:50:18', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (85, 'Benfuresate', 100000, '2018-12-26 22:52:08', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (86, 'Bensulfuron-Methyl', 100000, '2018-12-26 22:52:08', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (88, 'Bitertanol', 100000, '2018-12-26 22:53:07', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (89, 'Boscalid', 100000, '2018-12-26 22:53:07', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (90, 'Brodifacoum', 100000, '2018-12-26 22:53:07', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (91, 'Bromacil', 100000, '2018-12-26 22:53:07', NULL, NULL, NULL, 15, NULL);
+INSERT INTO `parameter_pengujian` VALUES (92, 'Propineb 70%', 100000, '2018-12-31 11:03:53', NULL, NULL, NULL, 4, NULL);
 
 -- ----------------------------
 -- Table structure for pelanggan
@@ -1015,7 +668,36 @@ CREATE TABLE `permohonan_detail_metode`  (
   `id_metode` int(11) NULL DEFAULT NULL,
   `id_permohonan_detail` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_permohonan_detail_metode`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of permohonan_detail_metode
+-- ----------------------------
+INSERT INTO `permohonan_detail_metode` VALUES (5, 1, 1);
+INSERT INTO `permohonan_detail_metode` VALUES (6, 2, 1);
+INSERT INTO `permohonan_detail_metode` VALUES (7, 3, 1);
+INSERT INTO `permohonan_detail_metode` VALUES (8, 9, 2);
+INSERT INTO `permohonan_detail_metode` VALUES (9, 0, 3);
+INSERT INTO `permohonan_detail_metode` VALUES (10, 0, 4);
+INSERT INTO `permohonan_detail_metode` VALUES (11, 0, 5);
+INSERT INTO `permohonan_detail_metode` VALUES (12, 0, 6);
+INSERT INTO `permohonan_detail_metode` VALUES (13, 0, 7);
+INSERT INTO `permohonan_detail_metode` VALUES (14, 0, 8);
+INSERT INTO `permohonan_detail_metode` VALUES (15, 0, 9);
+INSERT INTO `permohonan_detail_metode` VALUES (16, 0, 10);
+INSERT INTO `permohonan_detail_metode` VALUES (17, 0, 11);
+INSERT INTO `permohonan_detail_metode` VALUES (18, 0, 12);
+INSERT INTO `permohonan_detail_metode` VALUES (19, 0, 13);
+INSERT INTO `permohonan_detail_metode` VALUES (20, 0, 14);
+INSERT INTO `permohonan_detail_metode` VALUES (21, 0, 15);
+INSERT INTO `permohonan_detail_metode` VALUES (22, 0, 16);
+INSERT INTO `permohonan_detail_metode` VALUES (23, 0, 17);
+INSERT INTO `permohonan_detail_metode` VALUES (24, 0, 18);
+INSERT INTO `permohonan_detail_metode` VALUES (25, 0, 19);
+INSERT INTO `permohonan_detail_metode` VALUES (26, 0, 20);
+INSERT INTO `permohonan_detail_metode` VALUES (27, 0, 21);
+INSERT INTO `permohonan_detail_metode` VALUES (28, 0, 22);
+INSERT INTO `permohonan_detail_metode` VALUES (29, 0, 23);
 
 -- ----------------------------
 -- Table structure for permohonan_detail_parameter
@@ -1117,22 +799,6 @@ CREATE TABLE `setting_kop`  (
 -- Records of setting_kop
 -- ----------------------------
 INSERT INTO `setting_kop` VALUES (1, 'PEMERINTAH PROVINSI DAERAH KHUSUS IBUKOTA JAKARTA', 'DINAS KETAHANAN PANGAN, KELAUTAN DAN PERTANIAN', 'PUSAT PROMOSI DAN SERTIFIKASI HASIL PERTANIAN', 'LABORATORIUM PUSAT PROMOSI DAN SERTIFIKASI HASIL PERTANIAN', 'Jl. Raya Jambore No. 1 Cibubur Jakarta Timur', 'Telp. / Fax : (021) 87752692');
-
--- ----------------------------
--- Table structure for setting_lhp
--- ----------------------------
-DROP TABLE IF EXISTS `setting_lhp`;
-CREATE TABLE `setting_lhp`  (
-  `id_setting_lhp` int(11) NOT NULL AUTO_INCREMENT COMMENT ' ',
-  `lembaga` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `pejabat` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_setting_lhp`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of setting_lhp
--- ----------------------------
-INSERT INTO `setting_lhp` VALUES (1, 'Kepala Pusat Promosi dan Sertifikasi Hasil Pertanian<br>Dinas Ketahanan Pangan, Kelautan dan Pertanian<br>Provinsi DKI Jakarta', 'Wati Mutia<br>NIP. 196406021996032001');
 
 -- ----------------------------
 -- Table structure for setting_pengantar_contoh
@@ -1257,8 +923,7 @@ CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER V
 	CONCAT(REPLACE(a.nomor_contoh,'/','-'),'_',d.id_laporan) prim,
 	g.nomor_seri,
 	g.ceklis_1,
-	g.ceklis_2,
-	a.ket_kondisi
+	g.ceklis_2
 FROM
 	permohonan_detail a
 left join 
@@ -1295,9 +960,7 @@ CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER V
 	i.tanggal_pengambilan,
 	j.kemasan,
 	i.created_at,
-	i.tanggal_masuk,
-	a.ket_kondisi,
-	b.caption
+	i.tanggal_masuk
 FROM
 	permohonan_detail a
 left join 
@@ -1308,260 +971,6 @@ left join laporan d ON c.id_laporan = d.id_laporan
 left join satuan e ON a.satuan = e.id_satuan
 left join kondisi f ON a.kondisi = f.id_kondisi
 left join hasil_detail g ON b.id_permohonan_detail_parameter = g.id_permohonan_detail_parameter
-left join permohonan_detail h ON a.nomor_contoh = h.nomor_contoh
-left join permohonan i ON i.id_permohonan = h.id_permohonan
-left join kemasan j ON a.kemasan = j.id_kemasan
-
-ORDER BY a.nomor_contoh, d.laporan ;
-
--- ----------------------------
--- View structure for vw_hasil2_fp
--- ----------------------------
-DROP VIEW IF EXISTS `vw_hasil2_fp`;
-CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `vw_hasil2_fp` AS SELECT
-	a.nomor_contoh,
-	d.laporan,
-	a.komoditas,
-	a.varietas,
-	a.jumlah,
-	e.satuan,
-	f.kondisi,
-	a.keterangan,
-	d.id_laporan,
-	c.parameter_pengujian,
-	b.id_permohonan_detail_parameter,
-	g.bahan,
-	g.berat,
-	g.kadar,
-	g.metode,
-	g.satuan satuan_hasil,
-	i.tanggal_pengambilan,
-	j.kemasan,
-	i.created_at,
-	i.tanggal_masuk,
-	a.ket_kondisi,
-	b.caption
-FROM
-	permohonan_detail a
-left join 
-	permohonan_detail_parameter b ON a.id_permohonan_detail = b.id_permohonan_detail
-left join
-	parameter_pengujian c ON b.id_parameter_pengujian = c.id_parameter_pengujian
-left join laporan d ON c.id_laporan = d.id_laporan
-left join satuan e ON a.satuan = e.id_satuan
-left join kondisi f ON a.kondisi = f.id_kondisi
-left join hasil_detail_fp g ON b.id_permohonan_detail_parameter = g.id_permohonan_detail_parameter
-left join permohonan_detail h ON a.nomor_contoh = h.nomor_contoh
-left join permohonan i ON i.id_permohonan = h.id_permohonan
-left join kemasan j ON a.kemasan = j.id_kemasan
-
-ORDER BY a.nomor_contoh, d.laporan ;
-
--- ----------------------------
--- View structure for vw_hasil2_kn
--- ----------------------------
-DROP VIEW IF EXISTS `vw_hasil2_kn`;
-CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `vw_hasil2_kn` AS SELECT
-	a.nomor_contoh,
-	d.laporan,
-	a.komoditas,
-	a.varietas,
-	a.jumlah,
-	e.satuan,
-	f.kondisi,
-	a.keterangan,
-	d.id_laporan,
-	c.parameter_pengujian,
-	b.id_permohonan_detail_parameter,
-	g.hasil,
-	g.metode,
-	g.satuan satuan_hasil,
-	i.tanggal_pengambilan,
-	j.kemasan,
-	i.created_at,
-	i.tanggal_masuk,
-	a.ket_kondisi,
-	b.caption
-FROM
-	permohonan_detail a
-left join 
-	permohonan_detail_parameter b ON a.id_permohonan_detail = b.id_permohonan_detail
-left join
-	parameter_pengujian c ON b.id_parameter_pengujian = c.id_parameter_pengujian
-left join laporan d ON c.id_laporan = d.id_laporan
-left join satuan e ON a.satuan = e.id_satuan
-left join kondisi f ON a.kondisi = f.id_kondisi
-left join hasil_detail_kn g ON b.id_permohonan_detail_parameter = g.id_permohonan_detail_parameter
-left join permohonan_detail h ON a.nomor_contoh = h.nomor_contoh
-left join permohonan i ON i.id_permohonan = h.id_permohonan
-left join kemasan j ON a.kemasan = j.id_kemasan
-
-ORDER BY a.nomor_contoh, d.laporan ;
-
--- ----------------------------
--- View structure for vw_hasil2_lbm
--- ----------------------------
-DROP VIEW IF EXISTS `vw_hasil2_lbm`;
-CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `vw_hasil2_lbm` AS SELECT
-	a.nomor_contoh,
-	d.laporan,
-	a.komoditas,
-	a.varietas,
-	a.jumlah,
-	e.satuan,
-	f.kondisi,
-	a.keterangan,
-	d.id_laporan,
-	c.parameter_pengujian,
-	b.id_permohonan_detail_parameter,
-	g.hasil,
-	g.metode,
-	g.satuan satuan_hasil,
-	g.lod,
-	g.loq,
-	i.tanggal_pengambilan,
-	j.kemasan,
-	i.created_at,
-	i.tanggal_masuk,
-	a.ket_kondisi,
-	b.caption
-FROM
-	permohonan_detail a
-left join 
-	permohonan_detail_parameter b ON a.id_permohonan_detail = b.id_permohonan_detail
-left join
-	parameter_pengujian c ON b.id_parameter_pengujian = c.id_parameter_pengujian
-left join laporan d ON c.id_laporan = d.id_laporan
-left join satuan e ON a.satuan = e.id_satuan
-left join kondisi f ON a.kondisi = f.id_kondisi
-left join hasil_detail_lbm g ON b.id_permohonan_detail_parameter = g.id_permohonan_detail_parameter
-left join permohonan_detail h ON a.nomor_contoh = h.nomor_contoh
-left join permohonan i ON i.id_permohonan = h.id_permohonan
-left join kemasan j ON a.kemasan = j.id_kemasan
-
-ORDER BY a.nomor_contoh, d.laporan ;
-
--- ----------------------------
--- View structure for vw_hasil2_mfb
--- ----------------------------
-DROP VIEW IF EXISTS `vw_hasil2_mfb`;
-CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `vw_hasil2_mfb` AS SELECT
-	a.nomor_contoh,
-	d.laporan,
-	a.komoditas,
-	a.varietas,
-	a.jumlah,
-	e.satuan,
-	f.kondisi,
-	a.keterangan,
-	d.id_laporan,
-	c.parameter_pengujian,
-	b.id_permohonan_detail_parameter,
-	g.hasil,
-	g.metode,
-	g.satuan satuan_hasil,
-	g.medium,
-	g.premium,
-	i.tanggal_pengambilan,
-	j.kemasan,
-	i.created_at,
-	i.tanggal_masuk,
-	a.ket_kondisi,
-	b.caption
-FROM
-	permohonan_detail a
-left join 
-	permohonan_detail_parameter b ON a.id_permohonan_detail = b.id_permohonan_detail
-left join
-	parameter_pengujian c ON b.id_parameter_pengujian = c.id_parameter_pengujian
-left join laporan d ON c.id_laporan = d.id_laporan
-left join satuan e ON a.satuan = e.id_satuan
-left join kondisi f ON a.kondisi = f.id_kondisi
-left join hasil_detail_mfb g ON b.id_permohonan_detail_parameter = g.id_permohonan_detail_parameter
-left join permohonan_detail h ON a.nomor_contoh = h.nomor_contoh
-left join permohonan i ON i.id_permohonan = h.id_permohonan
-left join kemasan j ON a.kemasan = j.id_kemasan
-
-ORDER BY a.nomor_contoh, d.laporan ;
-
--- ----------------------------
--- View structure for vw_hasil2_mycotoxin
--- ----------------------------
-DROP VIEW IF EXISTS `vw_hasil2_mycotoxin`;
-CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `vw_hasil2_mycotoxin` AS SELECT
-	a.nomor_contoh,
-	d.laporan,
-	a.komoditas,
-	a.varietas,
-	a.jumlah,
-	e.satuan,
-	f.kondisi,
-	a.keterangan,
-	d.id_laporan,
-	c.parameter_pengujian,
-	b.id_permohonan_detail_parameter,
-	g.hasil,
-	g.mql,
-	g.metode,
-	g.bmc,
-	i.tanggal_pengambilan,
-	j.kemasan,
-	i.created_at,
-	i.tanggal_masuk,
-	a.ket_kondisi,
-	b.caption
-FROM
-	permohonan_detail a
-left join 
-	permohonan_detail_parameter b ON a.id_permohonan_detail = b.id_permohonan_detail
-left join
-	parameter_pengujian c ON b.id_parameter_pengujian = c.id_parameter_pengujian
-left join laporan d ON c.id_laporan = d.id_laporan
-left join satuan e ON a.satuan = e.id_satuan
-left join kondisi f ON a.kondisi = f.id_kondisi
-left join hasil_detail_mycotoxin g ON b.id_permohonan_detail_parameter = g.id_permohonan_detail_parameter
-left join permohonan_detail h ON a.nomor_contoh = h.nomor_contoh
-left join permohonan i ON i.id_permohonan = h.id_permohonan
-left join kemasan j ON a.kemasan = j.id_kemasan
-
-ORDER BY a.nomor_contoh, d.laporan ;
-
--- ----------------------------
--- View structure for vw_hasil2_residu
--- ----------------------------
-DROP VIEW IF EXISTS `vw_hasil2_residu`;
-CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `vw_hasil2_residu` AS SELECT
-	a.nomor_contoh,
-	d.laporan,
-	a.komoditas,
-	a.varietas,
-	a.jumlah,
-	e.satuan,
-	f.kondisi,
-	a.keterangan,
-	d.id_laporan,
-	c.parameter_pengujian,
-	b.id_permohonan_detail_parameter,
-	g.hasil,
-	g.mql,
-	g.metode,
-	g.bmr,
-	i.tanggal_pengambilan,
-	j.kemasan,
-	i.created_at,
-	i.tanggal_masuk,
-	a.ket_kondisi,
-	b.caption
-FROM
-	permohonan_detail a
-left join 
-	permohonan_detail_parameter b ON a.id_permohonan_detail = b.id_permohonan_detail
-left join
-	parameter_pengujian c ON b.id_parameter_pengujian = c.id_parameter_pengujian
-left join laporan d ON c.id_laporan = d.id_laporan
-left join satuan e ON a.satuan = e.id_satuan
-left join kondisi f ON a.kondisi = f.id_kondisi
-left join hasil_detail_residu g ON b.id_permohonan_detail_parameter = g.id_permohonan_detail_parameter
 left join permohonan_detail h ON a.nomor_contoh = h.nomor_contoh
 left join permohonan i ON i.id_permohonan = h.id_permohonan
 left join kemasan j ON a.kemasan = j.id_kemasan

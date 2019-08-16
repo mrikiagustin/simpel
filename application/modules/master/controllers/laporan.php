@@ -26,6 +26,8 @@ class Laporan extends CI_Controller {
 
 			$crud->callback_before_insert(array($this,'_insert_callback'));
 			$crud->callback_before_update(array($this,'_update_callback'));
+			
+			$crud->unset_add();
 
 
 
@@ -35,6 +37,7 @@ class Laporan extends CI_Controller {
 			$output->title = "Master Laporan";
 			//$output = $this->grocery_crud->render();
 			$c = $this->load->view('_index',(array)$output,true);
+
 
 			//echo $c;
 			$this->page->view2($c);

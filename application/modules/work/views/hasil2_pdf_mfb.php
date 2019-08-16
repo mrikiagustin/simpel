@@ -36,12 +36,12 @@
 			<br><i>Characteristics</i>
 		</td>
     <td rowspan="2" style="width:15%">
-			Satuan
-			<br><i>Unit</i>
-		</td>
-		<td rowspan="2" style="width:15%">
 			Hasil
 			<br><i>Result</i>
+		</td>
+		<td rowspan="2" style="width:15%">
+			Satuan
+			<br><i>Unit</i>
 		</td>
 
     <td colspan="2" style="width:20%">
@@ -64,8 +64,8 @@
 	<tr>
 		<td><?php echo $no?></td>
 		<td style="text-align:left"><?php echo $v->caption == "" ? $v->parameter_pengujian : $v->caption?></td>
-    <td><?php echo $v->satuan_hasil?></td>
-		<td><?php echo $v->hasil?></td>
+    <td><?php echo $v->hasil?></td>
+		<td><?php echo $v->satuan_hasil?></td>
     <td><?php echo $v->medium?></td>
     <td><?php echo $v->premium?></td>
 		<td><?php echo $v->metode?></td>

@@ -381,11 +381,42 @@ class Hasil extends CI_Controller {
 	public function hasil_selector($value = '', $primary_key = null)
 	{
 		$expl     = explode("_",$primary_key);
-    $nomor    = str_replace('-','/',$expl[0]);
+		$nomor    = str_replace('-','/',$expl[0]);
+		//echo $nomor;die();
+		$laporan  = (String)$expl[1];
 
-    $laporan  = (String)$expl[1];
+		// cek duplikat
+		$duplikat = $this->db->select('ifnull(permohonan.nama,"-") nama, ifnull(permohonan.alamat,"-") alamat,permohonan_detail.id_permohonan')
+						->where('nomor_contoh',$nomor)
+						->join('permohonan','permohonan.id_permohonan = permohonan_detail.id_permohonan','left')
+						->get('permohonan_detail');
+		$duplikat_str = "";
+		
+		if($duplikat->num_rows() > 1){
+			$duplikat_str = '<div class="callout callout-danger">
+          <h4>Duplikat Nomor Contoh!</h4>
 
-
+          <p>Ada terjadi duplikat nomor contoh mohon diperbaiki terlebih dahulu, berikut nomor contoh yang duplikat :</p>';
+		  $duplikat_str .='<table border="1" cellpadding="5">';
+		  $duplikat_str .='<tr>';
+			$duplikat_str .='<td style="padding:10px">Nama</td>';
+			$duplikat_str .='<td style="padding:10px">Alamat</td>';
+			$duplikat_str .='<td style="padding:10px">Nomor Contoh</td>';
+			$duplikat_str .='<td style="padding:10px"></td>';
+			$duplikat_str .='</tr>';
+		  foreach($duplikat->result() as $x => $v){
+			$duplikat_str .='<tr>';
+			$duplikat_str .='<td style="padding:10px">' .$v->nama. '</td>';
+			$duplikat_str .='<td style="padding:10px">' .$v->alamat. '</td>';
+			$duplikat_str .='<td style="padding:10px">' .$nomor. '</td>';
+			$duplikat_str .='<td style="padding:10px"><a target="_blank" href="'.base_url('work/kontrak/index/edit/').$v->id_permohonan.'"> EDIT KONTRAK KERJA</a></td>';
+			$duplikat_str .='</tr>';
+			
+		  }
+		  $duplikat_str .='</table>';
+		  $duplikat_str .='</div>';
+		  //echo $duplikat_str;die();
+		}
 
 
 
@@ -419,7 +450,7 @@ class Hasil extends CI_Controller {
 				break;
 
 			default:
-				return $this->hasil_pengujian($value, $primary_key);
+				return $duplikat_str . $this->hasil_pengujian($value, $primary_key);
 				break;
 		}
 	}
@@ -552,8 +583,8 @@ class Hasil extends CI_Controller {
 		  <tr>
 		    <th rowspan='2'>No</th>
 		    <th rowspan='2'>karakteristik</th>
-		    <th rowspan='2'>Satuan</th>
 		    <th rowspan='2'>Hasil</th>
+		    <th rowspan='2'>Satuan</th>
 		    <th colspan='2'>Persyaratan*</th>
 		    <th rowspan='2'>Metode</th>
 		  </tr>
@@ -565,7 +596,7 @@ class Hasil extends CI_Controller {
 
 
     $counter=1;
-		//echo "<pre>";print_r($data_metode->result());die();
+		//echo "<pre>";print_r($data->result());die();
     foreach ($data->result() as $key => $value) {
 			if(isset($data_metode[$counter - 1])){
 				$met = $data_metode[$counter - 1]->metode;
@@ -582,8 +613,8 @@ class Hasil extends CI_Controller {
       $html .= "<tr>";
       $html .= "<td>".($counter++)."</td>";
       $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
-			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
-      $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+      $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
       $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][medium]' value='".$value->medium."'></td>";
 			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][premium]' value='".$value->premium."'></td>";
       $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
