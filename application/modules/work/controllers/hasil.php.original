@@ -169,14 +169,11 @@ class Hasil extends CI_Controller {
 		}
 
 		$true_content = array();
-		$max_data_per_page = 25;
-		$max_data_last = 12;
-		$min_data_last = 3;
+		$max_data_per_page = 12;
 
 		$count_content = ceil(count($data) / $max_data_per_page);
-		$data_modulus = count($data) % $max_data_per_page;
 
-		for ($i=0; $i < $count_content - 1; $i++) {
+		for ($i=0; $i < $count_content; $i++) {
 			$position = $i + 1;
 
 			$start = ($max_data_per_page * ($position - 1)) + 1 ;
@@ -185,35 +182,6 @@ class Hasil extends CI_Controller {
 			$ttd = $position == $count_content ? true : false;
 
 			$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>$start , "end"=>$end,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
-		}
-
-		if($data_modulus > $max_data_last){
-			for ($i=$count_content - 1; $i < $count_content; $i++) {
-				$position = $i + 1;
-	
-				$start = ($max_data_per_page * ($position - 1)) + 1 ;
-				// $end   = $start + $max_data_per_page;
-				$end   = count($data);
-	
-				$ttd = $position == $count_content ? true : false;
-
-				// echo '<pre>';print_r($end);die(); // TODO debug die();
-	
-				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => false , "start"=>$start , "end"=>($end - 3),"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header),true);
-
-				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>($end - 3) , "end"=>$end + 1,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header),true);
-			}
-		}else{
-			for ($i=$count_content - 1; $i < $count_content; $i++) {
-				$position = $i + 1;
-	
-				$start = ($max_data_per_page * ($position - 1)) + 1 ;
-				$end   = $start + $max_data_per_page;
-	
-				$ttd = $position == $count_content ? true : false;
-	
-				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>$start , "end"=>$end,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header),true);
-			}
 		}
 
 
