@@ -199,9 +199,9 @@ class Hasil extends CI_Controller {
 
 				// echo '<pre>';print_r($end);die(); // TODO debug die();
 	
-				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => false , "start"=>$start , "end"=>($end - 3),"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header),true);
+				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => false , "start"=>$start , "end"=>($end - 3),"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
 
-				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>($end - 3) , "end"=>$end + 1,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header),true);
+				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>($end - 3) , "end"=>$end + 1,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
 			}
 		}else{
 			for ($i=$count_content - 1; $i < $count_content; $i++) {
@@ -212,7 +212,7 @@ class Hasil extends CI_Controller {
 	
 				$ttd = $position == $count_content ? true : false;
 	
-				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>$start , "end"=>$end,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header),true);
+				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>$start , "end"=>$end,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
 			}
 		}
 
