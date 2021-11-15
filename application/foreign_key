@@ -1,0 +1,20 @@
+delete permohonan_detail_parameter
+from permohonan_detail_parameter
+left join permohonan_detail on permohonan_detail.id_permohonan_detail = permohonan_detail_parameter.id_permohonan_detail
+where permohonan_detail.id_permohonan is null;
+
+ALTER TABLE simpel_20211115.permohonan_detail_parameter ADD CONSTRAINT permohonan_detail_parameter_FK FOREIGN KEY (id_permohonan_detail) REFERENCES simpel_20211115.permohonan_detail(id_permohonan_detail);
+
+//
+
+delete permohonan_detail_parameter
+from permohonan_detail_parameter
+left join parameter_pengujian on parameter_pengujian.id_parameter_pengujian = permohonan_detail_parameter.id_parameter_pengujian 
+where parameter_pengujian.id_parameter_pengujian is null
+
+ALTER TABLE simpel_20211115.permohonan_detail_parameter ADD CONSTRAINT permohonan_detail_parameter_FK_1 FOREIGN KEY (id_parameter_pengujian) REFERENCES simpel_20211115.parameter_pengujian(id_parameter_pengujian);
+
+//
+
+
+
