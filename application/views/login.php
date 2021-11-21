@@ -39,6 +39,7 @@
 	.login-box {
 	   margin:auto;
 	   border: 5px #004da3 solid;
+     width:450px;
 	}
 </style>
 
@@ -51,8 +52,12 @@
     		<img src="<?php echo base_url()?>/assets/jakarta.png" style="width: 100%;">
     </div>
     <div class="col-sm-8" style="text-align: left;padding: 0px 0px;">
-    		<span class="" style="color: black;font-weight: 600;font-size: 40px;text-align: left;">SIMPEL</span><br><span class="" style="color: black;font-weight: 600;">Sistem Informasi </span>
-		<br><span class="" style="color: black;font-weight: 600;"> Pengujian Laboratorium</span>
+        <span class="" style="color: black;font-weight: 600;font-size: 25px;text-align: left;">Sistem Informasi Manajemen Pengujian Laboratorium (SIMPEL) </span>
+		    <br>
+        <span class="" style="color: black;font-weight: 600;">Pusat Promosi dan Sertifikasi Hasil Pertanian
+Dinas Ketahananan Pangan, Kelautan dan Pertanian
+Provinsi DKI Jakarta</span>
+<br><br>
 	</div>
     </div>
 
