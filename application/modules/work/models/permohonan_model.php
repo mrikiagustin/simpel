@@ -187,8 +187,8 @@ class Permohonan_model  extends CI_Model  {
 			}
 			$temp_nmr = $zero . $temp_nmr;
 
-			// $nomor_contoh = $temp_nmr . "/" . date("m") . "/" . date("Y");
-			$nomor_contoh = "000" . "/" . date("m") . "/" . date("Y");
+			$nomor_contoh = $temp_nmr . "/" . date("m") . "/" . date("Y");
+			// $nomor_contoh = "000" . "/" . date("m") . "/" . date("Y");
 
 			// nomor kode_lab
 				// $kkodelab = $this->get_kodelab_by_lab($value["laboratorium"]);
