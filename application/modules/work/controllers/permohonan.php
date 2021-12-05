@@ -738,13 +738,13 @@ class Permohonan extends CI_Controller {
 
 					//$op_laboratorium = new MyOptions($this->db->get("laporan"),"id_laporan","","laporan",true);
 
-					$source_parameter_pengujian = $this->db->select("parameter_pengujian.id_parameter_pengujian,parameter_pengujian.parameter_pengujian,laporan.laporan,laporan.id_laporan
+			$source_parameter_pengujian = $this->db->select("parameter_pengujian.id_parameter_pengujian,parameter_pengujian.parameter_pengujian,laporan.laporan,laporan.id_laporan
 																														,CONCAT(parameter_pengujian.parameter_pengujian, ' - ' , laporan.laporan) display
 																													")
 																									->join("laporan","laporan.id_laporan = parameter_pengujian.id_laporan")
 																									->get("parameter_pengujian");
         	$op_parameter_pengujian = new MyOptionsData($source_parameter_pengujian,"id_parameter_pengujian","","display",true,"laporan","id_laporan");
-          $op_metode = new MyOptions($this->db->get("metode"),"id_metode","","metode",true);
+          	$op_metode = new MyOptions($this->db->get("metode"),"id_metode","","metode",true);
 
 
         /* end of options*/

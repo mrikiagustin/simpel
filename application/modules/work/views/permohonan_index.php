@@ -255,9 +255,9 @@ foreach($css_files as $file): ?>
 		}
 
 		temp.find("select[name='det[0][pengujian][0][param]']").select2({
-      // templateResult : formatSelection3,
-      width:200
-    });
+			// templateResult : formatSelection3,
+			width:200
+		});
 
 		temp.find("select[name='det[0][pengujian][0][metode]']").select2();
 
@@ -348,56 +348,9 @@ foreach($css_files as $file): ?>
 	});
 
 	$("body").on("change",".select-laboratorium",function (e) {
-		//$(this).remove();
-		// $(this).parent().parent().next().remove();
-		// $(this).parent().parent().remove();
-		// console.log($(this).parent().next().find("option"));
-		// console.log($(this).parent().next().find("option[data-data2='"+$(this).val()+"']"));
 		$(this).parent().next().find("option").hide();
 		$(this).parent().next().find("option[data-data2 = '"+$(this).val()+"']").show();
-
-		// console.log($(this).parent().next().find("option"));
-    //$(this).parent().parent().next().find("option[data-data2 = '"+$(this).val()+"']").show();
 	});
-
-	// $("form").on("submit",function (e) {
-	// 	$.each($(".multiple_check"),function (i,val) {
-	// 		v = $(this).select2("val");
-	// 		nm = $(this).attr("name");
-	// 		nm = nm.substring(0, nm.length - 1);
-	//
-	// 		// console.log("nm",nm);
-	//
-	// 		$("input[name='" + nm + "_text]']").val(v.join(","));
-	// 		// console.log("final value",$(this).select2("val"));
-	// 		//console.log();
-	// 	});
-	//
-	//
-	// });
-
-	$(document).ready(function () {
-		// $.each($(".multiple_check"),function (i,val) {
-		// 	var t = $(this);
-		// 	nm = $(this).attr("name");
-
-		// 	nm = nm.substring(0, nm.length - 1);
-
-		// 	console.log(["Trade Fair", "CA", "Party"]);
-		// 	var vall = $("input[name='" + nm + "_text]']").val().split(",");
-		// 	console.log(vall);
-
-		// 	//setMutiple(t,vall);
-		// 	$(this).select2('val', ["2", "3"]).trigger("change");
-
-		// 	//setTimeout(function(){  }, 200);
-
-
-		// 	//console.log("final value",$(this).select2("val"));
-		// 	//console.log();
-		// });
-	});
-
 
 	function open_picker (){
 		picker = window.open('<?php echo base_url() ?>master/pelanggan_picker', '_blank', 'location=yes,height=570,width=1200,scrollbars=yes,status=yes');
@@ -423,83 +376,6 @@ foreach($css_files as $file): ?>
 
 
 	$(document).ready(function() {
-						// $(".numberOnly").on("keydown",function (e) {
-            //     // console.log("e",e);
-						//
-            //     // Allow: backspace, delete, tab, escape, enter and comma.
-            //     if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190,188]) !== -1 ||
-            //          // Allow: Ctrl/cmd+A
-            //         (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-            //          // Allow: Ctrl/cmd+C
-            //         (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-            //          // Allow: Ctrl/cmd+X
-            //         (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
-            //          // Allow: home, end, left, right
-            //         (e.keyCode >= 35 && e.keyCode <= 39)) {
-            //              // let it happen, don't do anything
-            //              return;
-            //     }
-            //     // Ensure that it is a number and stop the keypress
-            //     if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            //         e.preventDefault();
-            //         go = false;
-            //     }
-            // });
-
-            // $(".numberOnly").keydown();
-
-            // $(".numberOnly").on("keyup",function (e) {
-            //     var go = true;
-            //     var comma;
-            //     var c;
-						//
-            //     base = $(this).val();
-						//
-						//
-						//
-            //     if(base.indexOf(',') !== -1){
-            //         // console.log("base",typeof base);
-            //         // var x = base +'';
-            //         c = true;
-            //         var temp = base.split(",");
-            //         comma = temp[1];
-            //         angka = temp[0];
-            //     }else{
-            //         angka = base;
-            //     }
-						//
-            //     if(go){
-            //         angka = angka.replace(/[.]/g,"");
-						// 				angka += 10;
-            //         var rev     = parseInt(angka, 10).toString().split('').reverse().join('');
-						//
-            //         if(isNaN(rev)) rev = 0;
-						//
-            //         var rev2    = '';
-            //         for(var i = 0; i < rev.length; i++){
-            //             rev2  += rev[i];
-            //             if((i + 1) % 3 === 0 && i !== (rev.length - 1)){
-            //                 rev2 += '.';
-            //             }
-            //         }
-						//
-            //         if(comma){
-            //             var res = rev2.split('').reverse().join('');
-            //             $(this).val(res+','+comma);
-            //         }else{
-            //             if(c){
-            //                 $(this).val(rev2.split('').reverse().join('')+',');
-            //             }else{
-            //                 $(this).val(rev2.split('').reverse().join(''));
-            //             }
-						//
-            //         }
-						//
-            //     }
-            // });
-
-            // $(".numberOnly").keyup();
-
 						Inputmask.extendAliases({
 						  rp: {
 						            prefix: "",
