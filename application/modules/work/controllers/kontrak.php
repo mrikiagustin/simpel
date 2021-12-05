@@ -8,13 +8,8 @@ class Kontrak extends CI_Controller {
 		$this->page->use_directory();
 
 		$this->load->library('grocery_CRUD');
-  	$this->load->model("permohonan_model");
-
-
+  		$this->load->model("permohonan_model");
 	}
-
-
-
 
 	public function word($id)
 	{
@@ -131,8 +126,6 @@ class Kontrak extends CI_Controller {
 		$templateProcessor->saveAs('php://output');
 		// $templateProcessor->saveAs(APPPATH.'third_party/PhpWord/Sample_23_TemplateBlock_hasil.docx');
 	}
-
-
 
 	public function pdf($id, $download = 0, $header = 0,$tanggal = "")
 	{
@@ -368,7 +361,6 @@ class Kontrak extends CI_Controller {
 		}
 	}
 
-
 	public function index()
 	{
 
@@ -379,7 +371,8 @@ class Kontrak extends CI_Controller {
 			$crud->set_subject('Kontrak Kerja');
 
             $crud->columns(
-                'nama'
+				'created_at'
+                ,'nama'
                 ,'instansi_perusahaan'
                 ,'nik_npwp'
                 ,'alamat'
@@ -387,10 +380,11 @@ class Kontrak extends CI_Controller {
                 ,'kontak_person'
                 ,'hasil_kaji_ulang'
                 ,'tanggal_pengambilan');
-
+			
+			$crud->display_as('created_at','Waktu Input');
             $crud->display_as('instansi_perusahaan','Instansi / Perusahaan')->display_as('nik_npwp','Nik / NPWP');
             $crud->display_as('telepon_fax','Telepon / Fax');
-						$crud->display_as('tanggal_pengambilan','Tanggal Pengambilan');
+			$crud->display_as('tanggal_pengambilan','Tanggal Pengambilan');
 
 
 
@@ -535,7 +529,6 @@ class Kontrak extends CI_Controller {
 
 		return $html;
 	}
-
 
 	public function _before_insert_callback($post_array)
 	{
