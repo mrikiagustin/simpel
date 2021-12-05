@@ -29,7 +29,7 @@
 		<i style="font-size:12px">Test Result</i>
 </div>
 <br>
-<table border="1" cellpadding="2" style="text-align:center">
+<table border="1" cellpadding="2" style="text-align:center;font-size:10px;">
 	<tr>
 		<td rowspan="2" style="width:5%">No.</td>
 		<td rowspan="2" style="width:25%">karakteristik

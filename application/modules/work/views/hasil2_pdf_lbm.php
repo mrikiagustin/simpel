@@ -29,7 +29,7 @@
 		<i style="font-size:12px">Test Result</i>
 </div>
 <br>
-<table border="1" cellpadding="2" style="text-align:center">
+<table border="1" cellpadding="2" style="text-align:center;font-size:10px;">
 	<tr>
 		<td style="width:5%">No.</td>
 		<td style="width:20%">Parameter
