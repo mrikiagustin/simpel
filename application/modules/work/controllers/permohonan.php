@@ -617,7 +617,8 @@ class Permohonan extends CI_Controller {
 			$crud->set_subject('Permohonan Pengujian');
 
             $crud->columns(
-                'nama'
+				'created_at'
+                ,'nama'
                 ,'instansi_perusahaan'
                 ,'nik_npwp'
                 ,'alamat'
@@ -625,7 +626,9 @@ class Permohonan extends CI_Controller {
                 ,'kontak_person'
                 //,'hasil_kaji_ulang'
                 ,'tanggal_masuk');
+			
 
+			$crud->display_as('created_at','Waktu Input');
             $crud->display_as('instansi_perusahaan','Instansi / Perusahaan')->display_as('nik_npwp','Nik / NPWP');
             $crud->display_as('telepon_fax','Telepon / Fax');
 						//$crud->display_as('tanggal_masuk','Tanggal Terima Sample /<br> Tgl Pengambilan (PPC)');
@@ -633,7 +636,7 @@ class Permohonan extends CI_Controller {
 
 
 			$crud->add_fields('pelanggan','nama','instansi_perusahaan','nik_npwp','alamat','telepon_fax','kontak_person','tanggal_masuk','detail','hasil_kaji_ulang');
-      			$crud->edit_fields('Print','pelanggan','nama','instansi_perusahaan','nik_npwp','alamat','telepon_fax','kontak_person','tanggal_masuk','detail','hasil_kaji_ulang');
+      		$crud->edit_fields('Print','pelanggan','nama','instansi_perusahaan','nik_npwp','alamat','telepon_fax','kontak_person','tanggal_masuk','detail','hasil_kaji_ulang');
 
 
 			$crud->change_field_type('hasil_kaji_ulang', 'text');
@@ -996,102 +999,102 @@ class Permohonan extends CI_Controller {
   		return $post_array;
 	}
 
-		public function _after_update_callback($post_array,$primary_key)
-		{
-			// echo "<pre>";print_r($post_array);die();
-				// delete detail
-					$hidden_id = array();
-					$hidden_id_parameter = array();
-					if(isset($post_array["det"])){
-						foreach ($post_array["det"] as $key => $value) {
-							if($value["hidden_id"] != "z"){
-									$hidden_id[] = $value["hidden_id"];
-							}
+	public function _after_update_callback($post_array,$primary_key)
+	{
+		// echo "<pre>";print_r($post_array);die();
+			// delete detail
+				$hidden_id = array();
+				$hidden_id_parameter = array();
+				if(isset($post_array["det"])){
+					foreach ($post_array["det"] as $key => $value) {
+						if($value["hidden_id"] != "z"){
+								$hidden_id[] = $value["hidden_id"];
+						}
 
-							foreach ($value['pengujian'] as $x => $v) {
-								if($v["hidden_id"] != "z"){$hidden_id_parameter[] = $v['hidden_id'];}
-							}
+						foreach ($value['pengujian'] as $x => $v) {
+							if($v["hidden_id"] != "z"){$hidden_id_parameter[] = $v['hidden_id'];}
 						}
 					}
-					// echo "<pre>";print_r($hidden_id);//die();
-					// echo "<pre>";print_r($hidden_id_parameter);die();
+				}
+				// echo "<pre>";print_r($hidden_id);//die();
+				// echo "<pre>";print_r($hidden_id_parameter);die();
 
 
 
 
-					// delete detail parameter
-					$this->permohonan_model->delete_parameter_where_not($primary_key,$hidden_id_parameter);
+				// delete detail parameter
+				$this->permohonan_model->delete_parameter_where_not($primary_key,$hidden_id_parameter);
 
-					// delete detail
-					$this->permohonan_model->delete_details_where_not($primary_key,$hidden_id);
-
-
+				// delete detail
+				$this->permohonan_model->delete_details_where_not($primary_key,$hidden_id);
 
 
-				if(isset($post_array["det"])){
 
-					// add detail
-						$array_to_add = array();
-						$array_to_add_parameter = array();
-						// $array_to_add = $post_array["det"];
 
-						//re arrange
-							foreach ($post_array["det"] as $key ) {
-								$array_to_add[] = $key;
-							}
+			if(isset($post_array["det"])){
 
-						// echo "<pre>";print_r($array_to_add);die();
+				// add detail
+					$array_to_add = array();
+					$array_to_add_parameter = array();
+					// $array_to_add = $post_array["det"];
 
-						$temp_count = count($array_to_add);
-
-						for ($i=0; $i < $temp_count; $i++) {
-							if($array_to_add[$i]["hidden_id"] != "z"){
-									$array_to_add_parameter[] = $array_to_add[$i];
-									unset($array_to_add[$i]);
-							}
+					//re arrange
+						foreach ($post_array["det"] as $key ) {
+							$array_to_add[] = $key;
 						}
 
-						// echo "<pre>";print_r($array_to_add_parameter);//die();
+					// echo "<pre>";print_r($array_to_add);die();
 
-						// for ($i=0; $i < count($array_to_add_parameter); $i++) {
-						// 	// echo "<pre>";print_r($array_to_add_parameter[$i]['pengujian']);die();
-						// 	for ($j=0; $j < $array_to_add_parameter[$i]['pengujian']; $j++) {
-						// 		if($array_to_add_parameter[$i]['pengujian'][$j]['hidden_id'] != 'z') usnet($array_to_add_parameter[$i]['pengujian'][$j]);
-						// 	}
-						// }
-						// echo "<pre>";print_r($array_to_add_parameter);die();
-						// echo "<pre>";print_r($array_to_add);die();
+					$temp_count = count($array_to_add);
 
-						$this->permohonan_model->add_details($array_to_add,$primary_key);
-
-
-
-						$this->permohonan_model->add_details_parameter($array_to_add_parameter,$primary_key);
-
-
-					// update detail
-						$array_to_update = array();
-						//$array_to_update = $post_array["det"];
-
-						//re arrange
-							foreach ($post_array["det"] as $key ) {
-								$array_to_update[] = $key;
-							}
-							// echo "<pre>";print_r($array_to_update);//die();
-
-						$temp_count = count($array_to_update);
-						for ($i=0; $i < $temp_count; $i++) {
-							if($array_to_update[$i]["hidden_id"] == "z") unset($array_to_update[$i]);
+					for ($i=0; $i < $temp_count; $i++) {
+						if($array_to_add[$i]["hidden_id"] != "z"){
+								$array_to_add_parameter[] = $array_to_add[$i];
+								unset($array_to_add[$i]);
 						}
+					}
 
-						// echo "<pre>";print_r($array_to_update);die();
+					// echo "<pre>";print_r($array_to_add_parameter);//die();
+
+					// for ($i=0; $i < count($array_to_add_parameter); $i++) {
+					// 	// echo "<pre>";print_r($array_to_add_parameter[$i]['pengujian']);die();
+					// 	for ($j=0; $j < $array_to_add_parameter[$i]['pengujian']; $j++) {
+					// 		if($array_to_add_parameter[$i]['pengujian'][$j]['hidden_id'] != 'z') usnet($array_to_add_parameter[$i]['pengujian'][$j]);
+					// 	}
+					// }
+					// echo "<pre>";print_r($array_to_add_parameter);die();
+					// echo "<pre>";print_r($array_to_add);die();
+
+					$this->permohonan_model->add_details($array_to_add,$primary_key);
 
 
-						$this->permohonan_model->update_parameter($array_to_update,$primary_key);
-						$this->permohonan_model->update_details($array_to_update,$primary_key);
-					// end of update detail
 
-			}
+					$this->permohonan_model->add_details_parameter($array_to_add_parameter,$primary_key);
+
+
+				// update detail
+					$array_to_update = array();
+					//$array_to_update = $post_array["det"];
+
+					//re arrange
+						foreach ($post_array["det"] as $key ) {
+							$array_to_update[] = $key;
+						}
+						// echo "<pre>";print_r($array_to_update);//die();
+
+					$temp_count = count($array_to_update);
+					for ($i=0; $i < $temp_count; $i++) {
+						if($array_to_update[$i]["hidden_id"] == "z") unset($array_to_update[$i]);
+					}
+
+					// echo "<pre>";print_r($array_to_update);die();
+
+
+					$this->permohonan_model->update_parameter($array_to_update,$primary_key);
+					$this->permohonan_model->update_details($array_to_update,$primary_key);
+				// end of update detail
 
 		}
+
+	}
 }
