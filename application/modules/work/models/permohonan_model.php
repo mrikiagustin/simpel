@@ -475,10 +475,17 @@ class Permohonan_model  extends CI_Model  {
 
 	public function get_counter($y)
 	{
-		$zz = $this->db->query("select counter x from counter_contoh where tahun = ".$y." limit 1 ");
+		// $zz = $this->db->query("select counter x from counter_contoh where tahun = ".$y." limit 1 ");
+		$zz = $this->db->query("select nomor_contoh x from permohonan_detail where right(nomor_contoh,4) = '".$y."' order by id_permohonan_detail desc limit 1");
 
 		if($zz->num_rows() > 0){
-			return $zz->row()->x;
+			$exp = explode("/",$zz->row()->x);
+
+			$counter = (int)$exp[0];
+
+			if(is_nan($counter)) $counter = 1;
+
+			return $counter;
 		}else{
 			return 0;
 		}

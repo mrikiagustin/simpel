@@ -12,7 +12,7 @@ class Permohonan extends CI_Controller {
 		$this->page->use_directory();
 
 		$this->load->library('grocery_CRUD');
-  	$this->load->model("permohonan_model");
+  		$this->load->model("permohonan_model");
 
 
 	}
@@ -610,6 +610,7 @@ class Permohonan extends CI_Controller {
 
 	public function index()
 	{
+
 		try{
 			$crud = new grocery_CRUD();
 
