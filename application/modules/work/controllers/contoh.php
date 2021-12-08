@@ -308,7 +308,8 @@ class Contoh extends CI_Controller {
 			$crud->set_subject('Pengantar Contoh');
 
             $crud->columns(
-                'nama'
+				'created_at'
+                ,'nama'
                 ,'instansi_perusahaan'
                 ,'nik_npwp'
                 ,'alamat'
@@ -316,7 +317,8 @@ class Contoh extends CI_Controller {
                 ,'kontak_person'
                 ,'hasil_kaji_ulang'
                 ,'tanggal_pengambilan');
-
+			
+			$crud->display_as('created_at','Waktu Input');
             $crud->display_as('instansi_perusahaan','Instansi / Perusahaan')->display_as('nik_npwp','Nik / NPWP');
             $crud->display_as('telepon_fax','Telepon / Fax');
 
