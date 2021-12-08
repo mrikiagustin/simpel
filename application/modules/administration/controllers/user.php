@@ -19,11 +19,13 @@ class User extends CI_Controller {
 			$crud->set_table('user');
 			//$crud->set_subject('Office');
 			//$crud->required_fields('city');
-			$crud->columns('username','display_name','email','id_role','is_active');
-			$crud->add_action('Smileys', 'load-icon', 'demo/action_smiley');
+			$crud->columns('username','display_name','email','id_role','is_active','Lab');
+			// $crud->add_action('Smileys', 'load-icon', 'demo/action_smiley');
 
-			$crud->add_fields('username','display_name','email','password','verify_password','is_active','created_by','id_role');
-			$crud->edit_fields('username','display_name','email','is_active','created_by','id_role');
+			$crud->set_relation_n_n('Lab','user_lab','laporan','id_user','id_laporan','laporan','priority');
+
+			$crud->add_fields('username','display_name','email','password','verify_password','is_active','created_by','id_role','Lab');
+			$crud->edit_fields('username','display_name','email','is_active','created_by','id_role','Lab');
 
 			$crud->display_as('id_role','Role');
 			$crud->set_relation('id_role','role','nama_role');
