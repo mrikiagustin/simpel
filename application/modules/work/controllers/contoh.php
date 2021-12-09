@@ -324,8 +324,6 @@ class Contoh extends CI_Controller {
 				$crud->set_read_fields('Print','Detail');
 				$crud->callback_read_field('Print', array($this, 'printc'));
 				$crud->callback_read_field('Detail', array($this, 'detail'));
-
-				
 			}else{
 				$crud->columns(
 					'created_at'
@@ -346,6 +344,10 @@ class Contoh extends CI_Controller {
 
 				$crud->callback_edit_field('Print', array($this, 'printc'));
 				$crud->callback_edit_field('Detail', array($this, 'detail'));
+
+				$crud->set_read_fields('Print','Detail');
+				$crud->callback_read_field('Print', array($this, 'printc'));
+				$crud->callback_read_field('Detail', array($this, 'detail'));
 			}
 
 
