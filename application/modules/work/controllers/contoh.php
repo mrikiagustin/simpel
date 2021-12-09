@@ -8,9 +8,9 @@ class Contoh extends CI_Controller {
 		$this->page->use_directory();
 
 		$this->load->library('grocery_CRUD');
-  	$this->load->model("permohonan_model");
+  		$this->load->model("permohonan_model");
 
-
+		$this->login_info = $this->session->userdata("login_info");
 	}
 
 	function tgl_indo($tanggal){
@@ -307,34 +307,46 @@ class Contoh extends CI_Controller {
 			$crud->set_table('permohonan');
 			$crud->set_subject('Pengantar Contoh');
 
-            $crud->columns(
-				'created_at'
-                ,'nama'
-                ,'instansi_perusahaan'
-                ,'nik_npwp'
-                ,'alamat'
-                ,'telepon_fax'
-                ,'kontak_person'
-                ,'hasil_kaji_ulang'
-                ,'tanggal_pengambilan');
-			
-			$crud->display_as('created_at','Waktu Input');
-            $crud->display_as('instansi_perusahaan','Instansi / Perusahaan')->display_as('nik_npwp','Nik / NPWP');
-            $crud->display_as('telepon_fax','Telepon / Fax');
-
-
-
-      $crud->edit_fields('Print','Detail');
-
-      $crud->callback_edit_field('Print', array($this, 'printc'));
-			$crud->callback_edit_field('Detail', array($this, 'detail'));
-
-
-
 			$crud->unset_add();
 			$crud->unset_delete();
-			$crud->unset_read();
 			$crud->unset_clone();
+
+			if($this->login_info->id_role == 3){
+				$crud->unset_edit();
+
+				$crud->columns(
+					'created_at'
+					,'Nomor Contoh'
+				);
+	
+				$crud->callback_column('Nomor Contoh',array($this,'_nomor_contoh'));
+
+				$crud->set_read_fields('Print','Detail');
+				$crud->callback_read_field('Print', array($this, 'printc'));
+				$crud->callback_read_field('Detail', array($this, 'detail'));
+
+				
+			}else{
+				$crud->columns(
+					'created_at'
+					,'nama'
+					,'instansi_perusahaan'
+					,'nik_npwp'
+					,'alamat'
+					,'telepon_fax'
+					,'kontak_person'
+					,'hasil_kaji_ulang'
+					,'tanggal_pengambilan');
+				
+				$crud->display_as('created_at','Waktu Input');
+				$crud->display_as('instansi_perusahaan','Instansi / Perusahaan')->display_as('nik_npwp','Nik / NPWP');
+				$crud->display_as('telepon_fax','Telepon / Fax');
+
+				$crud->edit_fields('Print','Detail');
+
+				$crud->callback_edit_field('Print', array($this, 'printc'));
+				$crud->callback_edit_field('Detail', array($this, 'detail'));
+			}
 
 
 			$crud->callback_before_update(array($this,'_update_callback'));
@@ -451,55 +463,69 @@ class Contoh extends CI_Controller {
         $this->permohonan_model->add_details($post_array["det"],$primary_key);
     }
 
-		public function _update_callback($post_array)
-		{
-					//update nomor_contoh
+	public function _update_callback($post_array)
+	{
+				//update nomor_contoh
 
-					// echo "<pre>";print_r($post_array);die();
-
-
+				// echo "<pre>";print_r($post_array);die();
 
 
-					$paten = array();
-					foreach ($post_array['kode_contoh'] as $key => $value) {
-						$paten[$key] = array();
-						foreach ($value as $k => $v) {
-							$paten[$key][$k] = array();
-							foreach ($v as $z => $x) {
-								if(substr($x,0,3) != "000"){
-									$paten[$key][$k]= $x; break;
-								}
+
+
+				$paten = array();
+				foreach ($post_array['kode_contoh'] as $key => $value) {
+					$paten[$key] = array();
+					foreach ($value as $k => $v) {
+						$paten[$key][$k] = array();
+						foreach ($v as $z => $x) {
+							if(substr($x,0,3) != "000"){
+								$paten[$key][$k]= $x; break;
 							}
-
-							foreach ($v as $z => $x) {
-								$this->db->update("permohonan_detail_parameter",array("kode_contoh" => $paten[$key][$k]),array("id_permohonan_detail_parameter" => $z));
-							}
-
 						}
+
+						foreach ($v as $z => $x) {
+							$this->db->update("permohonan_detail_parameter",array("kode_contoh" => $paten[$key][$k]),array("id_permohonan_detail_parameter" => $z));
+						}
+
 					}
+				}
 
-					// echo "<pre>";print_r($paten);die();
-
-
-					//set header data
-					// $head['RP'] = "031"
+				// echo "<pre>";print_r($paten);die();
 
 
-	        //update harga
+				//set header data
+				// $head['RP'] = "031"
 
-					// foreach ($post_array['kode_contoh'] as $key => $value) {
-					//
-					// 	$this->db->update("permohonan_detail_parameter",array("biaya" => str_replace(".","",$value)),array("id_permohonan_detail_parameter" => $key));
-					// }
 
-					echo  '{
-		         "success":true,
-		        "insert_primary_key":true,
-		        "success_message":"<p>Your data has been successfully updated. <a href=\'http:\/\/localhost\/pertanian\/work\/hasil\/index\/\'>Go back to list<\/a><\/p>",
-		        "success_list_url":"http:\/\/localhost\/pertanian\/work\/permohonan\/index\/success\/1"
-		      }';
-		      die();
+		//update harga
 
-	  		return $post_array;
+				// foreach ($post_array['kode_contoh'] as $key => $value) {
+				//
+				// 	$this->db->update("permohonan_detail_parameter",array("biaya" => str_replace(".","",$value)),array("id_permohonan_detail_parameter" => $key));
+				// }
+
+				echo  '{
+				"success":true,
+			"insert_primary_key":true,
+			"success_message":"<p>Your data has been successfully updated. <a href=\'http:\/\/localhost\/pertanian\/work\/hasil\/index\/\'>Go back to list<\/a><\/p>",
+			"success_list_url":"http:\/\/localhost\/pertanian\/work\/permohonan\/index\/success\/1"
+			}';
+			die();
+
+		return $post_array;
+	}
+
+	public function _nomor_contoh($value,$row)
+	{
+
+		$src = $this->db->where("id_permohonan",$row->id_permohonan)->select("nomor_contoh")->get("permohonan_detail")->result();
+
+		$result = "";
+		foreach ($src as $key => $value) {
+			$result .= $value->nomor_contoh . ", ";
 		}
+
+		return $result;
+	}
+
 }
