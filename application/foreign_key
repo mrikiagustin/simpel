@@ -16,5 +16,16 @@ ALTER TABLE simpel_20211115.permohonan_detail_parameter ADD CONSTRAINT permohona
 
 //
 
+ALTER TABLE simpel_20211115.parameter_pengujian ADD CONSTRAINT parameter_pengujian_FK FOREIGN KEY (id_laporan) REFERENCES simpel_20211115.laporan(id_laporan);
+
+//
+
+ALTER TABLE simpel_20211115.permohonan_detail ADD CONSTRAINT permohonan_detail_FK FOREIGN KEY (id_permohonan) REFERENCES simpel_20211115.permohonan(id_permohonan);
+
+delete permohonan_detail
+from permohonan_detail
+left join permohonan on permohonan.id_permohonan = permohonan_detail.id_permohonan
+where permohonan.id_permohonan is null;
+
 
 
