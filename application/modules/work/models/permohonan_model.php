@@ -392,7 +392,7 @@ class Permohonan_model  extends CI_Model  {
 		}
 	}
 
-	public function get($id)
+	public function get($id,$additional_params = array())
 	{
 		// get data
 
@@ -431,6 +431,10 @@ class Permohonan_model  extends CI_Model  {
 					$this->db->select("mpengujian.* , parameter_pengujian.parameter_pengujian,metode.metode,parameter_pengujian.id_laporan");
 					$this->db->where("mpengujian.id_permohonan_detail",$main_data->mdetail[$i]->id_permohonan_detail);
 
+					if(isset($additional_params['id_laporan'])){
+						$this->db->where_in("parameter_pengujian.id_laporan",$additional_params['id_laporan']);
+					}
+
 					$main_data->mdetail[$i]->mpengujian = $this->db->get("permohonan_detail_parameter mpengujian")->result();
 
 					$this->db->join("parameter_pengujian","parameter_pengujian.id_parameter_pengujian = mpengujian.id_parameter_pengujian","left");
@@ -438,6 +442,11 @@ class Permohonan_model  extends CI_Model  {
 					$this->db->select("mpengujian.* , parameter_pengujian.parameter_pengujian,metode.metode");
 					$this->db->where("mpengujian.id_permohonan_detail",$main_data->mdetail[$i]->id_permohonan_detail);
 					$this->db->where("id_paket","0");
+
+					if(isset($additional_params['id_laporan'])){
+						$this->db->where_in("parameter_pengujian.id_laporan",$additional_params['id_laporan']);
+					}
+
 					$main_data->mdetail[$i]->mpengujian_nonpaket = $this->db->get("permohonan_detail_parameter mpengujian")->result();
 
 

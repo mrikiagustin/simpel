@@ -9,6 +9,7 @@ class Contoh extends CI_Controller {
 
 		$this->load->library('grocery_CRUD');
   		$this->load->model("permohonan_model");
+		$this->load->model("administration/user_model");
 
 		$this->login_info = $this->session->userdata("login_info");
 	}
@@ -312,14 +313,19 @@ class Contoh extends CI_Controller {
 			$crud->unset_clone();
 
 			if($this->login_info->id_role == 3){
+				$crud->set_model('Custom_model');
+				$crud->basic_model->set_id_laporan($this->user_model->get_user_lab($this->login_info->id_user));
 				$crud->unset_edit();
 
 				$crud->columns(
 					'created_at'
-					,'Nomor Contoh'
+					,'kode_contoh'
 				);
 	
-				$crud->callback_column('Nomor Contoh',array($this,'_nomor_contoh'));
+				// $crud->callback_column('Kode Contoh',array($this,'_kode_contoh'));
+
+				$crud->display_as('created_at','Waktu Input');
+				$crud->display_as('nama','Kode Contoh');
 
 				$crud->set_read_fields('Print','Detail');
 				$crud->callback_read_field('Print', array($this, 'printc'));
@@ -394,7 +400,10 @@ class Contoh extends CI_Controller {
 	}
 
 	function detail($value = '', $primary_key = null){
-		$this->data = $this->permohonan_model->get($primary_key);
+
+		$user_lab = $this->user_model->get_user_lab($this->login_info->id_user);
+
+		$this->data = $this->permohonan_model->get($primary_key,array("id_laporan" => $user_lab));
 		$data = $this->data;
 
 		// echo "<pre>";print_r($data);die();
@@ -414,32 +423,37 @@ class Contoh extends CI_Controller {
 		    <th>Keterangan</th>
 		  </tr>";
 
-		  $no = 1;foreach ($data->mdetail as $k => $v):
-      $rowspan = count($v->mpengujian) == 0 ? 1 : count($v->mpengujian);
+		  $no = 1;
+		  foreach ($data->mdetail as $k => $v):
+      	  $rowspan = count($v->mpengujian) == 0 ? 1 : count($v->mpengujian);
 
+		  if(count($v->mpengujian) > 0){
 			$html .= "<tr>
-		    <td rowspan='".$rowspan."'>".$no++."</td>
-		    <td rowspan='".$rowspan."'>".$v->komoditas."</td>
-		    <td rowspan='".$rowspan."'>".$v->varietas."</td>
-		    <td rowspan='".$rowspan."'>".$v->jumlah." ".$v->str_satuan."</td>
-		    <td rowspan='".$rowspan."'>".$v->str_kemasan."</td>
-		    <td rowspan='".$rowspan."'>".$v->str_kondisi."</td>
-				<td>
-					<input type=\"text\" class=\"form-control\" style='width:100px' value='".(isset($v->mpengujian[0]->kode_contoh) ? $v->mpengujian[0]->kode_contoh : "-")."' name='kode_contoh[".$v->id_permohonan_detail."][".$v->mpengujian[0]->id_laporan."][".$v->mpengujian[0]->id_permohonan_detail_parameter."]'>
-				</td>
-		    <td>".(isset($v->mpengujian[0]->caption) && $v->mpengujian[0]->caption != '' ? $v->mpengujian[0]->caption :  (isset($v->mpengujian[0]->parameter_pengujian) ? $v->mpengujian[0]->parameter_pengujian : "-"))."</td>
-		    <td>".(isset($v->mpengujian[0]->metode) ? $v->mpengujian[0]->metode : "-")."</td>
-		    <td rowspan='".$rowspan."'>".$v->keterangan."</td>
-		  </tr>";
+				<td rowspan='".$rowspan."'>".$no++."</td>
+				<td rowspan='".$rowspan."'>".$v->komoditas."</td>
+				<td rowspan='".$rowspan."'>".$v->varietas."</td>
+				<td rowspan='".$rowspan."'>".$v->jumlah." ".$v->str_satuan."</td>
+				<td rowspan='".$rowspan."'>".$v->str_kemasan."</td>
+				<td rowspan='".$rowspan."'>".$v->str_kondisi."</td>
+					<td>
+						<input type=\"text\" class=\"form-control\" style='width:100px' value='".(isset($v->mpengujian[0]->kode_contoh) ? $v->mpengujian[0]->kode_contoh : "-")."' name='kode_contoh[".$v->id_permohonan_detail."][".$v->mpengujian[0]->id_laporan."][".$v->mpengujian[0]->id_permohonan_detail_parameter."]'>
+					</td>
+				<td>".(isset($v->mpengujian[0]->caption) && $v->mpengujian[0]->caption != '' ? $v->mpengujian[0]->caption :  (isset($v->mpengujian[0]->parameter_pengujian) ? $v->mpengujian[0]->parameter_pengujian : "-"))."</td>
+				<td>".(isset($v->mpengujian[0]->metode) ? $v->mpengujian[0]->metode : "-")."</td>
+				<td rowspan='".$rowspan."'>".$v->keterangan."</td>
+			</tr>";
 
 
-		  for ($i=1; $i < count($v->mpengujian); $i++) :
-		    $html .= "<tr>
-				<td><input type=\"text\" class=\"form-control\" style='width:100px' value='".(isset($v->mpengujian[$i]->kode_contoh) ? $v->mpengujian[$i]->kode_contoh : "-")."' name='kode_contoh[".$v->id_permohonan_detail."][".$v->mpengujian[$i]->id_laporan."][".$v->mpengujian[$i]->id_permohonan_detail_parameter."]'></td>
-				<td>".(isset($v->mpengujian[$i]->caption) && $v->mpengujian[$i]->caption != '' ? $v->mpengujian[$i]->caption :  (isset($v->mpengujian[$i]->parameter_pengujian) ? $v->mpengujian[$i]->parameter_pengujian : "-"))."</td>
-				<td>".(isset($v->mpengujian[$i]->metode) ? $v->mpengujian[$i]->metode : "-")."</td>
-		    </tr>";
-		  endfor;
+			for ($i=1; $i < count($v->mpengujian); $i++) :
+				$html .= "<tr>
+					<td><input type=\"text\" class=\"form-control\" style='width:100px' value='".(isset($v->mpengujian[$i]->kode_contoh) ? $v->mpengujian[$i]->kode_contoh : "-")."' name='kode_contoh[".$v->id_permohonan_detail."][".$v->mpengujian[$i]->id_laporan."][".$v->mpengujian[$i]->id_permohonan_detail_parameter."]'></td>
+					<td>".(isset($v->mpengujian[$i]->caption) && $v->mpengujian[$i]->caption != '' ? $v->mpengujian[$i]->caption :  (isset($v->mpengujian[$i]->parameter_pengujian) ? $v->mpengujian[$i]->parameter_pengujian : "-"))."</td>
+					<td>".(isset($v->mpengujian[$i]->metode) ? $v->mpengujian[$i]->metode : "-")."</td>
+				</tr>";
+			endfor;
+		  }
+
+			
 
 		endforeach;
 		$html .= "</table>";
@@ -517,7 +531,7 @@ class Contoh extends CI_Controller {
 		return $post_array;
 	}
 
-	public function _nomor_contoh($value,$row)
+	public function _kode_contoh($value,$row)
 	{
 
 		$src = $this->db->where("id_permohonan",$row->id_permohonan)->select("nomor_contoh")->get("permohonan_detail")->result();
