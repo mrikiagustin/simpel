@@ -176,7 +176,14 @@ class Contoh extends CI_Controller {
 
 	public function pdf($id, $download = 0, $header = 0)
 	{
-		$data = $this->permohonan_model->get($id);
+		$user_lab = $this->user_model->get_user_lab($this->login_info->id_user);
+
+		if($this->login_info->id_role == 3){
+			$data = $this->permohonan_model->get($id,array("id_laporan" => $user_lab));
+		}else{
+			$data = $this->permohonan_model->get($id);
+		}
+
 		$setting = $this->db->get("setting_pengantar_contoh")->row();
 
 		$content = $this->load->view("contoh_pdf",array("data" => $data,"setting" => $setting),true);
@@ -403,7 +410,12 @@ class Contoh extends CI_Controller {
 
 		$user_lab = $this->user_model->get_user_lab($this->login_info->id_user);
 
-		$this->data = $this->permohonan_model->get($primary_key,array("id_laporan" => $user_lab));
+		if($this->login_info->id_role == 3){
+			$this->data = $this->permohonan_model->get($primary_key,array("id_laporan" => $user_lab));
+		}else{
+			$this->data = $this->permohonan_model->get($primary_key);
+		}
+		
 		$data = $this->data;
 
 		// echo "<pre>";print_r($data);die();
