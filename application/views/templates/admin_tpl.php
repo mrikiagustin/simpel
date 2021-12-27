@@ -96,6 +96,10 @@
           $class = $this->router->fetch_class();
 
           $this->db->order_by("urut");
+          if($this->session->userdata('login_info')->id_role != "1"){
+            $this->db->join("menu_access","menu_access.id_menu = menu.id_menu");
+            $this->db->where("menu_access.id_role",$this->session->userdata('login_info')->id_role);
+          }
           $menu  = $this->db->get_where("menu", array("parent_menu" => 0));
         ?>
 
@@ -104,6 +108,10 @@
           <!-- get child menu -->
           <?php
             $this->db->order_by("urut");
+            if($this->session->userdata('login_info')->id_role != "1"){
+              $this->db->join("menu_access","menu_access.id_menu = menu.id_menu");
+              $this->db->where("menu_access.id_role",$this->session->userdata('login_info')->id_role);
+            }
             $child_menu = $this->db->get_where("menu", array("parent_menu" => $v->id_menu));
             //var_dump($child_menu->result());
           ?>
