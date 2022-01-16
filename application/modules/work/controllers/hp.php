@@ -712,6 +712,11 @@ class Hp extends CI_Controller {
 		$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][medium]' value='".$value->medium."'></td>";
 				$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][premium]' value='".$value->premium."'></td>";
 		// $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		$html .= "<td>
+						<select style='width:150px;padding:0;' name='h[".$value->id_permohonan_detail_parameter."][metode]'>
+							".$this->metode_instrumen($metode)."
+						</select>
+					  </td>";
 		$html .= "</tr>";
 		}
 		
@@ -807,7 +812,12 @@ class Hp extends CI_Controller {
 		$html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
 		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
 		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
-		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		// $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		$html .= "<td>
+						<select style='width:150px;padding:0;' name='h[".$value->id_permohonan_detail_parameter."][metode]'>
+							".$this->metode_instrumen($metode)."
+						</select>
+					  </td>";
 				$html .= "<td><select name='h[".$value->id_permohonan_detail_parameter."][standard]'>
 												<option value='1' ".($value->standard == 1 ? 'selected' : '')."> Positif </option>
 												<option value='2' ".($value->standard == 2 ? 'selected' : '')."> Negatif </option>
@@ -915,7 +925,12 @@ class Hp extends CI_Controller {
 		$html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
 		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
 		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
-		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		// $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		$html .= "<td>
+						<select style='width:150px;padding:0;' name='h[".$value->id_permohonan_detail_parameter."][metode]'>
+							".$this->metode_instrumen($metode)."
+						</select>
+					  </td>";
 		$html .= "</tr>";
 		}
 		
@@ -1022,7 +1037,12 @@ class Hp extends CI_Controller {
 		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][lod]' value='".$value->lod."'></td>";
 				$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][loq]' value='".$value->loq."'></td>";
 				$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
-		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		// $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		$html .= "<td>
+						<select style='width:150px;padding:0;' name='h[".$value->id_permohonan_detail_parameter."][metode]'>
+							".$this->metode_instrumen($metode)."
+						</select>
+					  </td>";
 		$html .= "</tr>";
 		}
 	
@@ -1124,7 +1144,12 @@ class Hp extends CI_Controller {
 			$html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
 			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
 			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][mql]' value='".$value->mql."'></td>";
-			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+			// $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+			$html .= "<td>
+						<select style='width:150px;padding:0;' name='h[".$value->id_permohonan_detail_parameter."][metode]'>
+							".$this->metode_instrumen($metode)."
+						</select>
+					  </td>";
 			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmr]' value='".$value->bmr."'></td>";
 			$html .= "</tr>";
 		}
@@ -1221,7 +1246,12 @@ class Hp extends CI_Controller {
 			$html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
 			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
 			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][mql]' value='".$value->mql."'></td>";
-			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+			// $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+			$html .= "<td>
+						<select style='width:150px;padding:0;' name='h[".$value->id_permohonan_detail_parameter."][metode]'>
+							".$this->metode_instrumen($metode)."
+						</select>
+					  </td>";
 			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmc]' value='".$value->bmc."'></td>";
 			$html .= "</tr>";
 		}
@@ -1319,7 +1349,12 @@ class Hp extends CI_Controller {
 		$html .= "<td>".$value->parameter_pengujian."</td>";
 		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
 		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
-		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		// $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		$html .= "<td>
+						<select style='width:150px;padding:0;' name='h[".$value->id_permohonan_detail_parameter."][metode]'>
+							".$this->metode_instrumen($metode)."
+						</select>
+					  </td>";
 		$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][keterangan]' value='".$value->keterangan_hasil."'></td>";
 				$html .= "<td><select name='h[".$value->id_permohonan_detail_parameter."][standard]'>
 												<option value='1' ".($value->standard == 1 ? 'selected' : '')."> Positif </option>
