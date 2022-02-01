@@ -45,7 +45,7 @@
 	  -o-background-size: cover;
 	  background-size: cover !important;
 	  padding-top: 10%;
-    animation: animatedBackground 500s linear infinite;
+    animation: animatedBackground 1000s linear infinite;
 	}
 
 	.login-box {
