@@ -331,4 +331,10 @@ class Word2007 extends AbstractWriter implements WriterInterface
             }
         }
     }
+
+    public function getTableAsText($element) {
+		$writer = new \PhpOffice\PhpWord\Writer\Word2007\Element\Table($xmlWriter, $element);
+		$writer->write();
+		return $xmlWriter->getData();
+	}
 }

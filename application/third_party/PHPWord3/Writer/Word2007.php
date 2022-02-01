@@ -202,6 +202,13 @@ class PHPWord_Writer_Word2007 implements PHPWord_Writer_IWriter {
 			return null;
 		}
 	}
+
+	public function getTableAsText($element) {
+		$xmlWriter = $this->getXmlWriter();
+		$writer = new \PhpOffice\PhpWord\Writer\Word2007\Element\Table($xmlWriter, $element);
+		$writer->write();
+		return $xmlWriter->getData();
+	}
 	
 	public function getUseDiskCaching() {
 		return $this->_useDiskCaching;
