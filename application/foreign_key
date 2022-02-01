@@ -3,7 +3,7 @@ from permohonan_detail_parameter
 left join permohonan_detail on permohonan_detail.id_permohonan_detail = permohonan_detail_parameter.id_permohonan_detail
 where permohonan_detail.id_permohonan is null;
 
-ALTER TABLE simpel_20211115.permohonan_detail_parameter ADD CONSTRAINT permohonan_detail_parameter_FK FOREIGN KEY (id_permohonan_detail) REFERENCES simpel_20211115.permohonan_detail(id_permohonan_detail);
+ALTER TABLE permohonan_detail_parameter ADD CONSTRAINT permohonan_detail_parameter_FK FOREIGN KEY (id_permohonan_detail) REFERENCES permohonan_detail(id_permohonan_detail);
 
 //
 
@@ -12,20 +12,30 @@ from permohonan_detail_parameter
 left join parameter_pengujian on parameter_pengujian.id_parameter_pengujian = permohonan_detail_parameter.id_parameter_pengujian 
 where parameter_pengujian.id_parameter_pengujian is null
 
-ALTER TABLE simpel_20211115.permohonan_detail_parameter ADD CONSTRAINT permohonan_detail_parameter_FK_1 FOREIGN KEY (id_parameter_pengujian) REFERENCES simpel_20211115.parameter_pengujian(id_parameter_pengujian);
+ALTER TABLE permohonan_detail_parameter ADD CONSTRAINT permohonan_detail_parameter_FK_1 FOREIGN KEY (id_parameter_pengujian) REFERENCES parameter_pengujian(id_parameter_pengujian);
 
 //
 
-ALTER TABLE simpel_20211115.parameter_pengujian ADD CONSTRAINT parameter_pengujian_FK FOREIGN KEY (id_laporan) REFERENCES simpel_20211115.laporan(id_laporan);
+ALTER TABLE parameter_pengujian ADD CONSTRAINT parameter_pengujian_FK FOREIGN KEY (id_laporan) REFERENCES laporan(id_laporan);
 
 //
 
-ALTER TABLE simpel_20211115.permohonan_detail ADD CONSTRAINT permohonan_detail_FK FOREIGN KEY (id_permohonan) REFERENCES simpel_20211115.permohonan(id_permohonan);
+ALTER TABLE permohonan_detail ADD CONSTRAINT permohonan_detail_FK FOREIGN KEY (id_permohonan) REFERENCES permohonan(id_permohonan);
 
 delete permohonan_detail
 from permohonan_detail
 left join permohonan on permohonan.id_permohonan = permohonan_detail.id_permohonan
 where permohonan.id_permohonan is null;
 
+select permohonan_detail_parameter.* , permohonan.id_permohonan
+from permohonan_detail_parameter
+left join permohonan_detail on permohonan_detail_parameter.id_permohonan_detail = permohonan_detail.id_permohonan_detail
+left join permohonan on permohonan.id_permohonan = permohonan_detail.id_permohonan
+where permohonan.id_permohonan is null;
+
+//
+
+ALTER TABLE hasil ADD tanggal_pengujian DATE NULL;
+ALTER TABLE hasil ADD tanggal_selesai DATE NULL;
 
 
