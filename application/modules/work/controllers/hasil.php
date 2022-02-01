@@ -8,121 +8,124 @@ class Hasil extends CI_Controller {
 		$this->page->use_directory();
 
 		$this->load->library('grocery_CRUD');
-  	$this->load->model("permohonan_model");
+  		$this->load->model("permohonan_model");
 
 
 	}
 
 
 
-		public function word($id)
-		{
-			// require_once APPPATH."third_party\PhpWord\AutoLoader.php";
-			// require_once APPPATH."third_party\PhpWord\TemplateProcessor.php";
+	public function word($id)
+	{
+		// require_once APPPATH."third_party\PhpWord\AutoLoader.php";
+		// require_once APPPATH."third_party\PhpWord\TemplateProcessor.php";
 
-			require_once APPPATH."third_party/vendor/autoload.php";
+		require_once APPPATH."third_party/vendor/autoload.php";
 
-			$temp = explode("_",$id);
+		$temp = explode("_",$id);
 
-			$data = $this->permohonan_model->get_hasil(str_replace('-','/',$temp[0]),$temp[1]);
-			$data2= $this->db->where("prim",$id)->get("hasil")->row();
+		$data = $this->permohonan_model->get_hasil(str_replace('-','/',$temp[0]),$temp[1]);
+		$data2= $this->db->where("prim",$id)->get("hasil")->row();
 
-			$c1 = "";
-			$c2 = "";
+		$c1 = "";
+		$c2 = "";
 
-			if(isset($data2->ceklis_1)){
-				if($data2->ceklis_1 == 1){
-					$c1 = "y";
-				}else{
-					$c1 = "n";
-				}
+		if(isset($data2->ceklis_1)){
+			if($data2->ceklis_1 == 1){
+				$c1 = "y";
 			}else{
 				$c1 = "n";
 			}
+		}else{
+			$c1 = "n";
+		}
 
-			if(isset($data2->ceklis_2)){
-				if($data2->ceklis_2 == 1){
-					$c2 = "y";
-				}else{
-					$c2 = "n";
-				}
+		if(isset($data2->ceklis_2)){
+			if($data2->ceklis_2 == 1){
+				$c2 = "y";
 			}else{
 				$c2 = "n";
 			}
-
-			$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(APPPATH.'third_party/PhpWord/hasil_pengujian_'.$c1.$c2.'.docx');
-
-			$texts = $this->db->get("setting_kop")->row();
-			$kode_laporan = $this->db->get("setting_kontrak_kerja")->row();
-
-
-
-			$kkode = $this->db->where("id_laporan",$temp[1])->get("laporan")->row()->kode_laporan;
-
-
-
-				// end pengujian dan metode
-
-
-			$templateProcessor->setValue('header_line1', $texts->line_1);
-			$templateProcessor->setValue('header_line2', $texts->line_2);
-			$templateProcessor->setValue('header_line3', $texts->line_3);
-			$templateProcessor->setValue('header_line4', $texts->line_4);
-			$templateProcessor->setValue('header_line5', $texts->line_5);
-
-			$templateProcessor->setValue('header_line11', $texts->line_1);
-			$templateProcessor->setValue('header_line12', $texts->line_2);
-			$templateProcessor->setValue('header_line13', $texts->line_3);
-			$templateProcessor->setValue('header_line14', $texts->line_4);
-			$templateProcessor->setValue('header_line15', $texts->line_5);
-
-			$templateProcessor->deleteBlock('DELETEME');
-
-
-
-			$this->db->where("permohonan_detail.nomor_contoh",$data[0]->nomor_contoh);
-			$this->db->join("permohonan p","p.id_permohonan = permohonan_detail.id_permohonan");
-			$this->db->select("p.nama");
-
-			$templateProcessor->setValue('customer', $this->db->get("permohonan_detail")->row()->nama);
-			$ns = ($data2 != null && $data2->nomor_seri != null ? $data2->nomor_seri : "") ;
-			$templateProcessor->setValue('nomor_seri', $ns);
-			$templateProcessor->setValue('nomor_seri2', $ns);
-			$templateProcessor->setValue('tanggal',tgl_indo(date("Y-m-d")));
-			$templateProcessor->setValue('kode_dokumen', $kkode);
-
-			$d = $data[0];
-			$templateProcessor->setValue('contoh',  $d->varietas);
-			$templateProcessor->setValue('tanggal_terima', tgl_indo($d->tanggal_masuk));
-			$templateProcessor->setValue('kondisi',  $d->kondisi. "(Dikemas dengan ".$d->kemasan);
-			$templateProcessor->setValue('jenis_pengujian',  $d->laporan);
-			$templateProcessor->setValue('tanggal_selesai', tgl_indo($d->tanggal_pengambilan));
-
-			$templateProcessor->cloneRow('no', count($data));
-
-			for ($i=0; $i < count($data); $i++) {
-				$templateProcessor->setValue('no#'.($i+1), $i+1);
-				$templateProcessor->setValue('parameter#'.($i+1), $data[$i]->parameter_pengujian);
-				$templateProcessor->setValue('hasil#'.($i+1), $data[$i]->hasil);
-				$templateProcessor->setValue('satuan#'.($i+1), $data[$i]->satuan_hasil);
-				$templateProcessor->setValue('metode#'.($i+1), $data[$i]->metode);
-				$templateProcessor->setValue('keterangan#'.($i+1), $data[$i]->keterangan_hasil);
-			}
-
-
-
-
-			// echo date('H:i:s'), ' Saving the result document...', EOL;
-			header("Content-Disposition: attachment; filename=Laporan Hasil Pengujian.docx");
-			$templateProcessor->saveAs('php://output');
-			// $templateProcessor->saveAs(APPPATH.'third_party/PhpWord/Sample_23_TemplateBlock_hasil.docx');
+		}else{
+			$c2 = "n";
 		}
+
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+
+		
+		
+		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(APPPATH.'third_party/PhpWord/hasil_pengujian_'.$c1.$c2.'.docx');
+		
+
+		$texts = $this->db->get("setting_kop")->row();
+		$kode_laporan = $this->db->get("setting_kontrak_kerja")->row();
+
+
+
+		$kkode = $this->db->where("id_laporan",$temp[1])->get("laporan")->row()->kode_laporan;
+
+
+
+			// end pengujian dan metode
+
+
+		$templateProcessor->setValue('header_line1', $texts->line_1);
+		$templateProcessor->setValue('header_line2', $texts->line_2);
+		$templateProcessor->setValue('header_line3', $texts->line_3);
+		$templateProcessor->setValue('header_line4', $texts->line_4);
+		$templateProcessor->setValue('header_line5', $texts->line_5);
+
+		$templateProcessor->setValue('header_line11', $texts->line_1);
+		$templateProcessor->setValue('header_line12', $texts->line_2);
+		$templateProcessor->setValue('header_line13', $texts->line_3);
+		$templateProcessor->setValue('header_line14', $texts->line_4);
+		$templateProcessor->setValue('header_line15', $texts->line_5);
+
+		$templateProcessor->deleteBlock('DELETEME');
+
+
+
+		$this->db->where("permohonan_detail.nomor_contoh",$data[0]->nomor_contoh);
+		$this->db->join("permohonan p","p.id_permohonan = permohonan_detail.id_permohonan");
+		$this->db->select("p.nama");
+
+		$templateProcessor->setValue('customer', $this->db->get("permohonan_detail")->row()->nama);
+		$ns = ($data2 != null && $data2->nomor_seri != null ? $data2->nomor_seri : "") ;
+		$templateProcessor->setValue('nomor_seri', $ns);
+		$templateProcessor->setValue('nomor_seri2', $ns);
+		$templateProcessor->setValue('tanggal',tgl_indo(date("Y-m-d")));
+		$templateProcessor->setValue('kode_dokumen', $kkode);
+
+		$d = $data[0];
+		$templateProcessor->setValue('contoh',  $d->varietas);
+		$templateProcessor->setValue('tanggal_terima', tgl_indo($d->tanggal_masuk));
+		$templateProcessor->setValue('kondisi',  $d->kondisi. "(Dikemas dengan ".$d->kemasan);
+		$templateProcessor->setValue('jenis_pengujian',  $d->laporan);
+		$templateProcessor->setValue('tanggal_selesai', tgl_indo($d->tanggal_pengambilan));
+
+		$templateProcessor->cloneRow('no', count($data));
+
+		for ($i=0; $i < count($data); $i++) {
+			$templateProcessor->setValue('no#'.($i+1), $i+1);
+			$templateProcessor->setValue('parameter#'.($i+1), $data[$i]->parameter_pengujian);
+			$templateProcessor->setValue('hasil#'.($i+1), $data[$i]->hasil);
+			$templateProcessor->setValue('satuan#'.($i+1), $data[$i]->satuan_hasil);
+			$templateProcessor->setValue('metode#'.($i+1), $data[$i]->metode);
+			$templateProcessor->setValue('keterangan#'.($i+1), $data[$i]->keterangan_hasil);
+		}
+
+		// echo date('H:i:s'), ' Saving the result document...', EOL;
+		header("Content-Disposition: attachment; filename=Laporan Hasil Pengujian.docx");
+		$templateProcessor->saveAs('php://output');
+		// $templateProcessor->saveAs(APPPATH.'third_party/PhpWord/Sample_23_TemplateBlock_hasil.docx');
+	}
 
 
 
 	public function pdf($id, $download = 0, $header = 0,$tanggal = "")
 	{
-
 		$temp = explode("_",$id);
 		$data = $this->permohonan_model->get_hasil2(str_replace('-','/',$temp[0]),$temp[1]);
 		$data2= $this->db->where("prim",$id)->get("hasil")->row();
@@ -169,9 +172,9 @@ class Hasil extends CI_Controller {
 		}
 
 		$true_content = array();
-		$max_data_per_page = 25;
-		$max_data_last = 12;
-		$min_data_last = 3;
+		$max_data_per_page = 30;
+		$max_data_last = 0;
+		$min_data_last = 2;
 
 		$count_content = ceil(count($data) / $max_data_per_page);
 		$data_modulus = count($data) % $max_data_per_page;
@@ -187,7 +190,8 @@ class Hasil extends CI_Controller {
 			$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>$start , "end"=>$end,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
 		}
 
-		if($data_modulus > $max_data_last){
+		if($data_modulus > $max_data_last)
+		{
 			for ($i=$count_content - 1; $i < $count_content; $i++) {
 				$position = $i + 1;
 	
@@ -196,10 +200,16 @@ class Hasil extends CI_Controller {
 				$end   = count($data);
 	
 				$ttd = $position == $count_content ? true : false;
-
-				// echo '<pre>';print_r($end);die(); // TODO debug die();
 	
-				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => false , "start"=>$start , "end"=>($end - 3),"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
+				$true_content[] = $this->load->view(
+					$view_name,
+					array(
+						"data" => $data,
+						"data2" => $data2,
+						"ttd" => false , 
+						"start"=>$start , 
+						"end"=>($end - 3),
+						"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
 
 				$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>($end - 3) , "end"=>$end + 1,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header,"data_detail_metode" =>$data_detail_metode),true);
 			}
@@ -217,8 +227,8 @@ class Hasil extends CI_Controller {
 		}
 
 
-		//echo $content;die();
-		//echo "<pre>"; print_r($content);die();
+		// echo $content;die();
+		// echo "<pre>"; print_r($content);die();
 
 		$this->load->helper('tcpdf');
 		//$pdf = init_pdf();
@@ -267,10 +277,6 @@ class Hasil extends CI_Controller {
 			$pdf->writeHTML($key, true, false, true, false, '');
 		}
 
-
-
-
-
 		$pdf->lastPage();
 		if($download == 1){
 			$pdf->Output('hasil_pengujian.pdf', 'D');
@@ -293,9 +299,9 @@ class Hasil extends CI_Controller {
 			$crud->set_subject('Hasil Pengujian');
 
             $crud->columns(
-							'nomor_seri',
-              'nomor_contoh',
-              'parameter',
+				'nomor_seri',
+              	'nomor_contoh',
+              	'parameter',
             	'laporan',
             	'komoditas',
             	'varietas',
@@ -306,20 +312,20 @@ class Hasil extends CI_Controller {
             	'keterangan');
 
 
-        			$crud->edit_fields('prim','print','nomor_contoh','laporan','nomor_seri','ceklis_1','ceklis_2','hasil_pengujian');
+			$crud->edit_fields('prim','print','nomor_contoh','laporan','nomor_seri','ceklis_1','ceklis_2','hasil_pengujian');
 
-							$crud->change_field_type('prim', 'hidden');
+			$crud->change_field_type('prim', 'hidden');
 
-							$crud->display_as('ceklis_1',' ');
-							$crud->display_as('ceklis_2',' ');
+			$crud->display_as('ceklis_1',' ');
+			$crud->display_as('ceklis_2',' ');
 
 
-							$crud->callback_edit_field('nomor_seri', function ($t = 0) {
-								if($t == 0){
-										return '<input type="text" value="'.date("y").'0000" name="nomor_seri">';
-								}
-        				return '<input type="text" value="'.$t.'" name="nomor_seri">';
-        			});
+			$crud->callback_edit_field('nomor_seri', function ($t = 0) {
+				if($t == 0){
+					return '<input type="text" value="'.date("y").'0000" name="nomor_seri">';
+				}
+				return '<input type="text" value="'.$t.'" name="nomor_seri">';
+			});
 
 							$crud->callback_edit_field('ceklis_1', function ($t = 0) {
 								$checked = "";
@@ -590,104 +596,104 @@ class Hasil extends CI_Controller {
 	public function hasil_pengujian_mfb($value = '', $primary_key = null)
 	{
 		$expl     = explode("_",$primary_key);
-    $nomor    = str_replace('-','/',$expl[0]);
+		$nomor    = str_replace('-','/',$expl[0]);
 
-    $laporan  = $expl[1];
+		$laporan  = $expl[1];
 
-    $data = $this->db
-                    ->where("nomor_contoh", $nomor)
-                    ->where("id_laporan", $laporan)
-                    ->get("vw_hasil2_mfb");
+		$data = $this->db
+						->where("nomor_contoh", $nomor)
+						->where("id_laporan", $laporan)
+						->get("vw_hasil2_mfb");
 
-	  $data_metode = $this->db
-										->where("nomor_contoh", $nomor)
-										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
-										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
-										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
-										->select("metode.metode")
-										->get("permohonan_detail")
-										->result()
-										;
+		$data_metode = $this->db
+											->where("nomor_contoh", $nomor)
+											->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+											->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+											->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+											->select("metode.metode")
+											->get("permohonan_detail")
+											->result()
+											;
 
 
-    $html = '';
-		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
-		  <tr>
-		    <th rowspan='2'>No</th>
-		    <th rowspan='2'>karakteristik</th>
-		    <th rowspan='2'>Hasil</th>
-		    <th rowspan='2'>Satuan</th>
-		    <th colspan='2'>Persyaratan*</th>
-		    <th rowspan='2'>Metode</th>
-		  </tr>
+		$html = '';
+			$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
 			<tr>
-				<th>Medium</th>
-				<th>Premium</th>
+				<th rowspan='2'>No</th>
+				<th rowspan='2'>karakteristik</th>
+				<th rowspan='2'>Hasil</th>
+				<th rowspan='2'>Satuan</th>
+				<th colspan='2'>Persyaratan*</th>
+				<th rowspan='2'>Metode</th>
 			</tr>
-			";
+				<tr>
+					<th>Medium</th>
+					<th>Premium</th>
+				</tr>
+				";
 
 
-    $counter=1;
-		//echo "<pre>";print_r($data->result());die();
-    foreach ($data->result() as $key => $value) {
-			if(isset($data_metode[$counter - 1])){
-				$met = $data_metode[$counter - 1]->metode;
-			}else{
-				$met = '';
-			}
+		$counter=1;
+			//echo "<pre>";print_r($data->result());die();
+		foreach ($data->result() as $key => $value) {
+				if(isset($data_metode[$counter - 1])){
+					$met = $data_metode[$counter - 1]->metode;
+				}else{
+					$met = '';
+				}
 
-			if($value->hasil == null  && $value->metode == null){
-				$metode = $met;
-			}else{
-				$metode = $value->metode;
-			}
+				if($value->hasil == null  && $value->metode == null){
+					$metode = $met;
+				}else{
+					$metode = $value->metode;
+				}
 
-      $html .= "<tr>";
-      $html .= "<td>".($counter++)."</td>";
-      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
-			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
-      $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
-      $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][medium]' value='".$value->medium."'></td>";
-			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][premium]' value='".$value->premium."'></td>";
-      $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
-      $html .= "</tr>";
-    }
-	
-		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+		$html .= "<tr>";
+		$html .= "<td>".($counter++)."</td>";
+		$html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+				$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+		$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
+		$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][medium]' value='".$value->medium."'></td>";
+				$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][premium]' value='".$value->premium."'></td>";
+		$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+		$html .= "</tr>";
+		}
 		
-		$html .= "<tr>
-								<th colspan='2'> Metode Analitikal :</th>
-								<td colspan='5'>
-								<div class='form-check'>
-									<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
-									<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
-								</div>
-								<div class='form-check'>
-									<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
-									<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
-								</div>
-								<div class='form-check'>
-									<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
-									<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
-								</div>
-								<div class='form-check'>
-									<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
-									<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
-								</div>
-								<div class='form-check'>
-									<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
-									<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
-								</div>
-								</td>
-							</tr>";
+			$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
+			
+			$html .= "<tr>
+									<th colspan='2'> Metode Analitikal :</th>
+									<td colspan='5'>
+									<div class='form-check'>
+										<input type='checkbox' class='form-check-input' value='1' name='g1' ".( (isset($dadet->g1) && $dadet->g1 == 1) ? "checked" : "" ).">
+										<label class='form-check-label' for='exampleCheck1'>G1 : GC-ECD/FPD</label>
+									</div>
+									<div class='form-check'>
+										<input type='checkbox' class='form-check-input' value='1' name='g2' ".( (isset($dadet->g2) && $dadet->g2 == 1) ? "checked" : "" ).">
+										<label class='form-check-label' for='exampleCheck1'>G2 : GC-ECD/FID/NPD</label>
+									</div>
+									<div class='form-check'>
+										<input type='checkbox' class='form-check-input' value='1' name='g3' ".( (isset($dadet->g3) && $dadet->g3 == 1) ? "checked" : "" ).">
+										<label class='form-check-label' for='exampleCheck1'>G3 : GC-MS</label>
+									</div>
+									<div class='form-check'>
+										<input type='checkbox' class='form-check-input' value='1' name='l1' ".( (isset($dadet->l1) && $dadet->l1 == 1) ? "checked" : "" ).">
+										<label class='form-check-label' for='exampleCheck1'>L1 : LC-FLD</label>
+									</div>
+									<div class='form-check'>
+										<input type='checkbox' class='form-check-input' value='1' name='l2' ".( (isset($dadet->l2) && $dadet->l2 == 1) ? "checked" : "" ).">
+										<label class='form-check-label' for='exampleCheck1'>L2 : LC-MS/MS(MRM)</label>
+									</div>
+									</td>
+								</tr>";
 
-    $html .= "</table>";
+		$html .= "</table>";
 
-		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+			$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
 
 
 
-    return $html;
+		return $html;
 	}
 
 	public function hasil_pengujian_bn($value = '', $primary_key = null)
@@ -1011,40 +1017,40 @@ class Hasil extends CI_Controller {
 	public function hasil_pengujian_residu($value = '', $primary_key = null)
 	{
 		$expl     = explode("_",$primary_key);
-    $nomor    = str_replace('-','/',$expl[0]);
+		$nomor    = str_replace('-','/',$expl[0]);
 
-    $laporan  = $expl[1];
+		$laporan  = $expl[1];
 
-    $data = $this->db
-                    ->where("nomor_contoh", $nomor)
-                    ->where("id_laporan", $laporan)
-                    ->get("vw_hasil2_residu");
+		$data = $this->db
+						->where("nomor_contoh", $nomor)
+						->where("id_laporan", $laporan)
+						->get("vw_hasil2_residu");
 
-	  $data_metode = $this->db
-										->where("nomor_contoh", $nomor)
-										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
-										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
-										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
-										->select("metode.metode")
-										->get("permohonan_detail")
-										->result()
-										;
+		$data_metode = $this->db
+											->where("nomor_contoh", $nomor)
+											->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+											->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+											->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+											->select("metode.metode")
+											->get("permohonan_detail")
+											->result()
+											;
 
 
-    $html = '';
+		$html = '';
 		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
-		  <tr>
-		    <th>No</th>
-		    <th>Parameter</th>
-		    <th>Hasil</th>
-		    <th>MQL</th>
-		    <th>Metode</th>
-		    <th>BMR</th>
-		  </tr>";
+		<tr>
+			<th>No</th>
+			<th>Parameter</th>
+			<th>Hasil</th>
+			<th>MQL</th>
+			<th>Metode</th>
+			<th>BMR</th>
+		</tr>";
 
-    $counter=1;
-		//echo "<pre>";print_r($data_metode->result());die();
-    foreach ($data->result() as $key => $value) {
+		$counter=1;
+			//echo "<pre>";print_r($data_metode->result());die();
+		foreach ($data->result() as $key => $value) {
 			if(isset($data_metode[$counter - 1])){
 				$met = $data_metode[$counter - 1]->metode;
 			}else{
@@ -1057,15 +1063,15 @@ class Hasil extends CI_Controller {
 				$metode = $value->metode;
 			}
 
-      $html .= "<tr>";
-      $html .= "<td>".($counter++)."</td>";
-      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
-      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
-      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][mql]' value='".$value->mql."'></td>";
-      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
-      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmr]' value='".$value->bmr."'></td>";
-      $html .= "</tr>";
-    }
+			$html .= "<tr>";
+			$html .= "<td>".($counter++)."</td>";
+			$html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][mql]' value='".$value->mql."'></td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmr]' value='".$value->bmr."'></td>";
+			$html .= "</tr>";
+		}
 	
 		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
 		
@@ -1095,40 +1101,40 @@ class Hasil extends CI_Controller {
 								</td>
 							</tr>";
 
-    $html .= "</table>";
+    	$html .= "</table>";
 
 		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
 
 
 
-    return $html;
+    	return $html;
 	}
 
 
 	public function hasil_pengujian_mycotoxin($value = '', $primary_key = null)
 	{
 		$expl     = explode("_",$primary_key);
-    $nomor    = str_replace('-','/',$expl[0]);
+		$nomor    = str_replace('-','/',$expl[0]);
 
-    $laporan  = $expl[1];
+		$laporan  = $expl[1];
 
-    $data = $this->db
-                    ->where("nomor_contoh", $nomor)
-                    ->where("id_laporan", $laporan)
-                    ->get("vw_hasil2_mycotoxin");
+		$data = $this->db
+						->where("nomor_contoh", $nomor)
+						->where("id_laporan", $laporan)
+						->get("vw_hasil2_mycotoxin");
 
-	  $data_metode = $this->db
-										->where("nomor_contoh", $nomor)
-										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
-										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
-										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
-										->select("metode.metode")
-										->get("permohonan_detail")
-										->result()
-										;
+		$data_metode = $this->db
+											->where("nomor_contoh", $nomor)
+											->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+											->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+											->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+											->select("metode.metode")
+											->get("permohonan_detail")
+											->result()
+											;
 
 
-    $html = '';
+		$html = '';
 		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
 		  <tr>
 		    <th>No</th>
@@ -1139,30 +1145,30 @@ class Hasil extends CI_Controller {
 		    <th>BMC</th>
 		  </tr>";
 
-    $counter=1;
+    	$counter=1;
 		//echo "<pre>";print_r($data_metode->result());die();
-    foreach ($data->result() as $key => $value) {
-			if(isset($data_metode[$counter - 1])){
-				$met = $data_metode[$counter - 1]->metode;
-			}else{
-				$met = '';
-			}
+		foreach ($data->result() as $key => $value) {
+				if(isset($data_metode[$counter - 1])){
+					$met = $data_metode[$counter - 1]->metode;
+				}else{
+					$met = '';
+				}
 
-			if($value->hasil == null  && $value->metode == null){
-				$metode = $met;
-			}else{
-				$metode = $value->metode;
-			}
+				if($value->hasil == null  && $value->metode == null){
+					$metode = $met;
+				}else{
+					$metode = $value->metode;
+				}
 
-      $html .= "<tr>";
-      $html .= "<td>".($counter++)."</td>";
-      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
-      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
-      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][mql]' value='".$value->mql."'></td>";
-      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
-      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmc]' value='".$value->bmc."'></td>";
-      $html .= "</tr>";
-    }
+			$html .= "<tr>";
+			$html .= "<td>".($counter++)."</td>";
+			$html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][mql]' value='".$value->mql."'></td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmc]' value='".$value->bmc."'></td>";
+			$html .= "</tr>";
+		}
 	
 		$dadet = $this->db->where("nomor",$primary_key)->get("hasil_metode")->row();
 		
@@ -1192,13 +1198,13 @@ class Hasil extends CI_Controller {
 								</td>
 							</tr>";
 
-    $html .= "</table>";
+    	$html .= "</table>";
 
 		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
 
 
 
-    return $html;
+    	return $html;
 	}
 
 
