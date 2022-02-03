@@ -172,9 +172,9 @@ class Hasil extends CI_Controller {
 		}
 
 		$true_content = array();
-		$max_data_per_page = 30;
-		$max_data_last = 0;
-		$min_data_last = 2;
+		$max_data_per_page = 25;
+		$max_data_last = 12;
+		$min_data_last = 3;
 
 		$count_content = ceil(count($data) / $max_data_per_page);
 		$data_modulus = count($data) % $max_data_per_page;
@@ -1218,6 +1218,7 @@ class Hasil extends CI_Controller {
     $data = $this->db
                     ->where("nomor_contoh", $nomor)
                     ->where("id_laporan", $laporan)
+					->order_by("id_permohonan_detail_parameter")
                     ->get("vw_hasil2");
 
 	  $data_metode = $this->db
