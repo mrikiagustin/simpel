@@ -109,7 +109,7 @@
         <br>
         <br>
         <p></p>
-				<?php $d = $this->session->userdata("login_info");echo $d->display_name; ?>
+				<?php //$d = $this->session->userdata("login_info");echo $d->display_name; ?>
 
     </td>
   </tr>
