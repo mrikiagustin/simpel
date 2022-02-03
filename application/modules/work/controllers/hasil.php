@@ -503,6 +503,7 @@ class Hasil extends CI_Controller {
 		$data = $this->db
 										->where("nomor_contoh", $nomor)
 										->where("id_laporan", $laporan)
+										->order_by("id_permohonan_detail_parameter")
 										->get("vw_hasil2_fp");
 
 		$data_metode = $this->db
@@ -603,6 +604,7 @@ class Hasil extends CI_Controller {
 		$data = $this->db
 						->where("nomor_contoh", $nomor)
 						->where("id_laporan", $laporan)
+						->order_by("id_permohonan_detail_parameter")
 						->get("vw_hasil2_mfb");
 
 		$data_metode = $this->db
@@ -706,6 +708,7 @@ class Hasil extends CI_Controller {
     $data = $this->db
                     ->where("nomor_contoh", $nomor)
                     ->where("id_laporan", $laporan)
+					->order_by("id_permohonan_detail_parameter")
                     ->get("vw_hasil2");
 
 	  $data_metode = $this->db
@@ -815,6 +818,7 @@ class Hasil extends CI_Controller {
     $data = $this->db
                     ->where("nomor_contoh", $nomor)
                     ->where("id_laporan", $laporan)
+					->order_by("id_permohonan_detail_parameter")
                     ->get("vw_hasil2_kn");
 
 	  $data_metode = $this->db
@@ -917,6 +921,7 @@ class Hasil extends CI_Controller {
     $data = $this->db
                     ->where("nomor_contoh", $nomor)
                     ->where("id_laporan", $laporan)
+					->order_by("id_permohonan_detail_parameter")
                     ->get("vw_hasil2_lbm");
 
 	  $data_metode = $this->db
@@ -1024,6 +1029,7 @@ class Hasil extends CI_Controller {
 		$data = $this->db
 						->where("nomor_contoh", $nomor)
 						->where("id_laporan", $laporan)
+						->order_by("id_permohonan_detail_parameter")
 						->get("vw_hasil2_residu");
 
 		$data_metode = $this->db
@@ -1121,6 +1127,7 @@ class Hasil extends CI_Controller {
 		$data = $this->db
 						->where("nomor_contoh", $nomor)
 						->where("id_laporan", $laporan)
+						->order_by("id_permohonan_detail_parameter")
 						->get("vw_hasil2_mycotoxin");
 
 		$data_metode = $this->db
