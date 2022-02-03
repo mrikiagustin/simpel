@@ -542,6 +542,7 @@ class Permohonan_model  extends CI_Model  {
 
 		switch ($id_laporan) {
 			case "4":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+				$this->db->order_by("id_permohonan_detail_parameter");
 				$res = $this->db->get("vw_hasil2_fp");
 				break;
 			case "8":  // RESIDU PESTISIDA (GOLONGAN ORGANOKLOR)
@@ -549,21 +550,27 @@ class Permohonan_model  extends CI_Model  {
 			case "10":  // RESIDU PESTISIDA (GOLONGAN PERETROID)
 			case "11":  // RESIDU PESTISIDA (GOLONGAN KARBAMAT)
 			case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+				$this->db->order_by("id_permohonan_detail_parameter");
 				$res = $this->db->get("vw_hasil2_residu");
 				break;
 			case "12":  // KN
+				$this->db->order_by("id_permohonan_detail_parameter");
 				$res = $this->db->get("vw_hasil2_kn");
 				break;
 			case "13":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+				$this->db->order_by("id_permohonan_detail_parameter");
 				$res = $this->db->get("vw_hasil2_lbm");
 				break;
 			case "19": // MYCOTOXIN
+				$this->db->order_by("id_permohonan_detail_parameter");
 				$res = $this->db->get("vw_hasil2_mycotoxin");
 				break;
 			case "20": // MYCOTOXIN
+				$this->db->order_by("id_permohonan_detail_parameter");
 				$res = $this->db->get("vw_hasil2_mfb");
 				break;
 			default:
+				$this->db->order_by("id_permohonan_detail_parameter");
 				$res = $this->db->get("vw_hasil2");
 				break;
 		}
