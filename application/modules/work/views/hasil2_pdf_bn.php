@@ -32,15 +32,17 @@
 <table border="1" cellpadding="2" style="text-align:center;font-size:10px;">
 	<tr>
 		<td style="width:5%">No.</td>
-		<td style="width:30%">Parameter
+		<td style="width:25%">Parameter
 			<br><i>Parameter</i>
 		</td>
 		<td style="width:20%">
 			Hasil
 			<br><i>Result</i>
 		</td>
-		<td style="width:15%">Satuan
+		<td style="width:10%">Satuan
 			<br><i>Unit</i>
+		</td>
+		<td style="width:15%">Standard Kelulusan
 		</td>
 		<td style="width:30%">
 			Metode/Teknik Pengujian
@@ -55,6 +57,7 @@
 		<td style="text-align:left"><?php echo $v->caption == "" ? $v->parameter_pengujian : $v->caption?></td>
 		<td><?php echo $v->hasil?></td>
 		<td><?php echo $v->satuan_hasil?></td>
+		<td><?php echo $v->standard_kelulusan?></td>
 		<td><?php echo $v->metode?></td>
 	</tr>
   <?php endif;$no++?>

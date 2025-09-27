@@ -8,7 +8,7 @@ $d = $data[0];
   p {font-size: 10px;}
 </style>
 
-<p style="text-align:right"><?php echo "DF/MA/-"//$kode_dokumen?></p>
+<p style="text-align:right"><?php echo $kode_dokumen; //"DF/MA/-"//?></p>
 <table cellpadding="5">
 	<tr>
 		<td style="width:60%"></td>

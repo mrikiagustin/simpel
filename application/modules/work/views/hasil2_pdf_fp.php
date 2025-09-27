@@ -32,18 +32,30 @@
 <table border="1" cellpadding="2" style="text-align:center;font-size:10px;">
 	<tr>
 		<td style="width:5%">No.</td>
-		<td style="width:25%">Bahan Aktif
+		<td style="width:25%">
+      Bahan Aktif
+      <br>
+      <i>Active Ingredient</i>
 		</td>
 		<td style="width:15%">
 			Berat Jenis
+      <br>
+      <i>Density</i>
 		</td>
-		<td style="width:15%">Kadar Presentase
+		<td style="width:15%">
+      Hasil
+      <br>
+      <i>Result</i>
 		</td>
     <td style="width:20%">
 			Satuan
+      <br>
+      <i>Unit</i>
 		</td>
 		<td style="width:20%">
-			Metode
+			Metode/Teknik Pengujian
+      <br>
+      <i>Analytical Methods</i>
 		</td>
 
 	</tr>
