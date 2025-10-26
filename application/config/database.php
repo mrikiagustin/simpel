@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -76,11 +76,12 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> 'localhost',
 	'hostname' => 'localhost',
+	'port' => '13306',
 	'username' => 'root',
-	'password' => '',
+	'password' => '123456',
 	//'password' => 'admin2014',
 	// 'database' => 'simpel', //pertanian
-	'database' => 'simpel_20220721', //pertanian
+	'database' => 'simpel', //pertanian
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
