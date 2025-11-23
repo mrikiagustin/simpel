@@ -68,12 +68,20 @@ $this->set_js_lib($this->default_javascript_path . '/jquery_plugins/config/jquer
 			<?php 	} ?>
 			<?php if ($this->custom_button) { ?>
 				<div class='form-button-box'>
-					<a class="btn btn-large" href="<?php echo $this->custom_button_link; ?>"><?php echo $this->custom_button_text; ?></a>
+					<?php
+					//replace {{primary_key}} with actual primary key value in the custom button link
+					$custom_button_link = str_replace('{{primary_key}}', $primary_key_value, $this->custom_button_link);
+					?>
+					<a class="btn btn-large" href="<?php echo $custom_button_link; ?>"><?php echo $this->custom_button_text; ?></a>
 				</div>
 			<?php 	} ?>
 			<?php if ($this->custom_button2) { ?>
 				<div class='form-button-box'>
-					<a class="btn btn-large" href="<?php echo $this->custom_button2_link; ?>"><?php echo $this->custom_button2_text; ?></a>
+					<?php
+					//replace {{primary_key}} with actual primary key value in the custom button link
+					$custom_button2_link = str_replace('{{primary_key}}', $primary_key_value, $this->custom_button2_link);
+					?>
+					<a class="btn btn-large" href="<?php echo $custom_button2_link; ?>"><?php echo $this->custom_button2_text; ?></a>
 				</div>
 			<?php 	} ?>
 			<div class='form-button-box'>

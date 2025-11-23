@@ -615,7 +615,8 @@ class Permohonan extends CI_Controller
 
 			$crud->columns(
 				'created_at',
-				'nama',
+				'no_permohonan',
+				// 'nama',
 				'instansi_perusahaan',
 				'nik_npwp',
 				'alamat',
@@ -624,9 +625,11 @@ class Permohonan extends CI_Controller
 				//,'hasil_kaji_ulang'
 				// 'tanggal_masuk'
 			);
+			// $crud->order_by('no_permohonan', 'desc');
 
 
 			$crud->display_as('created_at', 'Waktu Input');
+			$crud->display_as('no_permohonan', 'No. Permohonan');
 			$crud->display_as('instansi_perusahaan', 'Instansi / Perusahaan')->display_as('nik_npwp', 'Nik / NPWP');
 			$crud->display_as('telepon_fax', 'Telepon / Fax');
 			//$crud->display_as('tanggal_masuk','Tanggal Terima Sample /<br> Tgl Pengambilan (PPC)');
@@ -634,7 +637,7 @@ class Permohonan extends CI_Controller
 
 
 			// $crud->add_fields('pelanggan', 'nama', 'instansi_perusahaan', 'nik_npwp', 'alamat', 'telepon_fax', 'kontak_person', 'tanggal_masuk', 'detail', 'hasil_kaji_ulang');
-			$crud->edit_fields('nama', 'instansi_perusahaan', 'nik_npwp', 'alamat', 'telepon_fax', 'kontak_person', 'detail');
+			$crud->edit_fields('instansi_perusahaan', 'nik_npwp', 'alamat', 'telepon_fax', 'kontak_person', 'detail');
 
 
 			$crud->change_field_type('hasil_kaji_ulang', 'text');
@@ -683,8 +686,8 @@ class Permohonan extends CI_Controller
 
 			$crud->unset_save();
 			$crud->unset_back_to_list();
-			$crud->set_custom_button('Terima', '#');
-			$crud->set_custom_button2('Tolak', '#');
+			$crud->set_custom_button('Terima', base_url() . 'portal/permohonan/terima/' . '{{primary_key}}');
+			$crud->set_custom_button2('Tolak', base_url() . 'portal/permohonan/tolak/' . '{{primary_key}}');
 
 
 			$output = $crud->render();
@@ -1152,5 +1155,24 @@ class Permohonan extends CI_Controller
 		$buttons .= '</div>';
 
 		return $buttons;
+	}
+
+	function terima()
+	{
+		$input = $this->input->get();
+
+		// copy pub to main
+
+		// set status approved
+
+		// return response
+
+		// redirect
+
+	}
+
+	function tolak()
+	{
+		$input = $this->input->get();
 	}
 }
