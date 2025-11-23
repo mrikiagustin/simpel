@@ -416,6 +416,7 @@ class Permohonan_model  extends CI_Model
 														,kodelab.kodelab str_kodelab
 														,kodelab.desc");
 		$this->db->where("det.id_pub_permohonan_detail", $id);
+		$this->db->where("det.deleted_at is null");
 		$main_data->mdetail = $this->db->get("pub_permohonan_detail det")->result();
 		// end detail
 
@@ -432,6 +433,7 @@ class Permohonan_model  extends CI_Model
 			$this->db->join("metode", "metode.id_metode = mpengujian.id_metode", "left");
 			$this->db->select("mpengujian.* , parameter_pengujian.parameter_pengujian,metode.metode,parameter_pengujian.id_laporan");
 			$this->db->where("mpengujian.id_pub_permohonan_detail", $main_data->mdetail[$i]->id_pub_permohonan_detail);
+			$this->db->where("mpengujian.deleted_at is null");
 
 			if (isset($additional_params['id_laporan'])) {
 				$this->db->where_in("parameter_pengujian.id_laporan", $additional_params['id_laporan']);
@@ -444,6 +446,7 @@ class Permohonan_model  extends CI_Model
 			$this->db->select("mpengujian.* , parameter_pengujian.parameter_pengujian,metode.metode");
 			$this->db->where("mpengujian.id_pub_permohonan_detail", $main_data->mdetail[$i]->id_pub_permohonan_detail);
 			$this->db->where("id_paket", "0");
+			$this->db->where("mpengujian.deleted_at is null");
 
 			if (isset($additional_params['id_laporan'])) {
 				$this->db->where_in("parameter_pengujian.id_laporan", $additional_params['id_laporan']);
@@ -456,6 +459,7 @@ class Permohonan_model  extends CI_Model
 			$this->db->select("paket.nama_paket parameter_pengujian ,'-' metode, sum(biaya) biaya,mpengujian.kode_contoh");
 			$this->db->where("mpengujian.id_pub_permohonan_detail", $main_data->mdetail[$i]->id_pub_permohonan_detail);
 			$this->db->where("mpengujian.id_paket !=", "0");
+			$this->db->where("mpengujian.deleted_at is null");
 
 			$this->db->group_by("mpengujian.id_paket");
 

@@ -1157,11 +1157,153 @@ class Permohonan extends CI_Controller
 		return $buttons;
 	}
 
-	function terima()
+	public function terima($id)
 	{
-		$input = $this->input->get();
+		ini_set('display_errors', 1);
+		error_reporting(E_ALL);
 
-		// copy pub to main
+		// $input = $this->input->get();
+
+		//
+		$year = date("Y");
+		$pub_permohonan_detail = $this->db
+			->where("id_pub_permohonan_detail", $id)
+			->where("deleted_at is null")
+			->get("pub_permohonan_detail")
+			->row();
+		if ($pub_permohonan_detail == null) {
+			// return error response
+			$this->session->set_flashdata('error', 'Data permohonan tidak ditemukan.');
+			redirect(base_url('portal/permohonan'));
+		}
+		$pub_permohonan_detail_parameter = $this->db
+			->where("id_pub_permohonan_detail", $pub_permohonan_detail->id_pub_permohonan_detail)
+			->where("deleted_at is null")
+			->get("pub_permohonan_detail_parameter")
+			->result();
+		$pub_user = $this->db->where("id_public_user", $pub_permohonan_detail->user_id)->get("pub_users")->row();
+
+		// copy permohonan
+		$permohonan_payload = array(
+			// "id_permohonan" => ,
+			// "created_at" => ,
+			// "created_by" => ,
+			// "updated_at" => ,
+			// "updated_by" => ,
+			"tanggal_pengambilan" => date("Y-m-d"),
+			"id_pelanggan" => $pub_user->id_public_user,
+			"nama" => $pub_user->instansi_perusahaan,
+			"instansi_perusahaan" => $pub_user->instansi_perusahaan,
+			"nik_npwp" => $pub_user->nik_npwp,
+			"alamat" => $pub_user->alamat,
+			"telepon_fax" => $pub_user->telepon_fax,
+			"kontak_person" => $pub_user->kontak_person,
+			// "hasil_kaji_ulang" => ,
+			// "uang_muka" => ,
+			// "sisa_pembayaran" => ,
+			"tanggal_masuk" => date("Y-m-d"),
+		);
+
+		// copy permohonan detail
+		$current_counter = $this->permohonan_model->get_counter(date("Y"));
+		$current_counter++;
+		$temp_nmr  = (string)$current_counter;
+		$zero = "";
+		for ($i = 0; $i <  (3 - strlen($temp_nmr)); $i++) {
+			$zero .= "0";
+		}
+		$temp_nmr = $zero . $temp_nmr;
+
+		$nomor_contoh = $temp_nmr . "/" . date("m") . "/" . date("Y");
+
+		$permohonan_detail_payload = array(
+			// "id_permohonan_detail" => "",
+			// "created_at" => "",
+			// "created_by" => "",
+			// "updated_at" => "",
+			// "updated_by" => "",
+			// "id_permohonan" => "",
+			"komoditas" => $pub_permohonan_detail->komoditas,
+			"varietas" => $pub_permohonan_detail->varietas,
+			"jumlah" => $pub_permohonan_detail->jumlah,
+			"satuan" => $pub_permohonan_detail->satuan,
+			"kemasan" => $pub_permohonan_detail->kemasan,
+			"kondisi" => $pub_permohonan_detail->kondisi,
+			"keterangan" => $pub_permohonan_detail->keterangan,
+			// "pengujian" => "",
+			// "metode" => "",
+			"nomor_contoh" => $nomor_contoh,
+			// "id_kodelab" => "",
+			// "nomor_kodelab" => "",
+			// "laporan" => "",
+			"ket_kondisi" => $pub_permohonan_detail->ket_kondisi,
+		);
+
+
+		// copy permohonan detail parameter
+		$permohonan_detail_parameter_payload = array();
+		foreach ($pub_permohonan_detail_parameter as $key => $value) {
+			$biaya = 0;
+			$b = $this->db
+				->select("parameter_pengujian.*,laporan.kode_contoh lap_kode_contoh")
+				->where("id_parameter_pengujian", $value->id_parameter_pengujian)
+				->join("laporan", "laporan.id_laporan = parameter_pengujian.id_laporan", "left")
+				->get("parameter_pengujian")->row();
+			if (isset($b->harga)) $biaya = $b->harga;
+
+			$kode_contoh_to_insert = "";
+			if ($b->kode_contoh != "" && $b->kode_contoh != null) {
+				$kode_contoh_to_insert = $b->kode_contoh;
+			} else {
+				$kode_contoh_to_insert = $b->lap_kode_contoh;
+			}
+
+			// check $temp_kode_contoh
+			if (isset($temp_kode_contoh[$kode_contoh_to_insert])) {
+				// jika ada, gunakan $temp_kode_contoh
+				$kode_contoh_final = $temp_kode_contoh[$kode_contoh_to_insert];
+			} else {
+				// jika tidak ada , buat kode_contoh dan simpan ke $temp_kode_contoh
+				$kkodelab = $kode_contoh_to_insert;
+				$current_counter_lab 	= $this->permohonan_model->get_counter_kodelab($year, $kkodelab);
+				// Format nomor laboratorium : NOMOR(3 digit)/KODE LAB/BULAN(mm)/TAHUN(yy)
+				//                           : 001/Bu/01/17
+				$zero = "";
+				$current_counter_lab++;
+				$temp2 = (string)$current_counter_lab;
+				for ($i = 0; $i <  (3 - strlen($temp2)); $i++) {
+					$zero .= "0";
+				}
+				$temp2 = $zero . $temp2;
+
+				// $kode_contoh_final = $temp2 . "/" . $kkodelab . "/" . $this->romawi(date("n")) .  "/" . date("y");
+				$kode_contoh_final = "000" . "/" . $kkodelab . "/" . $this->permohonan_model->romawi(date("n")) .  "/" . date("y");
+
+				$temp_kode_contoh[$kode_contoh_to_insert] = $kode_contoh_final;
+				$this->permohonan_model->update_counter_kodelab($year, $kkodelab, $current_counter_lab);
+			}
+
+			$permohonan_detail_parameter_payload[] = array(
+				// "id_permohonan_detail_parameter" => "",
+				"id_parameter_pengujian" => $value->id_parameter_pengujian,
+				// "id_permohonan_detail" => "",
+				"biaya" => $value->biaya,
+				"kode_contoh" => $kode_contoh_final,
+				"caption" => $value->caption,
+				"id_metode" => $value->id_metode,
+				// "id_paket" => "",
+			);
+		}
+
+
+
+		echo '<pre>';
+		print_r($permohonan_payload); //die(); // TODO debug
+		echo '<pre>';
+		print_r($permohonan_detail_payload); // die(); // TODO debug
+		echo '<pre>';
+		print_r($permohonan_detail_parameter_payload);
+		die(); // TODO debug
 
 		// set status approved
 
