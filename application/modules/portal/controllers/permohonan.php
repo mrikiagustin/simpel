@@ -1162,6 +1162,9 @@ class Permohonan extends CI_Controller
 		ini_set('display_errors', 1);
 		error_reporting(E_ALL);
 
+		// Start transaction
+		$this->db->trans_start();
+
 		// $input = $this->input->get();
 
 		//
@@ -1295,26 +1298,94 @@ class Permohonan extends CI_Controller
 			);
 		}
 
+		//insert permohonan
+		$this->db->insert("permohonan", $permohonan_payload);
+		$new_permohonan_id = $this->db->insert_id();
 
+		//insert permohonan detail
+		$permohonan_detail_payload['id_permohonan'] = $new_permohonan_id;
+		$this->db->insert("permohonan_detail", $permohonan_detail_payload);
+		$new_permohonan_detail_id = $this->db->insert_id();
 
-		echo '<pre>';
-		print_r($permohonan_payload); //die(); // TODO debug
-		echo '<pre>';
-		print_r($permohonan_detail_payload); // die(); // TODO debug
-		echo '<pre>';
-		print_r($permohonan_detail_parameter_payload);
-		die(); // TODO debug
+		//insert permohonan detail parameter
+		foreach ($permohonan_detail_parameter_payload as $key => $value) {
+			$value['id_permohonan_detail'] = $new_permohonan_detail_id;
+			$this->db->insert("permohonan_detail_parameter", $value);
+		}
 
-		// set status approved
+		// insert tracking
+		$tracking_payload = array(
+			// "id_tracking" => "",
+			"id_pub_permohonan_detail" => $id,
+			"no_permohonan" => $pub_permohonan_detail->no_permohonan,
+			"status" => "diterima",
+			"stage" => "proses",
+			"description" => "Permohonan diterima dan disalin ke data utama.",
+			// "notes" => "",
+			// "updated_by" => "",
+			// "user_id" => "",
+			"activity_at" => date("Y-m-d H:m:s"),
+			"created_at" => date("Y-m-d H:m:s"),
+			// "updated_at" => "",
+			// "deleted_at" => "",
+		);
+		$this->db->insert("pub_tracking", $tracking_payload);
+
+		//update pub_permohonan_detail status to 'proses'
+		$update_payload = array(
+			"status" => "approved",
+			"copied_to_id" => $new_permohonan_id,
+			"updated_at" => date("Y-m-d H:m:s"),
+		);
+		$this->db->where("id_pub_permohonan_detail", $id);
+		$this->db->update("pub_permohonan_detail", $update_payload);
+
+		// Complete transaction
+		$this->db->trans_complete();
+
 
 		// return response
+		$this->session->set_flashdata('success', 'Permohonan berhasil diterima dan disalin ke data utama.');
 
 		// redirect
-
+		redirect(base_url('work/permohonan/index/edit/' . $new_permohonan_id));
 	}
 
-	function tolak()
+	function tolak($id)
 	{
-		$input = $this->input->get();
+
+		$year = date("Y");
+		$pub_permohonan_detail = $this->db
+			->where("id_pub_permohonan_detail", $id)
+			->where("deleted_at is null")
+			->get("pub_permohonan_detail")
+			->row();
+		if ($pub_permohonan_detail == null) {
+			// return error response
+			$this->session->set_flashdata('error', 'Data permohonan tidak ditemukan.');
+			redirect(base_url('portal/permohonan'));
+		}
+
+		// insert tracking
+		$tracking_payload = array(
+			// "id_tracking" => "",
+			"id_pub_permohonan_detail" => $id,
+			"no_permohonan" => $pub_permohonan_detail->no_permohonan,
+			"status" => "ditolak",
+			"stage" => "ditolak",
+			"description" => "Permohonan ditolak.",
+			// "notes" => "",
+			// "updated_by" => "",
+			// "user_id" => "",
+			"activity_at" => date("Y-m-d H:m:s"),
+			"created_at" => date("Y-m-d H:m:s"),
+			// "updated_at" => "",
+			// "deleted_at" => "",
+		);
+		$this->db->insert("tracking", $tracking_payload);
+
+		// return response
+		$this->session->set_flashdata('success', 'Permohonan berhasil ditolak.');
+		redirect(base_url('portal/permohonan'));
 	}
 }
