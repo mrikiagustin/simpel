@@ -373,19 +373,15 @@ class Hasil2 extends CI_Controller
 				$crud->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.10.1.custom.min.css');
 				$crud->set_css('assets/grocery_crud/themes/flexigrid/css/flexigrid.css');
 
-
-
 				$crud->set_js('assets/grocery_crud/js/jquery-1.11.1.min.js');
-				$crud->set_js('assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js');
-				$crud->set_js('assets/grocery_crud/js/jquery_plugins/ui/i18n/datepicker/jquery.ui.datepicker-id.js');
-				$crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datepicker.config.js');
-				$crud->set_js('assets/grocery_crud/themes/flexigrid/js/jquery.form.js');
-				$crud->set_js('assets/grocery_crud/js/jquery_plugins/jquery.form.min.js');
-				$crud->set_js('assets/grocery_crud/themes/flexigrid/js/flexigrid-add.js');
-				$crud->set_js('assets/grocery_crud/js/jquery_plugins/jquery.noty.js');
-				$crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.noty.config.js');
-
-
+				// $crud->set_js('assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js');
+				// $crud->set_js('assets/grocery_crud/js/jquery_plugins/ui/i18n/datepicker/jquery.ui.datepicker-id.js');
+				// $crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datepicker.config.js');
+				// $crud->set_js('assets/grocery_crud/themes/flexigrid/js/jquery.form.js');
+				// $crud->set_js('assets/grocery_crud/js/jquery_plugins/jquery.form.min.js');
+				// $crud->set_js('assets/grocery_crud/themes/flexigrid/js/flexigrid-add.js');
+				// $crud->set_js('assets/grocery_crud/js/jquery_plugins/jquery.noty.js');
+				// $crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.noty.config.js');
 
 				$crud->set_js('assets/grocery_crud/texteditor/ckeditor/ckeditor.js');
 				$crud->set_js('assets/grocery_crud/texteditor/ckeditor/adapters/jquery.js');
@@ -1214,10 +1210,30 @@ class Hasil2 extends CI_Controller
 			}
 		}
 
+		// insert tracking
+		$jenis_pengujian = $this->db->where("id_laporan", $post_array['id_laporanz'])->get("laporan")->row()->laporan;
 
+		$id_permohonan = $this->db->select("id_permohonan")->where("nomor_contoh", $post_array['nomor_contoh'])->get("permohonan_detail")->row()->id_permohonan;
+		$pub_permohonan_detail = $this->db->get_where("pub_permohonan_detail", array("copied_to_id" => $id_permohonan, "deleted_at" => null))->row();
 
-
-		die();
+		if ($pub_permohonan_detail != null) {
+			$tracking_payload = array(
+				// "id_tracking" => "",
+				"id_pub_permohonan_detail" => $pub_permohonan_detail->id_pub_permohonan_detail,
+				"no_permohonan" => $pub_permohonan_detail->no_permohonan,
+				"status" => "selesai",
+				"stage" => "selesai",
+				"description" => "Pengisian hasil pengujian pada nomor contoh " . $post_array['nomor_contoh'] . " dengan jenis pengujian " . $jenis_pengujian,
+				// "notes" => "",
+				// "updated_by" => "",
+				// "user_id" => "",
+				"activity_at" => date("Y-m-d H:m:s"),
+				"created_at" => date("Y-m-d H:m:s"),
+				// "updated_at" => "",
+				// "deleted_at" => "",
+			);
+			$this->db->insert("pub_tracking", $tracking_payload);
+		}
 
 		//echo json_encode(array('success' => false , 'error_message' => 'This participant already exists'));
 		echo  '{
