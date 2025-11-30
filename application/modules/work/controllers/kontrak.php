@@ -541,7 +541,9 @@ class Kontrak extends CI_Controller
 
 	public function _after_insert_callback($post_array, $primary_key)
 	{
-		//echo "<pre>";print_r($post_array);die();
+		echo "<pre>";
+		print_r($post_array);
+		die();
 		// delete detail
 		$this->permohonan_model->delete_details($primary_key);
 
@@ -551,16 +553,35 @@ class Kontrak extends CI_Controller
 
 	public function _update_callback($post_array)
 	{
-		//update nomor_contoh
+		$pub_permohonan_detail = $this->db->get_where("pub_permohonan_detail", array("copied_to_id" => $id_permohonan, "deleted_at" => null))->row();
 
+		if ($pub_permohonan_detail != null) {
+			// insert tracking
+			$tracking_payload = array(
+				// "id_tracking" => "",
+				"id_pub_permohonan_detail" => $pub_permohonan_detail->id_pub_permohonan_detail,
+				"no_permohonan" => $pub_permohonan_detail->no_permohonan,
+				"status" => "kontrak_kerja",
+				"stage" => "proses",
+				"description" => "Proses kontrak kerja, nomor contoh diupdate menjadi " . $value . "dengan total biaya " . $post_array['total'] . " dan uang muka " . $post_array['uang_muka'],
+				// "notes" => "",
+				// "updated_by" => "",
+				// "user_id" => "",
+				"activity_at" => date("Y-m-d H:m:s"),
+				"created_at" => date("Y-m-d H:m:s"),
+				// "updated_at" => "",
+				// "deleted_at" => "",
+			);
+			$this->db->insert("pub_tracking", $tracking_payload);
+		}
+
+		//update nomor_contoh
 		foreach ($post_array['nomor'] as $key => $value) {
 			$this->db->update("permohonan_detail", array("nomor_contoh" => $value), array("id_permohonan_detail" => $key));
 		}
 
 		//update harga
-
 		foreach ($post_array['biaya'] as $key => $value) {
-
 			$this->db->update("permohonan_detail_parameter", array("biaya" => str_replace(".", "", $value)), array("id_permohonan_detail_parameter" => $key));
 		}
 
