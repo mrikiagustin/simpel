@@ -553,8 +553,24 @@ class Kontrak extends CI_Controller
 
 	public function _update_callback($post_array)
 	{
+		//update nomor_contoh
+		foreach ($post_array['nomor'] as $key => $value) {
+			$this->db->update("permohonan_detail", array("nomor_contoh" => $value), array("id_permohonan_detail" => $key));
+		}
 
+		//update harga
+		foreach ($post_array['biaya'] as $key => $value) {
+			$this->db->update("permohonan_detail_parameter", array("biaya" => str_replace(".", "", $value)), array("id_permohonan_detail_parameter" => $key));
+		}
+
+		//
 		//insert tracking
+		$nomor_contoh = "";
+		foreach ($post_array['nomor'] as $key => $value) {
+			$nomor_contoh .= $value . ", ";
+		}
+		$nomor_contoh = rtrim($nomor_contoh, ", ");
+
 		$id_permohonan = end($this->uri->segments);
 		$pub_permohonan_detail = $this->db->get_where("pub_permohonan_detail", array("copied_to_id" => $id_permohonan, "deleted_at" => null))->row();
 
@@ -565,7 +581,7 @@ class Kontrak extends CI_Controller
 				"no_permohonan" => $pub_permohonan_detail->no_permohonan,
 				"status" => "kontrak_kerja",
 				"stage" => "proses",
-				"description" => "Proses kontrak kerja, nomor contoh diupdate menjadi " . $value . "dengan total biaya " . $post_array['total'] . " dan uang muka " . $post_array['uang_muka'],
+				"description" => "Proses kontrak kerja, nomor contoh diupdate menjadi " . $nomor_contoh . " dengan total biaya " . $post_array['total'] . " dan uang muka " . $post_array['uang_muka'],
 				// "notes" => "",
 				// "updated_by" => "",
 				// "user_id" => "",
@@ -575,16 +591,6 @@ class Kontrak extends CI_Controller
 				// "deleted_at" => "",
 			);
 			$this->db->insert("pub_tracking", $tracking_payload);
-		}
-
-		//update nomor_contoh
-		foreach ($post_array['nomor'] as $key => $value) {
-			$this->db->update("permohonan_detail", array("nomor_contoh" => $value), array("id_permohonan_detail" => $key));
-		}
-
-		//update harga
-		foreach ($post_array['biaya'] as $key => $value) {
-			$this->db->update("permohonan_detail_parameter", array("biaya" => str_replace(".", "", $value)), array("id_permohonan_detail_parameter" => $key));
 		}
 
 		unset($post_array['total']);
