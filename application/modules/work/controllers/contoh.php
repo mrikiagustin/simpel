@@ -494,13 +494,6 @@ class Contoh extends CI_Controller
 
 	public function _update_callback($post_array)
 	{
-		//update nomor_contoh
-
-		// echo "<pre>";print_r($post_array);die();
-
-
-
-
 		$paten = array();
 		foreach ($post_array['kode_contoh'] as $key => $value) {
 			$paten[$key] = array();
@@ -519,19 +512,37 @@ class Contoh extends CI_Controller
 			}
 		}
 
-		// echo "<pre>";print_r($paten);die();
-
-
-		//set header data
-		// $head['RP'] = "031"
-
-
-		//update harga
-
-		// foreach ($post_array['kode_contoh'] as $key => $value) {
 		//
-		// 	$this->db->update("permohonan_detail_parameter",array("biaya" => str_replace(".","",$value)),array("id_permohonan_detail_parameter" => $key));
-		// }
+		// insert tracking
+		$id_permohonan = end($this->uri->segments);
+		$pub_permohonan_detail = $this->db->get_where("pub_permohonan_detail", array("copied_to_id" => $id_permohonan, "deleted_at" => null))->row();
+
+		$pengatar_contoh = "";
+		foreach ($paten as $key => $value) {
+			foreach ($value as $k => $v) {
+				$pengatar_contoh .= $v . ", ";
+			}
+		}
+		$pengatar_contoh = rtrim($pengatar_contoh, ", ");
+
+		if ($pub_permohonan_detail != null) {
+			$tracking_payload = array(
+				// "id_tracking" => "",
+				"id_pub_permohonan_detail" => $pub_permohonan_detail->id_pub_permohonan_detail,
+				"no_permohonan" => $pub_permohonan_detail->no_permohonan,
+				"status" => "pengantar_contoh",
+				"stage" => "proses",
+				"description" => "Pengantar Contoh telah diupdate menjadi : " . $pengatar_contoh,
+				// "notes" => "",
+				// "updated_by" => "",
+				// "user_id" => "",
+				"activity_at" => date("Y-m-d H:m:s"),
+				"created_at" => date("Y-m-d H:m:s"),
+				// "updated_at" => "",
+				// "deleted_at" => "",
+			);
+			$this->db->insert("pub_tracking", $tracking_payload);
+		}
 
 		echo  '{
 				"success":true,
