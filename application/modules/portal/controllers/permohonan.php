@@ -1384,6 +1384,14 @@ class Permohonan extends CI_Controller
 		);
 		$this->db->insert("tracking", $tracking_payload);
 
+		//update status to 'rejected'
+		$update_payload = array(
+			"status" => "rejected",
+			"updated_at" => date("Y-m-d H:m:s"),
+		);
+		$this->db->where("id_pub_permohonan_detail", $id);
+		$this->db->update("pub_permohonan_detail", $update_payload);
+
 		// return response
 		$this->session->set_flashdata('success', 'Permohonan berhasil ditolak.');
 		redirect(base_url('portal/permohonan'));
