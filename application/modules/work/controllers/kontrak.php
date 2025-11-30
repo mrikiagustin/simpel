@@ -553,10 +553,12 @@ class Kontrak extends CI_Controller
 
 	public function _update_callback($post_array)
 	{
+
+		//insert tracking
+		$id_permohonan = end($this->uri->segments);
 		$pub_permohonan_detail = $this->db->get_where("pub_permohonan_detail", array("copied_to_id" => $id_permohonan, "deleted_at" => null))->row();
 
 		if ($pub_permohonan_detail != null) {
-			// insert tracking
 			$tracking_payload = array(
 				// "id_tracking" => "",
 				"id_pub_permohonan_detail" => $pub_permohonan_detail->id_pub_permohonan_detail,
