@@ -614,18 +614,19 @@ class Permohonan extends CI_Controller
 
 			$crud->columns(
 				'created_at',
+				'no_permohonan',
 				'nama',
 				'instansi_perusahaan',
 				'nik_npwp',
 				'alamat',
 				'telepon_fax',
-				'kontak_person'
+				'kontak_person',
 				//,'hasil_kaji_ulang'
-				,
 				'tanggal_masuk'
 			);
 
 
+			$crud->display_as('no_permohonan', 'No. Permohonan');
 			$crud->display_as('created_at', 'Waktu Input');
 			$crud->display_as('instansi_perusahaan', 'Instansi / Perusahaan')->display_as('nik_npwp', 'Nik / NPWP');
 			$crud->display_as('telepon_fax', 'Telepon / Fax');
@@ -633,8 +634,8 @@ class Permohonan extends CI_Controller
 			$crud->display_as('tanggal_masuk', 'Tgl Terima Sample');
 
 
-			$crud->add_fields('pelanggan', 'nama', 'instansi_perusahaan', 'nik_npwp', 'alamat', 'telepon_fax', 'kontak_person', 'tanggal_masuk', 'detail', 'hasil_kaji_ulang');
-			$crud->edit_fields('Print', 'pelanggan', 'nama', 'instansi_perusahaan', 'nik_npwp', 'alamat', 'telepon_fax', 'kontak_person', 'tanggal_masuk', 'detail', 'hasil_kaji_ulang');
+			$crud->add_fields('pelanggan', 'no_permohonan', 'nama', 'instansi_perusahaan', 'nik_npwp', 'alamat', 'telepon_fax', 'kontak_person', 'tanggal_masuk', 'detail', 'hasil_kaji_ulang');
+			$crud->edit_fields('Print', 'pelanggan', 'no_permohonan', 'nama', 'instansi_perusahaan', 'nik_npwp', 'alamat', 'telepon_fax', 'kontak_person', 'tanggal_masuk', 'detail', 'hasil_kaji_ulang');
 
 
 			$crud->change_field_type('hasil_kaji_ulang', 'text');

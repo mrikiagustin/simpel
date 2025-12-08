@@ -1215,25 +1215,35 @@ class Hasil2 extends CI_Controller
 
 		$id_permohonan = $this->db->select("id_permohonan")->where("nomor_contoh", $post_array['nomor_contoh'])->get("permohonan_detail")->row()->id_permohonan;
 		$pub_permohonan_detail = $this->db->get_where("pub_permohonan_detail", array("copied_to_id" => $id_permohonan, "deleted_at" => null))->row();
+		$permohonan = $this->db->get_where("permohonan", array("id_permohonan" => $id_permohonan))->row();
+
+		$id_pub_permohonan_detail = null;
+		$no_permohonan = null;
 
 		if ($pub_permohonan_detail != null) {
-			$tracking_payload = array(
-				// "id_tracking" => "",
-				"id_pub_permohonan_detail" => $pub_permohonan_detail->id_pub_permohonan_detail,
-				"no_permohonan" => $pub_permohonan_detail->no_permohonan,
-				"status" => "selesai",
-				"stage" => "selesai",
-				"description" => "Pengisian hasil pengujian pada nomor contoh " . $post_array['nomor_contoh'] . " dengan jenis pengujian " . $jenis_pengujian,
-				// "notes" => "",
-				// "updated_by" => "",
-				// "user_id" => "",
-				"activity_at" => date("Y-m-d H:m:s"),
-				"created_at" => date("Y-m-d H:m:s"),
-				// "updated_at" => "",
-				// "deleted_at" => "",
-			);
-			$this->db->insert("pub_tracking", $tracking_payload);
+			$id_pub_permohonan_detail = $pub_permohonan_detail->id_pub_permohonan_detail;
+			$no_permohonan = $pub_permohonan_detail->no_permohonan;
+		} else {
+			$id_pub_permohonan_detail = null;
+			$no_permohonan = $permohonan->no_permohonan;
 		}
+
+		$tracking_payload = array(
+			// "id_tracking" => "",
+			"id_pub_permohonan_detail" => $id_pub_permohonan_detail,
+			"no_permohonan" => $no_permohonan,
+			"status" => "selesai",
+			"stage" => "selesai",
+			"description" => "Pengisian hasil pengujian pada nomor contoh " . $post_array['nomor_contoh'] . " dengan jenis pengujian " . $jenis_pengujian,
+			// "notes" => "",
+			// "updated_by" => "",
+			// "user_id" => "",
+			"activity_at" => date("Y-m-d H:m:s"),
+			"created_at" => date("Y-m-d H:m:s"),
+			// "updated_at" => "",
+			// "deleted_at" => "",
+		);
+		$this->db->insert("pub_tracking", $tracking_payload);
 
 		//echo json_encode(array('success' => false , 'error_message' => 'This participant already exists'));
 		echo  '{
