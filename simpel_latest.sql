@@ -1,3 +1,4 @@
+-- CREATE DATABASE /*!32312 IF NOT EXISTS*/ `simpel` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 -- MariaDB dump 10.18  Distrib 10.4.17-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: simpel_20220721

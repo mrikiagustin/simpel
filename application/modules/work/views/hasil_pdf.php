@@ -74,7 +74,7 @@ $d = $data[0];
 				</tr>
 				
 				<tr>
-					<td style="width:35%">Nomor Contoh<br><i>Sample COde</i><br></td>
+					<td style="width:35%">Nomor Contoh<br><i>Sample Code</i><br></td>
 					<td style="width:2%">:</td>
 					<td style="width:63%"><?php echo $d->nomor_contoh?></td>
 				</tr>

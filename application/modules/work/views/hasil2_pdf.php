@@ -139,52 +139,12 @@
 </table>
 <br>
 <br>
-<br>
-<table cellpadding="1" valign="center">
+<table valign="center" border="1" cellpadding="5">
 	<tr>
-		<td style="width:6%"></td><td style="width:4%;">
-			<table border="1">
-				<tr>
-          <?php if(isset($data2->ceklis_1)){?>
-            <?php if($data2->ceklis_1 == 1){?>
-
-					<td><img src="assets/check.png" alt="test alt attribute" width="20" height="20" border="0" /></td>
-          <?php }else{?>
-            <td><img src="assets/check_blank.png" alt="test alt attribute" width="20" height="20" border="0" /></td>
-            <?php };?>
-          <?php }else{?>
-          <td><img src="assets/check_blank.png" alt="test alt attribute" width="20" height="20" border="0" /></td>
-          <?php };?>
-				</tr>
-			</table>
-		</td>
-		<td style="width:90%;font-size:10px">
-			Hasil Pengujian hanya berlaku untuk contoh yang diuji
+		<td style="width:50%;font-size:10px">
+			<b>Hasil Pengujian hanya berlaku untuk contoh yang diuji
 			<br><i>The test result is only valid for the sample analyzed</i>
-			<br>
-		</td>
-	</tr>
-
-	<tr>
-		<td style="width:6%"></td><td style="width:4%;padding-top:10px;">
-			<table border="1">
-				<tr>
-          <?php if(isset($data2->ceklis_2)){?>
-            <?php if($data2->ceklis_2 == 1){?>
-
-					<td><img src="assets/check.png" alt="test alt attribute" width="20" height="20" border="0"  /></td>
-          <?php }else{?>
-            <td><img src="assets/check_blank.png" alt="test alt attribute" width="20" height="20" border="0"  /></td>
-            <?php };?>
-          <?php }else{?>
-          <td><img src="assets/check_blank.png" alt="test alt attribute" width="20" height="20" border="0"  /></td>
-          <?php };?>
-				</tr>
-			</table>
-		</td>
-		<td style="width:90%;font-size:10px">
-			Hasil Pengujian berlaku untuk kelompok (Lot)
-			<br><i>The test result is only valid for the group sample taken</i>
+      </b>
 		</td>
 	</tr>
 </table>

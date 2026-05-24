@@ -103,7 +103,7 @@
     </td>
 
 		<td style="width:50%;text-align:center;">
-        <p>Pengirim Contoh</p>
+        <p>Pengantar Contoh</p>
 				&nbsp;&nbsp;&nbsp;&nbsp;
         <br>
         <br>

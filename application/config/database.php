@@ -74,9 +74,8 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'localhost',
-	'hostname' => 'localhost',
-	'port' => '13306',
+	'dsn'	=> '',
+	'hostname' => 'localhost', // Gunakan nama service dari docker-compose
 	'username' => 'root',
 	'password' => '123456',
 	//'password' => 'admin2014',

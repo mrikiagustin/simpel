@@ -31,34 +31,24 @@
 <br>
 <table border="1" cellpadding="2" style="text-align:center;font-size:10px;">
 	<tr>
-		<td rowspan="2" style="width:5%">No.</td>
-		<td rowspan="2" style="width:25%">karakteristik
+		<td style="width:5%">No.</td>
+		<td style="width:35%">Karakteristik
 			<br><i>Characteristics</i>
 		</td>
-    <td rowspan="2" style="width:15%">
+    <td style="width:15%">
 			Hasil
 			<br><i>Result</i>
 		</td>
-		<td rowspan="2" style="width:15%">
+		<td style="width:15%">
 			Satuan
 			<br><i>Unit</i>
 		</td>
 
-    <td colspan="2" style="width:20%">
-			Persyaratan*
-			<br><i>Requirements*</i>
-		</td>
-
-		<td rowspan="2" style="width:20%">
+		<td style="width:30%">
 			Metode
 			<br><i>Method </i>
 		</td>
 	</tr>
-
-  <tr>
-    <td>Medium</td>
-    <td>Premium</td>
-  </tr>
 <?php $no=1;foreach($data as $x  => $v):?>
   <?php if($no >= $start && $no < $end):?>
 	<tr>
@@ -66,8 +56,6 @@
 		<td style="text-align:left"><?php echo $v->caption == "" ? $v->parameter_pengujian : $v->caption?></td>
     <td><?php echo $v->hasil?></td>
 		<td><?php echo $v->satuan_hasil?></td>
-    <td><?php echo $v->medium?></td>
-    <td><?php echo $v->premium?></td>
 		<td><?php echo $v->metode?></td>
 	</tr>
   <?php endif;$no++?>
@@ -78,14 +66,6 @@
 
 
 <?php if($ttd == true):?>
-
-<br><br>
-
-<table>
-  <tr>
-    <th colspan="3">*Berdasarkan Permentan Nomor 31/Permentan/PP.130/8/2017 tentang Kelas Mutu Beras</th>
-  </tr>
-</table>
 
 <br><br>
 
@@ -139,54 +119,19 @@
 
 <?php endif;endif;?>
 
-<br>
-<br>
-<br>
-<table cellpadding="1" valign="center">
-	<tr>
-    <td style="width:4%;">
-			<table border="1">
-				<tr>
-          <?php if(isset($data2->ceklis_1)){?>
-            <?php if($data2->ceklis_1 == 1){?>
+<table>
+  <tr>
+    <th colspan="3">Catatan : <?php echo isset($data_detail->catatan) && !empty($data_detail->catatan) ? $data_detail->catatan : "-"?></th>
+  </tr>
+</table>
 
-					<td><img src="assets/check.png" alt="test alt attribute" width="20" height="20" border="0" /></td>
-          <?php }else{?>
-            <td><img src="assets/check_blank.png" alt="test alt attribute" width="20" height="20" border="0" /></td>
-            <?php };?>
-          <?php }else{?>
-          <td><img src="assets/check_blank.png" alt="test alt attribute" width="20" height="20" border="0" /></td>
-          <?php };?>
-				</tr>
-			</table>
-		</td>
-		<td style="width:90%;font-size:10px">
-			Hasil Pengujian hanya berlaku untuk contoh yang diuji
+<br><br>
+<table valign="center" border="1" cellpadding="5">
+	<tr>
+		<td style="width:50%;font-size:10px">
+			<b>Hasil Pengujian hanya berlaku untuk contoh yang diuji
 			<br><i>The test result is only valid for the sample analyzed</i>
-			<br>
-		</td>
-	</tr>
-
-	<tr>
-		<td style="width:4%;padding-top:10px;">
-			<table border="1">
-				<tr>
-          <?php if(isset($data2->ceklis_2)){?>
-            <?php if($data2->ceklis_2 == 1){?>
-
-					<td><img src="assets/check.png" alt="test alt attribute" width="20" height="20" border="0"  /></td>
-          <?php }else{?>
-            <td><img src="assets/check_blank.png" alt="test alt attribute" width="20" height="20" border="0"  /></td>
-            <?php };?>
-          <?php }else{?>
-          <td><img src="assets/check_blank.png" alt="test alt attribute" width="20" height="20" border="0"  /></td>
-          <?php };?>
-				</tr>
-			</table>
-		</td>
-		<td style="width:90%;font-size:10px">
-			Hasil Pengujian berlaku untuk kelompok (Lot)
-			<br><i>The test result is only valid for the group sample taken</i>
+      </b>
 		</td>
 	</tr>
 </table>

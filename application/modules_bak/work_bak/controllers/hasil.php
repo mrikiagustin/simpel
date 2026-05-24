@@ -1,0 +1,1314 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Hasil extends CI_Controller {
+
+	function __construct(){
+		parent::__construct();
+		$this->page->use_directory();
+
+		$this->load->library('grocery_CRUD');
+  	$this->load->model("permohonan_model");
+
+
+	}
+
+
+
+		public function word($id)
+		{
+			// require_once APPPATH."third_party\PhpWord\AutoLoader.php";
+			// require_once APPPATH."third_party\PhpWord\TemplateProcessor.php";
+
+			require_once APPPATH."third_party/vendor/autoload.php";
+
+			$temp = explode("_",$id);
+
+			$data = $this->permohonan_model->get_hasil(str_replace('-','/',$temp[0]),$temp[1]);
+			$data2= $this->db->where("prim",$id)->get("hasil")->row();
+
+			$c1 = "";
+			$c2 = "";
+
+			if(isset($data2->ceklis_1)){
+				if($data2->ceklis_1 == 1){
+					$c1 = "y";
+				}else{
+					$c1 = "n";
+				}
+			}else{
+				$c1 = "n";
+			}
+
+			if(isset($data2->ceklis_2)){
+				if($data2->ceklis_2 == 1){
+					$c2 = "y";
+				}else{
+					$c2 = "n";
+				}
+			}else{
+				$c2 = "n";
+			}
+
+			$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(APPPATH.'third_party/PhpWord/hasil_pengujian_'.$c1.$c2.'.docx');
+
+			$texts = $this->db->get("setting_kop")->row();
+			$kode_laporan = $this->db->get("setting_kontrak_kerja")->row();
+
+
+
+			$kkode = $this->db->where("id_laporan",$temp[1])->get("laporan")->row()->kode_laporan;
+
+
+
+				// end pengujian dan metode
+
+
+			$templateProcessor->setValue('header_line1', $texts->line_1);
+			$templateProcessor->setValue('header_line2', $texts->line_2);
+			$templateProcessor->setValue('header_line3', $texts->line_3);
+			$templateProcessor->setValue('header_line4', $texts->line_4);
+			$templateProcessor->setValue('header_line5', $texts->line_5);
+
+			$templateProcessor->setValue('header_line11', $texts->line_1);
+			$templateProcessor->setValue('header_line12', $texts->line_2);
+			$templateProcessor->setValue('header_line13', $texts->line_3);
+			$templateProcessor->setValue('header_line14', $texts->line_4);
+			$templateProcessor->setValue('header_line15', $texts->line_5);
+
+			$templateProcessor->deleteBlock('DELETEME');
+
+
+
+			$this->db->where("permohonan_detail.nomor_contoh",$data[0]->nomor_contoh);
+			$this->db->join("permohonan p","p.id_permohonan = permohonan_detail.id_permohonan");
+			$this->db->select("p.nama");
+
+			$templateProcessor->setValue('customer', $this->db->get("permohonan_detail")->row()->nama);
+			$ns = ($data2 != null && $data2->nomor_seri != null ? $data2->nomor_seri : "") ;
+			$templateProcessor->setValue('nomor_seri', $ns);
+			$templateProcessor->setValue('nomor_seri2', $ns);
+			$templateProcessor->setValue('tanggal',tgl_indo(date("Y-m-d")));
+			$templateProcessor->setValue('kode_dokumen', $kkode);
+
+			$d = $data[0];
+			$templateProcessor->setValue('contoh',  $d->varietas);
+			$templateProcessor->setValue('tanggal_terima', tgl_indo($d->tanggal_masuk));
+			$templateProcessor->setValue('kondisi',  $d->kondisi. "(Dikemas dengan ".$d->kemasan);
+			$templateProcessor->setValue('jenis_pengujian',  $d->laporan);
+			$templateProcessor->setValue('tanggal_selesai', tgl_indo($d->tanggal_pengambilan));
+
+			$templateProcessor->cloneRow('no', count($data));
+
+			for ($i=0; $i < count($data); $i++) {
+				$templateProcessor->setValue('no#'.($i+1), $i+1);
+				$templateProcessor->setValue('parameter#'.($i+1), $data[$i]->parameter_pengujian);
+				$templateProcessor->setValue('hasil#'.($i+1), $data[$i]->hasil);
+				$templateProcessor->setValue('satuan#'.($i+1), $data[$i]->satuan_hasil);
+				$templateProcessor->setValue('metode#'.($i+1), $data[$i]->metode);
+				$templateProcessor->setValue('keterangan#'.($i+1), $data[$i]->keterangan_hasil);
+			}
+
+
+
+
+			// echo date('H:i:s'), ' Saving the result document...', EOL;
+			header("Content-Disposition: attachment; filename=Laporan Hasil Pengujian.docx");
+			$templateProcessor->saveAs('php://output');
+			// $templateProcessor->saveAs(APPPATH.'third_party/PhpWord/Sample_23_TemplateBlock_hasil.docx');
+		}
+
+
+
+	public function pdf($id, $download = 0, $header = 0,$tanggal = "")
+	{
+
+		$temp = explode("_",$id);
+		$data = $this->permohonan_model->get_hasil2(str_replace('-','/',$temp[0]),$temp[1]);
+		$data2= $this->db->where("prim",$id)->get("hasil")->row();
+
+		$kkode = $this->db->where("id_laporan",$temp[1])->get("laporan")->row()->kode_laporan;
+
+		$content = $this->load->view("hasil_pdf",array("data" => $data,"data2" => $data2,"kode_dokumen" => $kkode,"header" => $header),true);
+
+
+		$data_detail = null;
+		switch ($temp[1]) {
+			case "3":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+				$view_name = "hasil2_pdf_bn";
+				break;
+			case "4":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+				$view_name = "hasil2_pdf_fp";
+				break;
+			case "8":  // RESIDU PESTISIDA (GOLONGAN ORGANOKLOR)
+			case "9":  // RESIDU PESTISIDA (GOLONGAN ORGANOFOSFAT)
+			case "10":  // RESIDU PESTISIDA (GOLONGAN PERETROID)
+			case "11":  // RESIDU PESTISIDA (GOLONGAN KARBAMAT)
+			case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+				$view_name = "hasil2_pdf_residu";
+				break;
+			case "12":  // KN
+				$view_name = "hasil2_pdf_kn";
+				$data_detail = $this->db->where("prim",$id)->get("hasil_kn")->row();
+				break;
+			case "13":  // LBM
+				$view_name = "hasil2_pdf_lbm";
+				$data_detail = $this->db->where("prim",$id)->get("hasil_lbm")->row();
+				break;
+			case "19": // MYCOTOXIN
+				$view_name = "hasil2_pdf_mycotoxin";
+				break;
+			case "20": // MFB
+				$view_name = "hasil2_pdf_mfb";
+				break;
+			default:
+				$view_name = "hasil2_pdf";
+				break;
+		}
+
+		$true_content = array();
+		$max_data_per_page = 10;
+
+		$count_content = ceil(count($data) / $max_data_per_page);
+
+		for ($i=0; $i < $count_content; $i++) {
+			$position = $i + 1;
+
+			$start = ($max_data_per_page * ($position - 1)) + 1 ;
+			$end   = $start + $max_data_per_page;
+
+			$ttd = $position == $count_content ? true : false;
+
+			$true_content[] = $this->load->view($view_name,array("data" => $data,"data2" => $data2,"ttd" => $ttd , "start"=>$start , "end"=>$end,"data_detail" => $data_detail,"tgl"=>$tanggal,"header" => $header),true);
+		}
+
+
+		//echo $content;die();
+		//echo "<pre>"; print_r($content);die();
+
+		$this->load->helper('tcpdf');
+		//$pdf = init_pdf();
+
+		$custom_layout = array(210,330);
+		$print_header = $header;
+		$pdf = init_pdf_f4("P", "mm", $custom_layout, true, 'UTF-8', false,$print_header);
+
+		// set document information
+		$pdf->SetCreator(PDF_CREATOR);
+		$pdf->SetAuthor('Riki');
+		$pdf->SetTitle('Hasil Uji Lab');
+		$pdf->SetSubject('Hasil Uji Lab');
+		$pdf->SetKeywords('Hasil Uji Lab');
+
+		// header
+		//$pdf->SetHeaderMargin(50);
+		//$pdf->SetAutoPageBreak(TRUE, 0);
+
+		// footer
+		$pdf->SetPrintHeader(true);
+		$pdf->setPrintFooter(true);
+
+		// margin
+		$pdf->SetMargins(10, 40, 15, 15);
+		$pdf->SetAutoPageBreak(TRUE, 25);
+
+		// font
+		$pdf->SetFont('times', '', 12);
+
+		// output
+		if($print_header == 0){
+			$pdf->SetPrintHeader(false);
+			$pdf->SetPrintFooter(false);
+
+			//$pdf->SetMargins(10, 50, 15, 15);
+		}
+
+		$pdf->AddPage();
+		$pdf->writeHTML($content, true, false, true, false, '');
+
+		foreach ($true_content as $key) {
+			$pdf->AddPage();
+			$pdf->writeHTML($key, true, false, true, false, '');
+		}
+
+
+
+
+
+		$pdf->lastPage();
+		if($download == 1){
+			$pdf->Output('hasil_pengujian.pdf', 'D');
+		}else {
+			$pdf->Output('hasil_pengujian.pdf', 'I');
+		}
+	}
+
+	public function index()
+	{
+
+		try{
+			$crud = new grocery_CRUD();
+
+
+
+			$crud->set_table('vw_hasil');
+			$crud->set_primary_key('prim');
+
+			$crud->set_subject('Hasil Pengujian');
+
+            $crud->columns(
+							'nomor_seri',
+              'nomor_contoh',
+              'parameter',
+            	'laporan',
+            	'komoditas',
+            	'varietas',
+            	'jumlah',
+            	'satuan',
+            	'kondisi',
+            	'total_biaya',
+            	'keterangan');
+
+
+        			$crud->edit_fields('prim','print','nomor_contoh','laporan','nomor_seri','ceklis_1','ceklis_2','hasil_pengujian');
+
+							$crud->change_field_type('prim', 'hidden');
+
+							$crud->display_as('ceklis_1',' ');
+							$crud->display_as('ceklis_2',' ');
+
+
+							$crud->callback_edit_field('nomor_seri', function ($t = 0) {
+								if($t == 0){
+										return '<input type="text" value="'.date("y").'0000" name="nomor_seri">';
+								}
+        				return '<input type="text" value="'.$t.'" name="nomor_seri">';
+        			});
+
+							$crud->callback_edit_field('ceklis_1', function ($t = 0) {
+								$checked = "";
+								if($t == 1) $checked = "checked";
+        				return '<div class="checkbox">
+											    <label>
+											      <input type="checkbox" name="ceklis_1" value="1" '.$checked.'> Hasil Pengujian hanya berlaku untuk contoh yang diuji <br> <i>The test result is only valid for the sample analyzed</i>
+											    </label>
+											  </div>';
+        			});
+
+							$crud->callback_edit_field('ceklis_2', function ($t = 0) {
+								$checked = "";
+								if($t == 1) $checked = "checked";
+
+        				return '<div class="checkbox">
+											    <label>
+											      <input type="checkbox" name="ceklis_2" value="1" '.$checked.'> Hasil Pengujian berlaku untuk kelompok (Lot) <br> <i>The test result is only valid for the group sample taken</i>
+											    </label>
+											  </div>';
+        			});
+
+              $crud->callback_edit_field('hasil_pengujian',array($this, 'hasil_selector'));
+
+							$crud->callback_edit_field('print',array($this, 'printc'));
+
+              $crud->callback_edit_field('nomor_contoh', function ($t = 0) {
+        				return '<input type="text" value="'.$t.'" readonly="true" name="nomor_contoh" style="background:#eee;">';
+        			});
+
+              $crud->callback_edit_field('laporan', function ($t = 0) {
+        				return '<input type="text" value="'.$t.'" readonly="true" style="background:#eee;">';
+        			});
+
+              $crud->set_lang_string('edit_error_message', 'My message for delete on error');
+
+
+			$crud->unset_add();
+			$crud->unset_delete();
+			$crud->unset_read();
+			$crud->unset_clone();
+			
+
+
+			if( $crud->getState() == 'edit' ) { //add these only in add form	
+
+			$crud->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.10.1.custom.min.css');
+			$crud->set_css('assets/grocery_crud/themes/flexigrid/css/flexigrid.css');
+
+
+						
+			$crud->set_js('assets/grocery_crud/js/jquery-1.11.1.min.js');
+			$crud->set_js('assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js');
+			$crud->set_js('assets/grocery_crud/js/jquery_plugins/ui/i18n/datepicker/jquery.ui.datepicker-id.js');
+			$crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datepicker.config.js');
+			$crud->set_js('assets/grocery_crud/themes/flexigrid/js/jquery.form.js');
+			$crud->set_js('assets/grocery_crud/js/jquery_plugins/jquery.form.min.js');
+			$crud->set_js('assets/grocery_crud/themes/flexigrid/js/flexigrid-add.js');
+			$crud->set_js('assets/grocery_crud/js/jquery_plugins/jquery.noty.js');
+			$crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.noty.config.js');
+
+
+
+				$crud->set_js('assets/grocery_crud/texteditor/ckeditor/ckeditor.js');
+				$crud->set_js('assets/grocery_crud/texteditor/ckeditor/adapters/jquery.js');
+				$crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.ckeditor.config.js');
+			
+			}
+
+			$crud->callback_before_update(array($this,'_update_callback'));
+
+      $this->crud = $crud;
+
+			$output = $crud->render();
+
+
+			$output->title = "Laporan Hasil Pengujian";
+			//$output = $this->grocery_crud->render();
+			$c = $this->load->view('permohonan_index',(array)$output,true);
+
+			//echo $c;
+			$this->page->view2($c);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+
+
+	}
+
+	public function hasil_selector($value = '', $primary_key = null)
+	{
+		$expl     = explode("_",$primary_key);
+    $nomor    = str_replace('-','/',$expl[0]);
+
+    $laporan  = (String)$expl[1];
+
+
+
+
+
+
+		switch ($laporan) {
+			case "3":  // LOGAM BERAT DAN MINERAL
+				return $this->hasil_pengujian_bn($value, $primary_key);
+				// return $this->hasil_pengujian($value, $primary_key);
+				break;
+			case "4":  // FORMULASI
+				return $this->hasil_pengujian_fp($value, $primary_key);
+				break;
+			case "8":  // RESIDU PESTISIDA (GOLONGAN ORGANOKLOR)
+			case "9":  // RESIDU PESTISIDA (GOLONGAN ORGANOFOSFAT)
+			case "10":  // RESIDU PESTISIDA (GOLONGAN PERETROID)
+			case "11":  // RESIDU PESTISIDA (GOLONGAN KARBAMAT)
+			case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+				return $this->hasil_pengujian_residu($value, $primary_key);
+				break;
+			case "12":  // LOGAM BERAT DAN MINERAL
+				return $this->hasil_pengujian_kn($value, $primary_key);
+				break;
+			case "13":  // LOGAM BERAT DAN MINERAL
+				return $this->hasil_pengujian_lbm($value, $primary_key);
+				break;
+			case "19": // MYCOTOXIN
+				return $this->hasil_pengujian_mycotoxin($value, $primary_key);
+				break;
+			case "20": // MYCOTOXIN
+				return $this->hasil_pengujian_mfb($value, $primary_key);
+				break;
+
+			default:
+				return $this->hasil_pengujian($value, $primary_key);
+				break;
+		}
+	}
+
+	public function hasil_pengujian_fp($value = '', $primary_key = null)
+	{
+		$expl     = explode("_",$primary_key);
+		$nomor    = str_replace('-','/',$expl[0]);
+
+		$laporan  = $expl[1];
+
+		$data = $this->db
+										->where("nomor_contoh", $nomor)
+										->where("id_laporan", $laporan)
+										->get("vw_hasil2_fp");
+
+		$data_metode = $this->db
+										->where("nomor_contoh", $nomor)
+										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+										->select("metode.metode")
+										->get("permohonan_detail")
+										->result()
+										;
+
+
+		$html = '';
+		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
+			<tr>
+				<th>No</th>
+				<th>Bahan Aktif</th>
+				<th>Berat Jenis</th>
+				<th>Kadar Presentase</th>
+				<th>Satuan</th>
+				<th>Metode</th>
+			</tr>
+			";
+
+
+		$counter=1;
+		//echo "<pre>";print_r($data_metode->result());die();
+		foreach ($data->result() as $key => $value) {
+			if(isset($data_metode[$counter - 1])){
+				$met = $data_metode[$counter - 1]->metode;
+			}else{
+				$met = '';
+			}
+
+			if($value->bahan == null  && $value->metode == null){
+				$metode = $met;
+			}else{
+				$metode = $value->metode;
+			}
+
+			$html .= "<tr>";
+			$html .= "<td>".($counter++)."</td>";
+			$html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][berat]' value='".$value->berat."'></td>";
+			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][kadar]' value='".$value->kadar."'></td>";
+			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
+			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+			$html .= "</tr>";
+		}
+
+		$html .= "</table>";
+
+		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+
+
+
+		return $html;
+	}
+
+
+
+	public function hasil_pengujian_mfb($value = '', $primary_key = null)
+	{
+		$expl     = explode("_",$primary_key);
+    $nomor    = str_replace('-','/',$expl[0]);
+
+    $laporan  = $expl[1];
+
+    $data = $this->db
+                    ->where("nomor_contoh", $nomor)
+                    ->where("id_laporan", $laporan)
+                    ->get("vw_hasil2_mfb");
+
+	  $data_metode = $this->db
+										->where("nomor_contoh", $nomor)
+										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+										->select("metode.metode")
+										->get("permohonan_detail")
+										->result()
+										;
+
+
+    $html = '';
+		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
+		  <tr>
+		    <th rowspan='2'>No</th>
+		    <th rowspan='2'>karakteristik</th>
+		    <th rowspan='2'>Satuan</th>
+		    <th rowspan='2'>Hasil</th>
+		    <th colspan='2'>Persyaratan*</th>
+		    <th rowspan='2'>Metode</th>
+		  </tr>
+			<tr>
+				<th>Medium</th>
+				<th>Premium</th>
+			</tr>
+			";
+
+
+    $counter=1;
+		//echo "<pre>";print_r($data_metode->result());die();
+    foreach ($data->result() as $key => $value) {
+			if(isset($data_metode[$counter - 1])){
+				$met = $data_metode[$counter - 1]->metode;
+			}else{
+				$met = '';
+			}
+
+			if($value->hasil == null  && $value->metode == null){
+				$metode = $met;
+			}else{
+				$metode = $value->metode;
+			}
+
+      $html .= "<tr>";
+      $html .= "<td>".($counter++)."</td>";
+      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
+      $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+      $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][medium]' value='".$value->medium."'></td>";
+			$html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][premium]' value='".$value->premium."'></td>";
+      $html .= "<td><input style='width:150px' type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+      $html .= "</tr>";
+    }
+
+    $html .= "</table>";
+
+		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+
+
+
+    return $html;
+	}
+
+	public function hasil_pengujian_bn($value = '', $primary_key = null)
+  {
+    $expl     = explode("_",$primary_key);
+    $nomor    = str_replace('-','/',$expl[0]);
+
+    $laporan  = $expl[1];
+
+    $data = $this->db
+                    ->where("nomor_contoh", $nomor)
+                    ->where("id_laporan", $laporan)
+                    ->get("vw_hasil2");
+
+	  $data_metode = $this->db
+										->where("nomor_contoh", $nomor)
+										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+										->select("metode.metode")
+										->get("permohonan_detail")
+										->result()
+										;
+
+		$data_detail = $this->db->where("prim",$primary_key)->get("hasil_bn")->row();
+
+    $html = '';
+		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
+		  <tr>
+		    <th>No</th>
+		    <th>Parameter</th>
+		    <th>Hasil</th>
+		    <th>Satuan</th>
+		    <th>Metode / Teknik Pengujian</th>
+				<th>Standard</th>
+		  </tr>";
+
+    $counter=1;
+		//echo "<pre>";print_r($data_metode->result());die();
+    foreach ($data->result() as $key => $value) {
+			if(isset($data_metode[$counter - 1])){
+				$met = $data_metode[$counter - 1]->metode;
+			}else{
+				$met = '';
+			}
+
+			if($value->hasil == null && $value->satuan_hasil == null && $value->metode == null){
+				$metode = $met;
+			}else{
+				$metode = $value->metode;
+			}
+
+      $html .= "<tr>";
+      $html .= "<td>".($counter++)."</td>";
+      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+			$html .= "<td><select name='h[".$value->id_permohonan_detail_parameter."][standard]'>
+											<option value='1' ".($value->standard == 1 ? 'selected' : '')."> Positif </option>
+											<option value='2' ".($value->standard == 2 ? 'selected' : '')."> Negatif </option>
+											<option value='3' ".($value->standard == 3 ? 'selected' : '')."> Terdeteksi </option>
+											<option value='4' ".($value->standard == 4 ? 'selected' : '')."> Tidak Terdeteksi </option>
+										</select></td>";
+      $html .= "</tr>";
+    }
+
+		$html .= "<tr>
+								<th colspan='2'> Catatan :</th>
+								<td colspan='5'> <textarea name='catatan_detail'>".(isset($data_detail->catatan) ? $data_detail->catatan : "" )."</textarea> </td>
+							</tr>";
+
+    $html .= "</table>";
+
+		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+
+
+
+    return $html;
+
+  }
+
+
+	public function hasil_pengujian_kn($value = '', $primary_key = null)
+  {
+    $expl     = explode("_",$primary_key);
+    $nomor    = str_replace('-','/',$expl[0]);
+
+    $laporan  = $expl[1];
+
+    $data = $this->db
+                    ->where("nomor_contoh", $nomor)
+                    ->where("id_laporan", $laporan)
+                    ->get("vw_hasil2_kn");
+
+	  $data_metode = $this->db
+										->where("nomor_contoh", $nomor)
+										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+										->select("metode.metode")
+										->get("permohonan_detail")
+										->result()
+										;
+
+		$data_detail = $this->db->where("prim",$primary_key)->get("hasil_kn")->row();
+
+    $html = '';
+		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
+		  <tr>
+		    <th>No</th>
+		    <th>Parameter</th>
+		    <th>Hasil</th>
+		    <th>Satuan</th>
+		    <th>Metode / Teknik Pengujian</th>
+		  </tr>";
+
+    $counter=1;
+		//echo "<pre>";print_r($data_metode->result());die();
+    foreach ($data->result() as $key => $value) {
+			if(isset($data_metode[$counter - 1])){
+				$met = $data_metode[$counter - 1]->metode;
+			}else{
+				$met = '';
+			}
+
+			if($value->hasil == null && $value->satuan_hasil == null && $value->metode == null){
+				$metode = $met;
+			}else{
+				$metode = $value->metode;
+			}
+
+      $html .= "<tr>";
+      $html .= "<td>".($counter++)."</td>";
+      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+      $html .= "</tr>";
+    }
+
+		$html .= "<tr>
+								<th colspan='2'> Catatan :</th>
+								<td colspan='5'> <textarea name='catatan_detail'>".(isset($data_detail->catatan) ? $data_detail->catatan : "" )."</textarea> </td>
+							</tr>";
+
+    $html .= "</table>";
+
+		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+
+
+
+    return $html;
+
+  }
+
+
+	public function hasil_pengujian_lbm($value = '', $primary_key = null)
+	{
+		$expl     = explode("_",$primary_key);
+    $nomor    = str_replace('-','/',$expl[0]);
+
+    $laporan  = $expl[1];
+
+    $data = $this->db
+                    ->where("nomor_contoh", $nomor)
+                    ->where("id_laporan", $laporan)
+                    ->get("vw_hasil2_lbm");
+
+	  $data_metode = $this->db
+										->where("nomor_contoh", $nomor)
+										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+										->select("metode.metode")
+										->get("permohonan_detail")
+										->result()
+										;
+
+		$data_detail = $this->db->where("prim",$primary_key)->get("hasil_lbm")->row();
+
+
+    $html = '';
+		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
+		  <tr>
+		    <th>No</th>
+		    <th>Parameter</th>
+		    <th>Hasil</th>
+		    <th>LoD</th>
+		    <th>LoQ</th>
+		    <th>Satuan</th>
+				<th>Metode</th>
+		  </tr>";
+
+    $counter=1;
+		//echo "<pre>";print_r($data_metode->result());die();
+    foreach ($data->result() as $key => $value) {
+			if(isset($data_metode[$counter - 1])){
+				$met = $data_metode[$counter - 1]->metode;
+			}else{
+				$met = '';
+			}
+
+			if($value->hasil == null  && $value->metode == null){
+				$metode = $met;
+			}else{
+				$metode = $value->metode;
+			}
+
+      $html .= "<tr>";
+      $html .= "<td>".($counter++)."</td>";
+      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][lod]' value='".$value->lod."'></td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][loq]' value='".$value->loq."'></td>";
+			$html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+      $html .= "</tr>";
+    }
+
+		$html .= "<tr>
+								<th colspan='2'> Catatan :</th>
+								<td colspan='5'> <textarea name='catatan_detail'>".(isset($data_detail->catatan) ? $data_detail->catatan : "" )."</textarea> </td>
+							</tr>";
+
+
+    $html .= "</table>";
+
+		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+
+
+
+    return $html;
+	}
+
+
+	public function hasil_pengujian_residu($value = '', $primary_key = null)
+	{
+		$expl     = explode("_",$primary_key);
+    $nomor    = str_replace('-','/',$expl[0]);
+
+    $laporan  = $expl[1];
+
+    $data = $this->db
+                    ->where("nomor_contoh", $nomor)
+                    ->where("id_laporan", $laporan)
+                    ->get("vw_hasil2_residu");
+
+	  $data_metode = $this->db
+										->where("nomor_contoh", $nomor)
+										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+										->select("metode.metode")
+										->get("permohonan_detail")
+										->result()
+										;
+
+
+    $html = '';
+		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
+		  <tr>
+		    <th>No</th>
+		    <th>Parameter</th>
+		    <th>Hasil</th>
+		    <th>MQL</th>
+		    <th>Metode</th>
+		    <th>BMR</th>
+		  </tr>";
+
+    $counter=1;
+		//echo "<pre>";print_r($data_metode->result());die();
+    foreach ($data->result() as $key => $value) {
+			if(isset($data_metode[$counter - 1])){
+				$met = $data_metode[$counter - 1]->metode;
+			}else{
+				$met = '';
+			}
+
+			if($value->hasil == null  && $value->metode == null){
+				$metode = $met;
+			}else{
+				$metode = $value->metode;
+			}
+
+      $html .= "<tr>";
+      $html .= "<td>".($counter++)."</td>";
+      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][mql]' value='".$value->mql."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmr]' value='".$value->bmr."'></td>";
+      $html .= "</tr>";
+    }
+
+    $html .= "</table>";
+
+		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+
+
+
+    return $html;
+	}
+
+
+	public function hasil_pengujian_mycotoxin($value = '', $primary_key = null)
+	{
+		$expl     = explode("_",$primary_key);
+    $nomor    = str_replace('-','/',$expl[0]);
+
+    $laporan  = $expl[1];
+
+    $data = $this->db
+                    ->where("nomor_contoh", $nomor)
+                    ->where("id_laporan", $laporan)
+                    ->get("vw_hasil2_mycotoxin");
+
+	  $data_metode = $this->db
+										->where("nomor_contoh", $nomor)
+										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+										->select("metode.metode")
+										->get("permohonan_detail")
+										->result()
+										;
+
+
+    $html = '';
+		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
+		  <tr>
+		    <th>No</th>
+		    <th>Parameter</th>
+		    <th>Hasil</th>
+		    <th>MQL</th>
+		    <th>Metode</th>
+		    <th>BMC</th>
+		  </tr>";
+
+    $counter=1;
+		//echo "<pre>";print_r($data_metode->result());die();
+    foreach ($data->result() as $key => $value) {
+			if(isset($data_metode[$counter - 1])){
+				$met = $data_metode[$counter - 1]->metode;
+			}else{
+				$met = '';
+			}
+
+			if($value->hasil == null  && $value->metode == null){
+				$metode = $met;
+			}else{
+				$metode = $value->metode;
+			}
+
+      $html .= "<tr>";
+      $html .= "<td>".($counter++)."</td>";
+      $html .= "<td>".($value->caption == "" ? $value->parameter_pengujian : $value->caption)."</td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][mql]' value='".$value->mql."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][bmc]' value='".$value->bmc."'></td>";
+      $html .= "</tr>";
+    }
+
+    $html .= "</table>";
+
+		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+
+
+
+    return $html;
+	}
+
+
+  public function hasil_pengujian($value = '', $primary_key = null)
+  {
+    $expl     = explode("_",$primary_key);
+    $nomor    = str_replace('-','/',$expl[0]);
+
+    $laporan  = $expl[1];
+
+    $data = $this->db
+                    ->where("nomor_contoh", $nomor)
+                    ->where("id_laporan", $laporan)
+                    ->get("vw_hasil2");
+
+	  $data_metode = $this->db
+										->where("nomor_contoh", $nomor)
+										->join("permohonan_detail_metode","permohonan_detail_metode.id_permohonan_detail = permohonan_detail.id_permohonan_detail","left")
+										->join("metode","metode.id_metode = permohonan_detail_metode.id_metode","left")
+										->order_by("permohonan_detail_metode.id_permohonan_detail_metode", "asc")
+										->select("metode.metode")
+										->get("permohonan_detail")
+										->result()
+										;
+
+
+    $html = '';
+		$html .= "<table class=\"table table-bordered\" style='min-width:1000px;background:white'>
+		  <tr>
+		    <th>No</th>
+		    <th>Parameter</th>
+		    <th>Hasil</th>
+		    <th>Satuan</th>
+		    <th>Metode / Teknik Pengujian</th>
+		    <th>Keterangan</th>
+				<th>Status Standard</th>
+		  </tr>";
+
+    $counter=1;
+		//echo "<pre>";print_r($data_metode->result());die();
+    foreach ($data->result() as $key => $value) {
+			if(isset($data_metode[$counter - 1])){
+				$met = $data_metode[$counter - 1]->metode;
+			}else{
+				$met = '';
+			}
+
+			if($value->hasil == null && $value->satuan_hasil == null && $value->metode == null && $value->keterangan_hasil == null){
+				$metode = $met;
+			}else{
+				$metode = $value->metode;
+			}
+
+      $html .= "<tr>";
+      $html .= "<td>".($counter++)."</td>";
+      $html .= "<td>".$value->parameter_pengujian."</td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][hasil]' value='".$value->hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][satuan]' value='".$value->satuan_hasil."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][metode]' value='".$metode."'></td>";
+      $html .= "<td><input type='text' name='h[".$value->id_permohonan_detail_parameter."][keterangan]' value='".$value->keterangan_hasil."'></td>";
+			$html .= "<td><select name='h[".$value->id_permohonan_detail_parameter."][standard]'>
+											<option value='1' ".($value->standard == 1 ? 'selected' : '')."> Positif </option>
+											<option value='2' ".($value->standard == 2 ? 'selected' : '')."> Negatif </option>
+											<option value='3' ".($value->standard == 3 ? 'selected' : '')."> Terdeteksi </option>
+											<option value='4' ".($value->standard == 4 ? 'selected' : '')."> Tidak Terdeteksi </option>
+										</select></td>";
+      $html .= "</tr>";
+    }
+
+    $html .= "</table>";
+
+		$html .= "<input type='hidden' name='id_laporanz' value='".$laporan."'>";
+
+
+
+    return $html;
+
+  }
+
+	public function pelanggan($value = '', $primary_key = null)
+	{
+		return "<table ><tr><td style='padding:5px'><input type='hidden' name='id_pelanggan'><a href='javascript:void(0)' onclick=\"open_picker()\" class='btn '> Ambil Dari Daftar</a></td><td style='padding:5px'><a href='javascript:void(0)' class='btn btn-success'> Simpan ke Daftar</a></td></tr></table>";
+	}
+
+	public function printc($value = '', $primary_key = null)
+	{
+		$ret = "<table ><tr>
+		<td style='padding:5px'><a  href='".base_url().$this->router->fetch_module()."/".$this->router->fetch_class()."/word/".$primary_key."/1". "' class='print btn btn-primary'> Download Word</a></td>
+		<td style='padding:5px'><a  href='".base_url().$this->router->fetch_module()."/".$this->router->fetch_class()."/pdf/".$primary_key."/1". "' class='print btn btn-primary'> Download PDF</a></td>
+		<td style='padding:5px'><a  href='".base_url().$this->router->fetch_module()."/".$this->router->fetch_class()."/pdf/".$primary_key."/0". "' class='print btn btn-primary' target='_blank'> Print PDF</a></td>";
+		$ret .= "<td style='padding:5px'>
+							<label><input type='radio' name='kop' value='1' checked> Dengan Kop </label>
+							<br>
+							<label><input type='radio' name='kop' value='0'> Tanpa Kop </label>
+						</td>";
+						$ret .= "<td style='padding:5px'>
+											Tanggal Print : <input type='text' class='datepicker-input' id='tanggal_print' value='".date("d/m/Y")."'>
+										</td>";
+		$ret .="</tr></table>";
+
+		return $ret;
+	}
+
+	public function _before_insert_callback($post_array)
+	{
+		$post_array['created_by'] = 1;
+  		return $post_array;
+	}
+
+    public function _after_insert_callback($post_array,$primary_key)
+    {
+        //echo "<pre>";print_r($post_array);die();
+        // delete detail
+        $this->permohonan_model->delete_details($primary_key);
+
+        // insert detail
+        $this->permohonan_model->add_details($post_array["det"],$primary_key);
+    }
+
+	public function _update_callback($post_array)
+	{
+				// echo "<pre>";print_r($post_array);die();
+				// head data
+				$is_update = $post_array["nomor_seri"] == "( auto number )" ? 0 : 1 ;
+
+				$dx = array();
+				$dx["prim"] 		= $post_array["prim"];
+				$dx["ceklis_1"] = isset($post_array["ceklis_1"]) ? $post_array["ceklis_1"] : 0 ;
+				$dx["ceklis_2"] = isset($post_array["ceklis_2"]) ? $post_array["ceklis_2"] : 0 ;
+				$dx["nomor_seri"] = $post_array["nomor_seri"];
+
+				if($is_update){
+					$this->db->where("prim",$post_array['prim'])->delete("hasil");
+					$this->db->insert("hasil",$dx);
+				}else{
+					$year = date("Y");
+					$current_counter_nomorseri 	= $this->get_counter_nomorseri($year);
+					// FORMAT nomor seri   : tahun(yy)nomor(4 digit)
+		    	// 										 : 190021
+					$zero = "";
+					$current_counter_nomorseri ++;
+					$temp2 = (String)$current_counter_nomorseri;
+					for ($i=0; $i <  (4 - strlen($temp2)); $i++) {
+						$zero .= "0";
+					}
+					$temp2 = $zero . $temp2;
+
+					$nomor_seri = date("y").$temp2;
+
+				//$dx["nomor_seri"] = $nomor_seri;
+				$dx["nomor_seri"] = $post_array["nomor_seri"];
+
+
+				$this->update_counter_nomorseri($year,$current_counter_nomorseri);
+
+				$this->db->where("prim",$post_array['prim'])->delete("hasil");
+				$this->db->insert("hasil",$dx);
+				}
+
+
+
+				//detail data
+				if(isset($post_array['id_laporanz'])){
+					switch ($post_array['id_laporanz']) {
+						case "3":  // BENIH
+							$this->_update_hasil_bn($post_array);
+							break;
+						case "4":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+							$this->_update_hasil_fp($post_array);
+							break;
+						case "8":  // RESIDU PESTISIDA (GOLONGAN ORGANOKLOR)
+						case "9":  // RESIDU PESTISIDA (GOLONGAN ORGANOFOSFAT)
+						case "10":  // RESIDU PESTISIDA (GOLONGAN PERETROID)
+						case "11":  // RESIDU PESTISIDA (GOLONGAN KARBAMAT)
+						case "15":  // RESIDU PESTISIDA (GOLONGAN LAIN)
+							$this->_update_hasil_residu($post_array['h']);
+							break;
+						case "12":  // KOMPOSISI NUTRISI
+							$this->_update_hasil_kn($post_array);
+							break;
+
+						case "13":  // LOGAM BERAT DAN MINERAL
+							$this->_update_hasil_lbm($post_array);
+							break;
+
+						case "19": // MYCOTOXIN
+							$this->_update_hasil_mycotoxin($post_array['h']);
+							break;
+
+						case "20": // MFB
+							$this->_update_hasil_mfb($post_array);
+							break;
+						default:
+							foreach ($post_array['h'] as $key => $value) {
+
+								// hapus data sebelumnya
+								$this->db->delete('hasil_detail', array('id_permohonan_detail_parameter' => $key));
+
+								// insert data baru
+								$data = $value;
+								$data['id_permohonan_detail_parameter'] = $key;
+								$this->db->insert('hasil_detail',$data);
+							}
+							break;
+					}
+				}else{
+					foreach ($post_array['h'] as $key => $value) {
+
+						// hapus data sebelumnya
+						$this->db->delete('hasil_detail', array('id_permohonan_detail_parameter' => $key));
+
+						// insert data baru
+						$data = $value;
+						$data['id_permohonan_detail_parameter'] = $key;
+						$this->db->insert('hasil_detail',$data);
+					}
+				}
+
+
+
+
+				die();
+
+      //echo json_encode(array('success' => false , 'error_message' => 'This participant already exists'));
+      echo  '{
+         "success":true,
+        "insert_primary_key":true,
+        "success_message":"<p>Your data has been successfully updated. <a href=\'http:\/\/localhost\/pertanian\/work\/hasil\/index\/\'>Go back to list<\/a><\/p>",
+        "success_list_url":"http:\/\/localhost\/pertanian\/work\/permohonan\/index\/success\/1"
+      }';
+      die();
+
+      // $this->crud->set_echo_and_die();
+      $this->form_validation->set_message('nomor_contoh', 'Berhasil');
+			return FALSE;
+  		return false;
+	}
+
+	public function _update_hasil_fp($arr)
+	{
+
+		foreach ($arr['h'] as $key => $value) {
+
+			// hapus data sebelumnya
+			$this->db->delete('hasil_detail_fp', array('id_permohonan_detail_parameter' => $key));
+
+			// insert data baru
+			$data = $value;
+			$data['id_permohonan_detail_parameter'] = $key;
+			$this->db->insert('hasil_detail_fp',$data);
+		}
+	}
+
+	public function _update_hasil_mfb($arr)
+	{
+
+		foreach ($arr['h'] as $key => $value) {
+
+			// hapus data sebelumnya
+			$this->db->delete('hasil_detail_mfb', array('id_permohonan_detail_parameter' => $key));
+
+			// insert data baru
+			$data = $value;
+			$data['id_permohonan_detail_parameter'] = $key;
+			$this->db->insert('hasil_detail_mfb',$data);
+		}
+	}
+
+	public function _update_hasil_lbm($arr)
+	{
+		foreach ($arr['h'] as $key => $value) {
+
+			// hapus data sebelumnya
+			$this->db->delete('hasil_detail_lbm', array('id_permohonan_detail_parameter' => $key));
+
+			// insert data baru
+			$data = $value;
+			$data['id_permohonan_detail_parameter'] = $key;
+			$this->db->insert('hasil_detail_lbm',$data);
+		}
+
+		$this->db->where("prim",$arr['prim'])->delete("hasil_lbm");
+
+		$this->db->insert("hasil_lbm",array(
+			"prim" => $arr['prim'],
+			"catatan" => $arr['catatan_detail'],
+		));
+	}
+
+	public function _update_hasil_kn($arr)
+	{
+		foreach ($arr['h'] as $key => $value) {
+
+			// hapus data sebelumnya
+			$this->db->delete('hasil_detail_kn', array('id_permohonan_detail_parameter' => $key));
+
+			// insert data baru
+			$data = $value;
+			$data['id_permohonan_detail_parameter'] = $key;
+			$this->db->insert('hasil_detail_kn',$data);
+		}
+
+		$this->db->where("prim",$arr['prim'])->delete("hasil_kn");
+
+		$this->db->insert("hasil_kn",array(
+			"prim" => $arr['prim'],
+			"catatan" => $arr['catatan_detail'],
+		));
+	}
+
+	public function _update_hasil_bn($arr)
+	{
+		foreach ($arr['h'] as $key => $value) {
+
+			// hapus data sebelumnya
+			$this->db->delete('hasil_detail', array('id_permohonan_detail_parameter' => $key));
+
+			// insert data baru
+			$data = $value;
+			$data['id_permohonan_detail_parameter'] = $key;
+			$this->db->insert('hasil_detail',$data);
+		}
+
+		$this->db->where("prim",$arr['prim'])->delete("hasil_bn");
+
+		$this->db->insert("hasil_bn",array(
+			"prim" => $arr['prim'],
+			"catatan" => $arr['catatan_detail'],
+		));
+	}
+
+	public function _update_hasil_residu($arr)
+	{
+		foreach ($arr as $key => $value) {
+
+			// hapus data sebelumnya
+			$this->db->delete('hasil_detail_residu', array('id_permohonan_detail_parameter' => $key));
+
+			// insert data baru
+			$data = $value;
+			$data['id_permohonan_detail_parameter'] = $key;
+			$this->db->insert('hasil_detail_residu',$data);
+		}
+	}
+
+	public function _update_hasil_mycotoxin($arr)
+	{
+		foreach ($arr as $key => $value) {
+
+			// hapus data sebelumnya
+			$this->db->delete('hasil_detail_mycotoxin', array('id_permohonan_detail_parameter' => $key));
+
+			// insert data baru
+			$data = $value;
+			$data['id_permohonan_detail_parameter'] = $key;
+			$this->db->insert('hasil_detail_mycotoxin',$data);
+		}
+	}
+
+	private function get_counter_nomorseri($y)
+	{
+		$zz = $this->db->query("select counter x from counter_nomorseri where tahun = ".$y." limit 1 ");
+
+		if($zz->num_rows() > 0){
+			return $zz->row()->x;
+		}else{
+			return 0;
+		}
+	}
+
+	public function update_counter_nomorseri($year,$counter)
+	{
+		$this->db->where("tahun",$year)->delete("counter_nomorseri");
+		$this->db->insert("counter_nomorseri", array("tahun" => $year ,"counter" => $counter));
+	}
+}
