@@ -169,6 +169,8 @@ class Permohonan extends CI_Controller
 	public function pdf($id, $download = 0, $header = 0, $tanggal = "")
 	{
 		// get data
+		$this->db->join("jenis_pengantaran","jenis_pengantaran.id_jenis_pengantaran = permohonan.id_jenis_pengantaran","left");
+		$this->db->select("permohonan.*, jenis_pengantaran.jenis_pengantaran");
 		$query = $this->db->where("id_permohonan", $id)->get("permohonan");
 
 		if ($query->num_rows() == 0) {
@@ -353,6 +355,8 @@ class Permohonan extends CI_Controller
 	public function pdf_paket($id, $download = 0, $header = 0, $tanggal = "")
 	{
 		// get data
+		$this->db->join("jenis_pengantaran","jenis_pengantaran.id_jenis_pengantaran = permohonan.id_jenis_pengantaran","left");
+		$this->db->select("permohonan.*, jenis_pengantaran.jenis_pengantaran");
 		$query = $this->db->where("id_permohonan", $id)->get("permohonan");
 
 		if ($query->num_rows() == 0) {

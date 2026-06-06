@@ -48,6 +48,11 @@
     <td style="width:15px">:</td>
     <td><?php echo tgl_indo($data->res->tanggal_masuk)?></td>
   </tr>
+  <tr>
+    <td style="width:180px">Jenis Pengantaran</td>
+    <td style="width:15px">:</td>
+    <td><?php echo $data->res->jenis_pengantaran?></td>
+  </tr>
 </table>
 <p>Bersama ini mengajukan permohonan pengujian seagai berikut : </p>
 

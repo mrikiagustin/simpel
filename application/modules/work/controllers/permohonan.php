@@ -161,7 +161,7 @@ class Permohonan extends CI_Controller {
 
 
 		// echo date('H:i:s'), ' Saving the result document...', EOL;
-		header("Content-Disposition: attachment; filename='Permohonan Penujian.docx'");
+		header("Content-Disposition: attachment; filename=PermohonanPengujian-".$data->res->id_permohonan.".docx");
 		$templateProcessor->saveAs('php://output');
 		// $templateProcessor->saveAs(APPPATH.'third_party/PhpWord/Sample_23_TemplateBlock_hasil.docx');
 	}
@@ -170,6 +170,8 @@ class Permohonan extends CI_Controller {
 	public function pdf($id, $download = 0,$header = 0, $tanggal = "")
 	{
 		// get data
+		$this->db->join("jenis_pengantaran","jenis_pengantaran.id_jenis_pengantaran = permohonan.id_jenis_pengantaran","left");
+		$this->db->select("permohonan.*, jenis_pengantaran.jenis_pengantaran");
 		$query = $this->db->where("id_permohonan",$id)->get("permohonan");
 
 		if($query->num_rows() == 0){
@@ -346,9 +348,9 @@ class Permohonan extends CI_Controller {
 
 		$pdf->lastPage();
 		if($download == 1){
-			$pdf->Output('invoice.pdf', 'D');
+			$pdf->Output('PermohonanPengujian-'.$main_data->res->id_permohonan.'.pdf', 'D');
 		}else {
-			$pdf->Output('invoice.pdf', 'I');
+			$pdf->Output('PermohonanPengujian-'.$main_data->res->id_permohonan.'.pdf', 'I');
 		}
 
 
@@ -357,6 +359,8 @@ class Permohonan extends CI_Controller {
 	public function pdf_paket($id, $download = 0,$header = 0, $tanggal = "")
 	{
 		// get data
+		$this->db->join("jenis_pengantaran","jenis_pengantaran.id_jenis_pengantaran = permohonan.id_jenis_pengantaran","left");
+		$this->db->select("permohonan.*, jenis_pengantaran.jenis_pengantaran");
 		$query = $this->db->where("id_permohonan",$id)->get("permohonan");
 
 		if($query->num_rows() == 0){
