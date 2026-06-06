@@ -80,6 +80,12 @@ $d = $data[0];
 				</tr>
 
 				<tr>
+					<td style="width:35%">Pengantaran Contoh<br><i>Sample Delivery</i><br></td>
+					<td style="width:2%">:</td>
+					<td style="width:63%"><?php echo $d->jenis_pengantaran ?? "" ?></td>
+				</tr>
+
+				<tr>
 					<td style="width:35%">Kondisi Contoh<br><i>Condition of sample</i><br></td>
 					<td style="width:2%">:</td>
 					<td style="width:63%"><?php echo $d->kondisi?>  <?php if($d->kondisi != "Baik") : ?>( <?php echo $d->ket_kondisi?> ) <?php endif;?></td>
