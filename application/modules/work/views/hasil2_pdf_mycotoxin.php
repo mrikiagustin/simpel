@@ -185,7 +185,8 @@
 	</tr>
 </table>
 
-<?php if($header == "1"):?>
+<?php //if($header == "1"):?>
+<?php if(0):?>
 <p style="font-size:10px;text-align:justify">
 	Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Laboratorium Pusat Promosi dan Sertifikasi Hasil Pertanian
 <br><i>This report shall not be reproduced without the written approval from Laboratory of Pusat Promosi dan Sertifikasi Hasil Pertanian</i>

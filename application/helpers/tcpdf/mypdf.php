@@ -80,6 +80,18 @@ class MyPDF extends TCPDF {
 
 	}
 
+	// Page footer
+	public function Footer() {
+		$this->SetY(-55);
+		$this->SetX(10);
+		$this->SetFont('times', 'N', 12);
+		$this->Cell(0, 0, 'Halaman / page : '.$this->getAliasNumPage().' dari / of '.$this->getAliasNbPages().'', 0, false, 'L', 0, '', 0, false, 'T', 'M');
+		$this->Ln(5);
+		$this->SetX(10);
+		$this->SetFont('times', 'I', 10);
+		$this->Cell(0, 0, 'Dicetak dari SIMPEL - Sistem Informasi Manajemen Pengujian Laboratorium', 0, false, 'L', 0, '', 0, false, 'T', 'M');
+	}
+
 
 }
 
@@ -132,7 +144,7 @@ class MyPDF_f4 extends TCPDF {
 			$telepon = $texts->line_6;//'Telp. / Fax : (021) 87752692';//'Telp: '.$medeq->no_telp.'. Fax: '.$medeq->fax.'. Email: '.$medeq->email;
 
 			$image_file = K_PATH_IMAGES.'jakarta.png';
-      $this->Image($image_file, 10, 10, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+      		$this->Image($image_file, 10, 10, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
 
 			$this->SetFont('helvetica', 'C', $_fontsize);
@@ -168,16 +180,22 @@ class MyPDF_f4 extends TCPDF {
 	// Page footer
     public function Footer() {
         // Position at 15 mm from bottom
-        $this->SetY(-15);
-				$this->SetX(10);
+        $this->SetY(-30);
+		$this->SetX(10);
         // Set font
         $this->SetFont('times', 'N', 12);
         // Page number
         $this->Cell(0, 0, 'Halaman / page : '.$this->getAliasNumPage().' dari / of '.$this->getAliasNbPages().'', 0, false, 'L', 0, '', 0, false, 'T', 'M');
-
-				//$this->writeHTMLCell($w = 0, $h = 0, $x = 10, $y = -1, $html='Halaman / page : <b>'.$this->getAliasNumPage().'</b> dari/of <b>'.$this->getAliasNbPages().'</b>', $border=0, $ln=0, $fill=0, $reseth=true, $align='',true);
-
-
+		//below page number
+		if($this->header == 1){
+			$this->Ln(5);
+			$this->SetX(10);
+			$disclaimer = '<p style="font-size:10px;text-align:justify">
+				Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Laboratorium Pusat Promosi dan Sertifikasi Hasil Pertanian
+			<br><i>This report shall not be reproduced without the written approval from Laboratory of Pusat Promosi dan Sertifikasi Hasil Pertanian</i>
+			</p>';
+			$this->writeHTMLCell(0, 0, 10, '', $disclaimer, 0, 0, false, true, 'J', true);
+		}
     }
 }
 

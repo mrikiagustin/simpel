@@ -247,7 +247,7 @@ class Hasil extends CI_Controller {
 
 		// set document information
 		$pdf->SetCreator(PDF_CREATOR);
-		$pdf->SetAuthor('Riki');
+		$pdf->SetAuthor('PPSHP');
 		$pdf->SetTitle('Hasil Uji Lab');
 		$pdf->SetSubject('Hasil Uji Lab');
 		$pdf->SetKeywords('Hasil Uji Lab');
@@ -270,7 +270,7 @@ class Hasil extends CI_Controller {
 		// output
 		if($print_header == 0){
 			$pdf->SetPrintHeader(false);
-			$pdf->SetPrintFooter(false);
+			// $pdf->SetPrintFooter(false);
 
 			//$pdf->SetMargins(10, 50, 15, 15);
 		}
