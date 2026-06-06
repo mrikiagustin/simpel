@@ -30,6 +30,8 @@ class Permohonan extends CI_Controller {
 		$texts = $this->db->get("setting_kop")->row();
 		$kode_laporan = $this->db->get("setting_permohonan")->row();
 
+		$this->db->join("jenis_pengantaran","jenis_pengantaran.id_jenis_pengantaran = permohonan.id_jenis_pengantaran","left");
+		$this->db->select("permohonan.*, jenis_pengantaran.jenis_pengantaran");
 		$query = $this->db->where("id_permohonan",$id)->get("permohonan");
 
 		if($query->num_rows() == 0){
@@ -38,6 +40,7 @@ class Permohonan extends CI_Controller {
 
 		$main_data = new stdClass();
 		$main_data->res = $query->row();
+		
 
 			// detail
 
@@ -95,6 +98,7 @@ class Permohonan extends CI_Controller {
 		$templateProcessor->setValue("body_telepon",$data->res->telepon_fax);
 		$templateProcessor->setValue("body_kontak",$data->res->kontak_person);
 		$templateProcessor->setValue("body_tanggal_ambil",$data->res->tanggal_pengambilan);
+		$templateProcessor->setValue("body_jenis_pengantaran",$data->res->jenis_pengantaran ?? "");
 
 		// var_dump(strip_tags($data->res->hasil_kaji_ulang));//die();
 		$hasilkaji = trim(strip_tags($data->res->hasil_kaji_ulang));
