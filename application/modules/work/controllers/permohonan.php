@@ -634,13 +634,15 @@ class Permohonan extends CI_Controller {
             $crud->display_as('telepon_fax','Telepon / Fax');
 						//$crud->display_as('tanggal_masuk','Tanggal Terima Sample /<br> Tgl Pengambilan (PPC)');
 						$crud->display_as('tanggal_masuk','Tgl Terima Sample');
+			$crud->display_as('id_jenis_pengantaran','Jenis Pengantaran');
 
 
-			$crud->add_fields('pelanggan','nama','instansi_perusahaan','nik_npwp','alamat','telepon_fax','kontak_person','tanggal_masuk','detail','hasil_kaji_ulang');
-      		$crud->edit_fields('Print','pelanggan','nama','instansi_perusahaan','nik_npwp','alamat','telepon_fax','kontak_person','tanggal_masuk','detail','hasil_kaji_ulang');
+			$crud->add_fields('pelanggan','nama','instansi_perusahaan','nik_npwp','alamat','telepon_fax','kontak_person','tanggal_masuk','id_jenis_pengantaran','detail','hasil_kaji_ulang');
+      		$crud->edit_fields('Print','pelanggan','nama','instansi_perusahaan','nik_npwp','alamat','telepon_fax','kontak_person','tanggal_masuk','id_jenis_pengantaran','detail','hasil_kaji_ulang');
 
 
 			$crud->change_field_type('hasil_kaji_ulang', 'text');
+			$crud->set_relation('id_jenis_pengantaran','jenis_pengantaran','jenis_pengantaran');
 			// $crud->change_field_type('id_pelanggan', 'invisible');
 
 
@@ -650,7 +652,7 @@ class Permohonan extends CI_Controller {
 
             $crud->callback_edit_field('pelanggan', array($this, 'pelanggan'));
             $crud->callback_edit_field('detail', array($this, 'detail'));
-						$crud->callback_edit_field('Print', array($this, 'printc'));
+			$crud->callback_edit_field('Print', array($this, 'printc'));
 
 
 
@@ -679,8 +681,8 @@ class Permohonan extends CI_Controller {
 
 
 			    $crud->set_js('assets/grocery_crud/texteditor/ckeditor/ckeditor.js');
-					$crud->set_js('assets/grocery_crud/texteditor/ckeditor/adapters/jquery.js');
-					$crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.ckeditor.config.js');
+				$crud->set_js('assets/grocery_crud/texteditor/ckeditor/adapters/jquery.js');
+				$crud->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.ckeditor.config.js');
 			}
 
 			$output = $crud->render();
