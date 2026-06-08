@@ -82,14 +82,16 @@ class MyPDF extends TCPDF {
 
 	// Page footer
 	public function Footer() {
-		$this->SetY(-55);
-		$this->SetX(10);
-		$this->SetFont('times', 'N', 12);
-		$this->Cell(0, 0, 'Halaman / page : '.$this->getAliasNumPage().' dari / of '.$this->getAliasNbPages().'', 0, false, 'L', 0, '', 0, false, 'T', 'M');
-		$this->Ln(5);
-		$this->SetX(10);
-		$this->SetFont('times', 'I', 10);
-		$this->Cell(0, 0, 'Dicetak dari SIMPEL - Sistem Informasi Manajemen Pengujian Laboratorium', 0, false, 'L', 0, '', 0, false, 'T', 'M');
+		if($this->getPage() > 1){
+			$this->SetY(-55);
+			$this->SetX(10);
+			$this->SetFont('times', 'N', 12);
+			$this->Cell(0, 0, 'Halaman / page : '.$this->getAliasNumPage().' dari / of '.$this->getAliasNbPages().'', 0, false, 'L', 0, '', 0, false, 'T', 'M');
+			$this->Ln(5);
+			$this->SetX(10);
+			$this->SetFont('times', 'I', 10);
+			$this->Cell(0, 0, 'Dicetak dari SIMPEL - Sistem Informasi Manajemen Pengujian Laboratorium', 0, false, 'L', 0, '', 0, false, 'T', 'M');
+		}
 	}
 
 
@@ -188,6 +190,16 @@ class MyPDF_f4 extends TCPDF {
         $this->Cell(0, 0, 'Halaman / page : '.$this->getAliasNumPage().' dari / of '.$this->getAliasNbPages().'', 0, false, 'L', 0, '', 0, false, 'T', 'M');
 		//below page number
 		if($this->header == 1){
+			$this->Ln(5);
+			$this->SetX(10);
+			$disclaimer = '<p style="font-size:10px;text-align:justify">
+				Laporan Hasil Pengujian ini dilarang diperbanyak kecuali atas persetujuan tertulis dari Laboratorium Pusat Promosi dan Sertifikasi Hasil Pertanian
+			<br><i>This report shall not be reproduced without the written approval from Laboratory of Pusat Promosi dan Sertifikasi Hasil Pertanian</i>
+			</p>';
+			$this->writeHTMLCell(0, 0, 10, '', $disclaimer, 0, 0, false, true, 'J', true);
+		}
+
+		if($this->header == 0 && $this->getPage() > 1){
 			$this->Ln(5);
 			$this->SetX(10);
 			$disclaimer = '<p style="font-size:10px;text-align:justify">

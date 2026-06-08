@@ -264,7 +264,7 @@ class Hp extends CI_Controller {
 		// output
 		if($print_header == 0){
 			$pdf->SetPrintHeader(false);
-			$pdf->SetPrintFooter(false);
+			// $pdf->SetPrintFooter(false);
 
 			//$pdf->SetMargins(10, 50, 15, 15);
 		}
